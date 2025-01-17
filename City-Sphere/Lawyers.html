@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lawyers</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="Laywers.css">
+</head>
+<body>
+    <h1>Lawyers</h1>
+    <div class="bake">
+      <button id="home" onclick="redirectToHome()">Back</button>
+    </div>
+    <nav>
+        <ul class="menu">
+          <li>
+            <a href="index.html"><b>Home</b></a>
+          </li>
+          <li>
+            <a href="aboutus.html" target="_main"><b>About Us</b></a>
+          </li>
+          <li>
+            <a href="contact.html" target="_main"><b>Contact Us</b></a>
+          </li>
+          <li>
+            <a href="services.html" target="_main"><b>Services</b></a>
+          </li>
+          <li>
+            <a href="providers.html" target="_main"><b>Providers</b></a>
+          </li>
+        </ul>
+        <div class="search-bar">
+          <input type="text" placeholder="Search..." id="searchInput" />
+          <button onclick="searchFunction()">Search</button>
+        </div>
+      </nav>
+    <div class="login">
+        <button id="login" onclick="redirectToLogin()" type="button" href="">
+          Login
+        </button>
+        <button id="signin" onclick="redirectToSignUp()" type="button" href="">
+          Sign Up
+        </button>
+    </div>
+
+    <p class="line">Connecting you with the best legal professionals in your city.</p>
+
+    <div class="container">
+        <section class="section">
+            <h2>Services Offered</h2>
+            <div class="services">
+                <div class="service">
+                    <h3>Family Law</h3>
+                    <p>Helping you navigate through family matters including divorce, child custody, and more.</p>
+                </div>
+                <div class="service">
+                    <h3>Corporate Law</h3>
+                    <p>Providing legal solutions for businesses and corporations.</p>
+                </div>
+                <div class="service">
+                    <h3>Criminal Defense</h3>
+                    <p>Defending your rights with experienced criminal defense lawyers.</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="lawyer-card">
+            <img src="" alt="Lawyer 1 Photo">
+            <div class="lawyer-bio">
+                <h2>Adv. Chaitanya</h2>
+                <p>Specialization: </p>
+                <p>Qualifications: </p>
+                <p>Experience: 10 years</p>
+                <p>Address: Sadashiv Peth, Pune-411030</p>
+            </div>
+            <div class="buttons">
+                <button class="button">Book Consultation</button>
+            </div>
+        </div>
+    
+        <div class="lawyer-card">
+            <img src="" alt="Lawyer 2 Photo">
+            <div class="lawyer-bio">
+                <h2>Adv. Devika</h2>
+                <p>Specialization: </p>
+                <p>Qualifications: </p>
+                <p>Experience: 8 years</p>
+                <p>Address: Latur</p>
+            </div>
+            <div class="buttons">
+                <button class="button">Book Consultation</button>
+            </div>
+        </div>
+    
+        <div class="lawyer-card">
+            <img src="" alt="Lawyer 3 Photo">
+            <div class="lawyer-bio">
+                <h2>Dr. Anurag</h2>
+                <p>Specialization: </p>
+                <p>Qualifications: </p>
+                <p>Experience: 16 years</p>
+                <p>Address: Bibwewadi, Pune-411037</p>
+            </div>
+            <div class="buttons">
+                <button class="button">Book Consultation</button>
+            </div>
+        </div>
+    </div>
+
+    <footer style="text-align: center; padding: 10px">
+        <p>© City Sphere 2024. All Rights Reserved.</p>
+    </footer>
+
+    <script src="Lawyers.js"></script>
+</body>
+</html>

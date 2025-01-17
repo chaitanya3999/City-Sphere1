@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CITY SPHERE</title>
+    <link rel="stylesheet" href=" home.css" />
+    <link rel="icon" type="image/x-icon" href="City Sphere.jpg" />
+  </head>
+
+  <body>
+    <div class="logo-container">
+      <img id="logo" src="City Sphere.jpg" alt="logo" />
+    </div>
+    <header>
+      <h1>CITY SPHERE</h1>
+      <h3>MY CITY IN MY PHONE</h3>
+      <nav>
+        <ul class="menu">
+          <li>
+            <a href="index.html"><b>Home</b></a>
+          </li>
+          <li>
+            <a href="aboutus.html" target="_main"><b>About Us</b></a>
+          </li>
+          <li>
+            <a href="contact.html" target="_main"><b>Contact Us</b></a>
+          </li>
+          <li>
+            <a href="services.html" target="_main"><b>Services</b></a>
+          </li>
+          <li>
+            <a href="providers.html" target="_main"><b>Providers</b></a>
+          </li>
+        </ul>
+        <div class="search-bar">
+          <input type="text" placeholder="Search..." id="searchInput" />
+          <button onclick="searchFunction()">Search</button>
+        </div>
+      </nav>
+      <div class="login">
+        <button id="login" onclick="redirectToLogin()" type="button" href="">
+          Login
+        </button>
+        <button id="signin" onclick="redirectToSignUp()" type="button" href="">
+          Sign Up
+        </button>
+      </div>
+    </header>
+    <main>
+      <div class="service-container">
+        <div class="category-button" onclick="location.href='vegetables.html';">
+          <img
+            src="Vegitabls1-removebg-preview.png"
+            alt="Vegetables"
+            class="icon"
+          />
+          <p>Vegetables</p>
+        </div>
+
+        <div class="category-button" onclick="location.href='doctors.html';">
+          <img src="Doctor-removebg-preview.png" alt="Doctors" class="icon" />
+          <p>Doctors</p>
+        </div>
+
+        <div
+          class="category-button"
+          onclick="location.href='restaurants.html';"
+        >
+          <img
+            src="Restorents-removebg-preview.png"
+            alt="Restaurants"
+            class="icon"
+          />
+          <p>Restaurants</p>
+        </div>
+
+        <div class="category-button" onclick="location.href='groceries.html';">
+          <img
+            src="Grocery-removebg-preview.png"
+            alt="Groceries"
+            class="icon"
+          />
+          <p>Groceries</p>
+        </div>
+        <div class="category-button" onclick="location.href='medicine.html';">
+          <img
+            src="Medicine-removebg-preview.png"
+            alt="Petrol Pumps"
+            class="icon"
+          />
+          <p>Medical Stores</p>
+        </div>
+
+        <div class="category-button">
+          <img src="Bus-removebg-preview.png" alt="Petrol Pumps" class="icon" />
+          <p>Bus</p>
+        </div>
+
+        <div
+          class="category-button"
+          onclick="location.href='https://mahametropune-alpha.billeasy.in/?t=aec289';"
+        >
+          <img
+            src="Metro-removebg-preview.png"
+            alt="Petrol Pumps"
+            class="icon"
+          />
+          <p>Metro</p>
+        </div>
+
+        <div
+          class="category-button"
+          onclick="location.href='https://www.utsonmobile.indianrail.gov.in/login;id=C2F2EABD7950A2FFB8EDD2623785DAF2?0';"
+        >
+          <img
+            src="Train-removebg-preview.png"
+            alt="Petrol Pumps"
+            class="icon"
+          />
+          <p>Train</p>
+        </div>
+      </div>
+    </main>
+    <!-- Chatbot Button -->
+    <button id="chatbot-button" onclick="toggleChat()">Chat with AI</button>
+
+    <!-- Chat Interface -->
+    <div id="chat-container" class="hidden">
+      <div id="chat-header">
+        <h3>City Sphere AI Assistant</h3>
+        <button id="close-chat" onclick="closeChat()">X</button>
+      </div>
+      <div id="chat-box"></div>
+      <input type="text" id="chat-input" placeholder="Type your message..." />
+      <button id="send-btn" onclick="sendMessage()">Send</button>
+    </div>
+    <input id="pac-input" type="text" placeholder="Search for a place" />
+    <button id="search-btn">Search</button>
+    <div id="map"></div>
+    <footer></footer>
+    <!-- Load the Google Maps JavaScript API with the Places library -->
+    <script
+      async
+      defer
+      src="https://maps.gomaps.pro/maps/api/js?key=AlzaSyX1jqO6ZlY2uvEvBhRk9I29YIafmbOEmAI&libraries=geometry,places&callback=initMap"
+    ></script>
+    <script src="home.js"></script>
+  </body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Doctors</title>
+    <link rel="stylesheet" type="text/css" href="doctors.css" />
+  </head>
+  <body>
+    <h1>Doctors</h1>
+    <div class="bake">
+      <button id="home" onclick="redirectToHome()">Back</button>
+    </div>
+    <nav>
+      <ul class="menu">
+        <li>
+          <a href="index.html"><b>Home</b></a>
+        </li>
+        <li>
+          <a href="aboutus.html" target="_main"><b>About Us</b></a>
+        </li>
+        <li>
+          <a href="contact.html" target="_main"><b>Contact Us</b></a>
+        </li>
+        <li>
+          <a href="services.html" target="_main"><b>Services</b></a>
+        </li>
+        <li>
+          <a href="providers.html" target="_main"><b>Providers</b></a>
+        </li>
+      </ul>
+      <div class="search-bar">
+        <input type="text" placeholder="Search..." id="searchInput" />
+        <button onclick="searchFunction()">Search</button>
+      </div>
+    </nav>
+    <div class="login">
+      <button id="login" onclick="redirectToLogin()" type="button" href="">
+        Login
+      </button>
+      <button id="signin" onclick="redirectToSignUp()" type="button" href="">
+        Sign Up
+      </button>
+  </div>
+    <div class="container">
+      <div class="doctor-card">
+        <img src="ChaitanyaDoctor.jpg" alt="Doctor 1 Photo">
+        <div class="doctor-bio">
+          <h2>Dr. Chaitanya</h2>
+          <p>Specialization: Cardiologist</p>
+          <p>Qualifications: MD, PhD</p>
+          <p>Experience: 10 years</p>
+          <p>Address: Sadashiv Peth, Pune-411030</p>
+          <p class="waiting-time">Approximate Waiting Time: 30 minutes</p>
+        </div>
+        <div class="buttons">
+          <button class="button">
+            Book Appointment
+          </button>
+          <button class="button">
+            Get Prescription
+          </button>
+        </div>
+      </div>
+
+      <div class="doctor-card">
+        <img src="DevikaDoctor.jpg" alt="Doctor 2 Photo">
+        <div class="doctor-bio">
+          <h2>Dr. Devika</h2>
+          <p>Specialization: Dermatologist</p>
+          <p>Qualifications: MBBS, MD</p>
+          <p>Experience: 8 years</p>
+          <p>Address: Latur</p>
+          <p class="waiting-time">Approximate Waiting Time: 15 minutes</p>
+        </div>
+        <div class="buttons">
+          <button class="button">
+            Book Appointment
+          </button>
+          <button class="button">
+            Get Prescription
+          </button>
+        </div>
+      </div>
+
+      <div class="doctor-card">
+        <img src="doctor3.jpeg" alt="Doctor3 Photo">
+        <div class="doctor-bio">
+          <h2>Dr. Anurag</h2>
+          <p>Specialization: Surgeon</p>
+          <p>Qualifications: MBBS, MD</p>
+          <p>Experience: 16 years</p>
+          <p>Address: Bibwewadi, Pune-411037</p>
+          <p class="waiting-time">Approximate Waiting Time: 30 minutes</p>
+        </div>
+        <div class="buttons">
+          <button class="button">
+            Book Appointment
+          </button>
+          <button class="button">
+            Get Prescription
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <footer style="text-align: center; padding: 10px">
+      <p>© City Sphere 2024. All Rights Reserved.</p>
+    </footer>
+
+    <script src="doctors.js"></script>
+  </body>
+</html>

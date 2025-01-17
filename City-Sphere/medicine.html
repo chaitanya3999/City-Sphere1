@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Medicine Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f2f2f2;
+    }
+    header {
+      background: linear-gradient(to right, #ff7a14, #d44604);
+      padding: 10px;
+      text-align: center;
+      color: white;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2.5rem;
+    }
+    .search-bar {
+      display: flex;
+      justify-content: center;
+      margin: 20px;
+    }
+    .search-bar input {
+      width: 300px;
+      padding: 10px;
+      font-size: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 5px 0 0 5px;
+      outline: none;
+    }
+    .search-bar button {
+      padding: 10px 20px;
+      background-color: #ff7a14
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 0 5px 5px 0;
+      font-size: 1rem;
+    }
+    .search-bar button:hover {
+      background-color:#d44604;
+    }
+    .categories {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    .category {
+      flex: 1 1 calc(33.33% - 10px);
+      background-color: white;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .category:hover {
+      transform: scale(1.05);
+      box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    }
+    .category h3 {
+      margin: 0;
+      color:#ff7a14;
+      font-size: 1.2rem;
+    }
+    .order-form {
+      max-width: 600px;
+      margin: 20px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .order-form h2 {
+      margin-bottom: 20px;
+      color:#d44604;
+    }
+    .order-form label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    .order-form input,
+    .order-form select,
+    .order-form textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+    .order-form button {
+      width: 100%;
+      padding: 10px;
+      background: #ff7a14;
+      color: white;
+      border: none;
+      font-size: 1rem;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    .order-form button:hover {
+      background:#d44604;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Medicine Page</h1>
+  </header>
+
+  <!-- Search Bar -->
+  <div class="search-bar">
+    <input type="text" id="searchInput" placeholder="Search for medicines..." />
+    <button onclick="searchMedicine()">Search</button>
+  </div>
+
+  <!-- Categories Section -->
+  <section class="categories">
+    <div class="category" onclick="selectCategory('Pain Relief')">
+      <h3>Pain Relief</h3>
+    </div>
+    <div class="category" onclick="selectCategory('Vitamins & Supplements')">
+      <h3>Vitamins & Supplements</h3>
+    </div>
+    <div class="category" onclick="selectCategory('Cold & Flu')">
+      <h3>Cold & Flu</h3>
+    </div>
+    <div class="category" onclick="selectCategory('Skin Care')">
+      <h3>Skin Care</h3>
+    </div>
+    <div class="category" onclick="selectCategory('Child Care')">
+      <h3>Child Care</h3>
+    </div>
+    <div class="category" onclick="selectCategory('Other Medicines')">
+      <h3>Other Medicines</h3>
+    </div>
+  </section>
+
+  <!-- Order Form -->
+  <section class="order-form">
+    <h2>Order Medicines</h2>
+    <form id="medicineForm" onsubmit="submitOrder(event)">
+      <label for="name">Your Name:</label>
+      <input type="text" id="name" name="name" required />
+
+      <label for="email">Your Email:</label>
+      <input type="email" id="email" name="email" required />
+
+      <label for="medicine">Medicine Name:</label>
+      <input type="text" id="medicine" name="medicine" required />
+
+      <label for="category">Category:</label>
+      <select id="category" name="category" required>
+        <option value="Pain Relief">Pain Relief</option>
+        <option value="Vitamins & Supplements">Vitamins & Supplements</option>
+        <option value="Cold & Flu">Cold & Flu</option>
+        <option value="Skin Care">Skin Care</option>
+        <option value="Child Care">Child Care</option>
+        <option value="Other Medicines">Other Medicines</option>
+      </select>
+
+      <label for="notes">Additional Notes (Optional):</label>
+      <textarea id="notes" name="notes" rows="3"></textarea>
+
+      <button type="submit">Submit Order</button>
+    </form>
+  </section>
+
+  </body>
+  </html>

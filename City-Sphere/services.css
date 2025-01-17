@@ -1,0 +1,149 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #f2f2f2;
+  margin: 0;
+  padding: 0;
+}
+h1 {
+  text-align: center;
+  font-weight: bold;
+  color: #ff7a14;
+  font-size: 3rem;
+  font-weight: bold;
+  text-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+  animation: fadeIn 2s ease-in-out;
+}
+h1:hover {
+  color: #d44604;
+  transition: color 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.bake {
+  position: fixed !important;
+  top: 30px;
+  left: 30px;
+  z-index: 99;
+}
+
+#home {
+  background: linear-gradient(to right, #ff7a14, #d44604);
+  border-color: #ff7a14;
+  color: #f2f2f2;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  font-weight: bold;
+  margin: 5px;
+  cursor: pointer;
+  border-radius: 7px;
+  transition: transform 0.2s ease-in-out, background-color 0.3s ease;
+  box-shadow: 0.3s ease;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+}
+#home:hover {
+  transform: scale(1.1);
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3);
+}
+.service-container {
+  display: flex !important;
+}
+.category-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 159px;
+  height: 150px;
+  margin: 10px;
+  background: linear-gradient(to right, #ff7a14, #d44604);
+  border-radius: 10px;
+  text-align: center;
+  color: white;
+  font-family: "Arial", sans-serif;
+  font-size: 16px;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+.category-button p {
+  font-weight: bold !important;
+}
+.category-button:hover {
+  transform: scale(1.05);
+}
+
+.icon {
+  width: 50px;
+  height: 50px;
+  margin-bottom: 10px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@media (max-width: 768px) {
+  .step {
+    flex-direction: column; /* Stack items vertically on smaller screens */
+    height: unset; /* Remove fixed height for stacking */
+  }
+
+  .step img {
+    max-width: 100%; /* Images span full width on small screens */
+  }
+
+  .step p {
+    margin-left: 0; /* Center-align text for small screens */
+    text-align: center;
+  }
+}
+
+/* Animation for fade-in effect */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes hoverEffect {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

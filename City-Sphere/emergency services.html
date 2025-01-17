@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emergency Services</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f2f2f2;
+    }
+    .emergency-container {
+      padding: 20px;
+      background-color: #fff;
+      max-width: 800px;
+      margin: 20px auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      text-align: center;
+      color: #ff7a14;
+      font-size: 2.5rem;
+      text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+    }
+    .emergency-list {
+      list-style: none;
+      padding: 0;
+    }
+    .emergency-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      background-color: #fafafa;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .emergency-item:hover {
+      transform: scale(1.05);
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+    }
+    .emergency-item span {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #555;
+    }
+    .emergency-item button {
+      background-color:#ff7a14;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .emergency-item button:hover {
+      background-color:#ff7a14;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="emergency-container">
+    <h1>Emergency Services</h1>
+    <ul class="emergency-list">
+      <li class="emergency-item">
+        <span>Police</span>
+        <button onclick="contactEmergency('100')">Call 100</button>
+      </li>
+      <li class="emergency-item">
+        <span>Ambulance</span>
+        <button onclick="contactEmergency('101')">Call 101</button>
+      </li>
+      <li class="emergency-item">
+        <span>Fire Brigade</span>
+        <button onclick="contactEmergency('102')">Call 102</button>
+      </li>
+      <li class="emergency-item">
+        <span>Women Helpline</span>
+        <button onclick="contactEmergency('1091')">Call 1091</button>
+      </li>
+      <li class="emergency-item">
+        <span>Child Helpline</span>
+        <button onclick="contactEmergency('1098')">Call 1098</button>
+      </li>
+    </ul>
+  </div>
+  <style>
+   body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f2f2f2;
+    }
+    header {
+      background:#d44604;
+      color: white;
+      padding: 10px 20px;
+      text-align: center;
+      position: below emergency services;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    }
+    header h1 {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+    .alert-container {
+      margin: 100px auto 0 auto;
+      max-width: 600px;
+      padding: 20px;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .alert {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px;
+      background: #ffccccf3;
+      color:#ff7a14;
+      border: 1px solid#ff7a14;
+      border-radius: 5px;
+      margin-bottom: 15px;
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+      animation: fadeIn 0.5s ease;
+    }
+    .alert h3 {
+      margin: 0;
+      font-size: 1rem;
+    }
+    .alert button {
+      background:#ff4d4d;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+    .alert button:hover {
+      background: #ff4d4d;
+    }
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1 style="color: #f2f2f2;">Emergency Alerts</h1>
+  </header>
+
+  <div class="alert-container" id="alertContainer">
+    <!-- Alerts will be dynamically added here -->
+  </div>
+
+  <script>
+    // List of emergency alerts
+    const alerts = [
+      { id: 1, message: "Severe weather warning in your area. Stay indoors!" },
+      { id: 2, message: "Power outage expected from 8 PM to 12 AM." },
+      { id: 3, message: "Emergency maintenance in your neighborhood. Water supply may be affected." }
+    ];
+
+    // Display alerts dynamically
+    function displayAlerts() {
+      const alertContainer = document.getElementById("alertContainer");
+      alertContainer.innerHTML = ""; // Clear existing alerts
+
+      alerts.forEach(alert => {
+        const alertDiv = document.createElement("div");
+        alertDiv.className = "alert";
+        alertDiv.innerHTML = `
+          <h3>${alert.message}</h3>
+          <button onclick="dismissAlert(${alert.id})">Dismiss</button>
+        `;
+        alertContainer.appendChild(alertDiv);
+      });
+    }
+
+    // Dismiss an alert
+    function dismissAlert(id) {
+      const index = alerts.findIndex(alert => alert.id === id);
+      if (index !== -1) {
+        alerts.splice(index, 1); // Remove alert from the list
+        displayAlerts(); // Update the UI
+      }
+    }
+
+    // Display alerts when the page loads
+    window.onload = displayAlerts;
+  </script>
+</body>
+</html>
+  </style>
+  </body>
+</html>
