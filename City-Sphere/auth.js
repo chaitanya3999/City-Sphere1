@@ -39,17 +39,72 @@ document.addEventListener('DOMContentLoaded', function() {
     const loginForm = document.getElementById('loginForm');
     const registerForm = document.getElementById('registerForm');
 
-    loginForm.addEventListener('submit', function(e) {
+    // Input validation
+    function validateEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+
+    function validatePassword(password) {
+        // At least 8 characters, 1 uppercase, 1 lowercase, 1 number
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+        return passwordRegex.test(password);
+    }
+
+    function showError(element, message) {
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'error-message';
+        errorDiv.textContent = message;
+        element.parentNode.appendChild(errorDiv);
+        setTimeout(() => errorDiv.remove(), 3000);
+    }
+
+    loginForm.addEventListener('submit', async function(e) {
         e.preventDefault();
         const email = this.querySelector('#loginEmail').value;
         const password = this.querySelector('#loginPassword').value;
         const remember = this.querySelector('input[name="remember"]').checked;
 
-        // Add your login logic here
-        console.log('Login:', { email, password, remember });
+        // Clear previous errors
+        document.querySelectorAll('.error-message').forEach(err => err.remove());
+
+        // Validate inputs
+        if (!validateEmail(email)) {
+            showError(this.querySelector('#loginEmail'), 'Please enter a valid email');
+            return;
+        }
+
+        try {
+            // Show loading state
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Logging in...';
+
+            // Add API call here
+            // const response = await fetch('/api/login', {
+            //     method: 'POST',
+            //     headers: {
+            //         'Content-Type': 'application/json',
+            //         'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
+            //     },
+            //     body: JSON.stringify({ email, password, remember })
+            // });
+
+            // Temporary simulation
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            // Redirect on success
+            window.location.href = '/home.html';
+        } catch (error) {
+            showError(this.querySelector('#loginEmail'), 'Login failed. Please try again.');
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalText;
+        }
     });
 
-    registerForm.addEventListener('submit', function(e) {
+    registerForm.addEventListener('submit', async function(e) {
         e.preventDefault();
         const name = this.querySelector('#registerName').value;
         const email = this.querySelector('#registerEmail').value;
@@ -57,7 +112,59 @@ document.addEventListener('DOMContentLoaded', function() {
         const confirmPassword = this.querySelector('#confirmPassword').value;
         const terms = this.querySelector('input[name="terms"]').checked;
 
-        // Add your registration logic here
-        console.log('Register:', { name, email, password, confirmPassword, terms });
+        // Clear previous errors
+        document.querySelectorAll('.error-message').forEach(err => err.remove());
+
+        // Validate inputs
+        if (!name.trim()) {
+            showError(this.querySelector('#registerName'), 'Name is required');
+            return;
+        }
+        if (!validateEmail(email)) {
+            showError(this.querySelector('#registerEmail'), 'Please enter a valid email');
+            return;
+        }
+        if (!validatePassword(password)) {
+            showError(this.querySelector('#registerPassword'), 'Password must be at least 8 characters with 1 uppercase, 1 lowercase, and 1 number');
+            return;
+        }
+        if (password !== confirmPassword) {
+            showError(this.querySelector('#confirmPassword'), 'Passwords do not match');
+            return;
+        }
+        if (!terms) {
+            showError(this.querySelector('input[name="terms"]'), 'Please accept the terms and conditions');
+            return;
+        }
+
+        try {
+            // Show loading state
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Creating account...';
+
+            // Add API call here
+            // const response = await fetch('/api/register', {
+            //     method: 'POST',
+            //     headers: {
+            //         'Content-Type': 'application/json',
+            //         'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
+            //     },
+            //     body: JSON.stringify({ name, email, password, terms })
+            // });
+
+            // Temporary simulation
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            // Show success and redirect
+            alert('Account created successfully! Please log in.');
+            window.location.href = '/Register-Login.html#login';
+        } catch (error) {
+            showError(this.querySelector('#registerEmail'), 'Registration failed. Please try again.');
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalText;
+        }
     });
 });

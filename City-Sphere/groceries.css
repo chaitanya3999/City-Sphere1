@@ -1,577 +1,369 @@
-/* Groceries Section */
+/* Groceries Ticket Design */
 .groceries-section {
-    padding: 4rem 0;
-    background: var(--bg-light);
+  background-color: #f4f4f4;
+  padding: 2rem 0;
 }
 
-.section-first {
-    padding-top: 6rem;
+.groceries-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  background-color: #fff;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.groceries-section h2 {
-    text-align: center;
-    color: var(--text-color);
-    margin-bottom: 1rem;
+.groceries-header h2 {
+  color: var(--primary-color);
+  margin: 0;
+  font-size: 2rem;
 }
 
-.section-description {
-    text-align: center;
-    color: var(--text-muted);
-    max-width: 600px;
-    margin: 0 auto 3rem;
+.order-details {
+  display: flex;
+  gap: 2rem;
+}
+
+.order-id, .order-date {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.order-id span, .order-date span {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.groceries-ticket {
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+}
+
+.ticket-section {
+  margin-bottom: 2rem;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 2rem;
+}
+
+.ticket-section:last-of-type {
+  border-bottom: none;
+}
+
+.ticket-section h3 {
+  color: var(--primary-color);
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+}
+
+.form-row {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.form-group {
+  flex: 1;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--text-color);
+  font-weight: 600;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.list-section textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.file-upload {
+  position: relative;
+  border: 2px dashed #ddd;
+  border-radius: 10px;
+  padding: 2rem;
+  text-align: center;
+}
+
+.file-upload input[type="file"] {
+  display: none;
+}
+
+.file-upload-label {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--text-muted);
+}
+
+.file-upload-label i {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: var(--primary-color);
+}
+
+.total-section {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.estimated-total {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1.2rem;
+}
+
+.estimated-total span {
+  color: var(--text-muted);
+}
+
+.ticket-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.btn-calculate-total,
+.btn-submit-order {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-calculate-total {
+  background-color: var(--bg-light);
+  color: var(--text-color);
+  border: 1px solid var(--primary-color);
+}
+
+.btn-submit-order {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.btn-calculate-total:hover {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.btn-submit-order:hover {
+  background-color: var(--accent-color);
 }
 
 /* Search and Filters */
 .search-filter-container {
-    margin-bottom: 3rem;
+  margin-bottom: 3rem;
 }
 
 .search-bar {
-    max-width: 600px;
-    margin: 0 auto 2rem;
-    display: flex;
-    gap: 1rem;
+  max-width: 600px;
+  margin: 0 auto 2rem;
+  display: flex;
+  gap: 1rem;
 }
 
 .search-bar input {
-    flex: 1;
-    padding: 1rem;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-size: 1rem;
+  flex: 1;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
 }
 
 .search-bar button {
-    padding: 0 1.5rem;
-    background: var(--primary-color);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: var(--transition);
+  padding: 0 1.5rem;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: var(--transition);
 }
 
 .search-bar button:hover {
-    background: var(--accent-color);
+  background: var(--accent-color);
 }
 
 .filters {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    flex-wrap: wrap;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 
 .filter-btn {
-    padding: 0.5rem 1.5rem;
-    border: 1px solid #ddd;
-    border-radius: 25px;
-    background: white;
-    color: var(--text-color);
-    cursor: pointer;
-    transition: var(--transition);
+  padding: 0.5rem 1.5rem;
+  border: 1px solid #ddd;
+  border-radius: 25px;
+  background: white;
+  color: var(--text-color);
+  cursor: pointer;
+  transition: var(--transition);
 }
 
 .filter-btn:hover,
 .filter-btn.active {
-    background: var(--primary-color);
-    color: white;
-    border-color: var(--primary-color);
-}
-
-/* Groceries Grid */
-.groceries-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
-    margin-bottom: 3rem;
-}
-
-.grocery-card {
-    background: white;
-    border-radius: 15px;
-    overflow: hidden;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: var(--transition);
-}
-
-.grocery-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
-}
-
-.grocery-image {
-    position: relative;
-    height: 200px;
-}
-
-.grocery-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.category {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    background: rgba(255, 255, 255, 0.9);
-    padding: 0.3rem 0.8rem;
-    border-radius: 15px;
-    font-weight: bold;
-    color: var(--primary-color);
-}
-
-.grocery-info {
-    padding: 1.5rem;
-}
-
-.grocery-info h3 {
-    margin-bottom: 0.5rem;
-    color: var(--text-color);
-}
-
-.store-name {
-    color: var(--text-muted);
-    margin-bottom: 0.5rem;
-    font-size: 0.9rem;
-}
-
-.description {
-    color: var(--text-muted);
-    font-size: 0.9rem;
-    margin-bottom: 1rem;
-}
-
-.grocery-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.price {
-    color: var(--text-color);
-    font-weight: bold;
-    font-size: 1.1rem;
-}
-
-.quantity-selector {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.quantity-btn {
-    width: 24px;
-    height: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--bg-light);
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: var(--transition);
-}
-
-.quantity-btn:hover {
-    background: var(--primary-color);
-    color: white;
-}
-
-.quantity {
-    font-size: 0.9rem;
-    color: var(--text-color);
-}
-
-.btn-add {
-    padding: 0.5rem 1rem;
-    background: var(--primary-color);
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: var(--transition);
-}
-
-.btn-add:hover {
-    background: var(--accent-color);
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
 }
 
 /* Load More Button */
 .load-more {
-    text-align: center;
+  text-align: center;
 }
 
 .btn-load-more {
-    padding: 1rem 2rem;
-    background: transparent;
-    border: 2px solid var(--primary-color);
-    color: var(--primary-color);
-    border-radius: 8px;
-    cursor: pointer;
-    transition: var(--transition);
-    font-weight: bold;
+  padding: 1rem 2rem;
+  background: transparent;
+  border: 2px solid var(--primary-color);
+  color: var(--primary-color);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: var(--transition);
+  font-weight: bold;
 }
 
 .btn-load-more:hover {
-    background: var(--primary-color);
-    color: white;
+  background: var(--primary-color);
+  color: white;
 }
 
 .btn-load-more i {
-    margin-left: 0.5rem;
+  margin-left: 0.5rem;
 }
 
 /* Cart Summary */
 .cart-summary {
-    position: fixed;
-    bottom: 2rem;
-    right: 2rem;
-    background: white;
-    padding: 1rem;
-    border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
 }
 
 .cart-total {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
 }
 
 .cart-total span {
-    font-weight: bold;
-    color: var(--text-color);
+  font-weight: bold;
+  color: var(--text-color);
 }
 
 .btn-checkout {
-    width: 100%;
-    padding: 0.8rem;
-    background: var(--primary-color);
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: var(--transition);
+  width: 100%;
+  padding: 0.8rem;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: var(--transition);
 }
 
 .btn-checkout:hover {
-    background: var(--accent-color);
+  background: var(--accent-color);
 }
 
 /* Message Styles */
 .message {
-    position: fixed;
-    bottom: 2rem;
-    right: 2rem;
-    padding: 1rem 2rem;
-    border-radius: 8px;
-    color: white;
-    animation: slideIn 0.3s ease-out;
-    z-index: 1000;
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  color: white;
+  animation: slideIn 0.3s ease-out;
+  z-index: 1000;
 }
 
 .message.success {
-    background: #4caf50;
+  background: #4caf50;
 }
 
 .message.error {
-    background: #f44336;
+  background: #f44336;
 }
 
 @keyframes slideIn {
-    from {
-        transform: translateX(100%);
-        opacity: 0;
-    }
-    to {
-        transform: translateX(0);
-        opacity: 1;
-    }
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    .search-bar {
-        flex-direction: column;
-    }
-
-    .search-bar button {
-        width: 100%;
-        padding: 1rem;
-    }
-
-    .groceries-grid {
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 1.5rem;
-    }
-
-    .cart-summary {
-        bottom: 0;
-        right: 0;
-        left: 0;
-        border-radius: 8px 8px 0 0;
-    }
-}
-
-@media (max-width: 576px) {
-    .groceries-section {
-        padding: 3rem 0;
-    }
-
-    .section-first {
-        padding-top: 5rem;
-    }
-
-    .grocery-image {
-        height: 180px;
-    }
-
-    .grocery-info {
-        padding: 1rem;
-    }
-
-    .quantity-selector {
-        flex-direction: column;
-        gap: 0.25rem;
-    }
-}
-
-body {
-  font-family: Arial, sans-serif;
-  background: #f2f2f2;
-  margin: 0;
-  padding: 0;
-}
-h1 {
-  text-align: center;
-  font-weight: bold;
-  color: #ff7a14;
-  font-size: 3rem;
-  font-weight: bold;
-  text-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
-  animation: fadeIn 2s ease-in-out;
-}
-
-.bake {
-  position: fixed;
-  top: 30px;
-  left: 30px;
-  z-index: 99;
-}
-#home {
-  background: linear-gradient(to right, #ff7a14, #d44604);
-  border-color: #ff7a14;
-  color: #f2f2f2;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  font-weight: bold;
-  margin: 5px;
-  cursor: pointer;
-  border-radius: 7px;
-  transition: transform 0.2s ease-in-out, background-color 0.3s ease;
-  box-shadow: 0.3s ease;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-}
-#home:hover {
-  transform: scale(1.1);
-  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3);
-}
-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: linear-gradient(to right, #ff7a14, #d44604);
-  padding: 7px 20px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
-}
-.menu {
-  list-style: none;
-  display: flex;
-  justify-content: center;
-  margin: 0;
-  padding: 0;
-}
-
-.menu li {
-  margin: 0 15px;
-}
-
-.menu a {
-  color: white;
-  text-decoration: none;
-  padding: 10px 15px;
-  position: relative;
-  font-size: 1.2rem;
-  font-weight: bold;
-  transition: all 0.3s ease-in-out;
-}
-.menu a:hover {
-  background-color: #555;
-  border-radius: 5px;
-  transform: scale(1.05);
-}
-
-.menu a::after {
-  content: "";
-  position: absolute;
-  width: 0%;
-  height: 3px;
-  background: white;
-  bottom: 0;
-  left: 0;
-  transition: width 0.3s ease;
-}
-
-.menu a:hover::after {
-  width: 100%;
-}
-.menu a::after {
-  content: "";
-  position: absolute;
-  width: 0%;
-  height: 3px;
-  background: white;
-  bottom: 0;
-  left: 0;
-  transition: width 0.3s ease;
-}
-
-.menu a:hover::after {
-  width: 100%;
-}
-.search-bar {
-  display: flex;
-  align-items: center;
-  background-color: white;
-  border-radius: 20px;
-  padding: 5px 10px;
-  margin-left: 20px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-}
-
-.search-bar input {
-  border: none;
-  outline: none;
-  padding: 8px;
-  font-size: 16px;
-  flex: 1; /* Makes the input take up remaining space */
-  border-radius: 10px;
-  margin-right: 10px;
-}
-
-.search-bar button {
-  background: #ff7a14;
-  color: white;
-  padding: 8px 15px;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background 0.3s ease;
-}
-
-.search-bar button:hover {
-  background: #d44604;
-}
-@media (max-width: 768px) {
-  /* Stack the search bar elements vertically on smaller screens */
   .search-bar {
-    flex-direction: column; /* Stack items vertically */
-    margin-left: 0; /* Remove left margin */
-    width: 100%; /* Make search bar take full width */
-    padding: 10px; /* Add more padding for smaller screens */
-  }
-
-  .search-bar input {
-    margin-bottom: 10px; /* Add space between input and button */
-    width: 100%; /* Make input field take full width */
+    flex-direction: column;
   }
 
   .search-bar button {
-    width: 100%; /* Make button take full width */
-    margin-top: 10px; /* Add some space above the button */
+    width: 100%;
+    padding: 1rem;
   }
 
-  /* Adjust the nav menu to stack vertically on small screens */
-  .menu {
+  .cart-summary {
+    bottom: 0;
+    right: 0;
+    left: 0;
+    border-radius: 8px 8px 0 0;
+  }
+}
+
+@media (max-width: 576px) {
+  .groceries-section {
+    padding: 3rem 0;
+  }
+
+  .grocery-image {
+    height: 180px;
+  }
+
+  .grocery-info {
+    padding: 1rem;
+  }
+
+  .quantity-selector {
     flex-direction: column;
-    margin-top: 20px; /* Add space above the menu items */
+    gap: 0.25rem;
   }
-
-  .menu li {
-    margin: 10px 0; /* Adjust spacing between menu items */
-  }
-}
-form {
-  display: block !important;
-  align-items: center;
-  margin-top: 30px;
-  margin-bottom: 50px;
-  max-width: 500px;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 20px;
-  background-color: #f2f2f2;
-  border-radius: 10px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease;
-}
-label {
-  display: flex;
-  margin-bottom: 10px;
-  font-weight: bold;
-}
-
-form input[type="text"],
-input[type="email"],
-input[type="tel"],
-textarea,
-select {
-  width: 97%;
-  padding: 10px;
-  border: 1px solid #ff7a14;
-  border-radius: 5px;
-  margin-bottom: 20px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  transition: box-shadow 0.3s ease;
-}
-form select {
-  padding: 10px;
-  border: 1px solid #ff7a14;
-  border-radius: 5px;
-  margin-bottom: 20px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  transition: box-shadow 0.3s ease;
-}
-form input:focus,
-textarea:focus,
-select:focus {
-  border-color: #d44604;
-  transform: scale(1.05);
-}
-form button {
-  background: linear-gradient(to right, #ff7a14, #d44604);
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  width: 100%;
-  font-weight: bold;
-  font-size: 16px;
-}
-form button:hover {
-  background: linear-gradient(to right, #d44604, #ff7a14);
-  color: white;
-  transition: background-color 0.3s ease;
-  transform: scale(1.05);
 }

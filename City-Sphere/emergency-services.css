@@ -1,0 +1,64 @@
+/* Emergency Services Page Styles */
+.emergency-services-section {
+    padding: 50px 0;
+    background-color: #f9f9f9;
+}
+
+.emergency-card {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.emergency-details h3 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.emergency-details p {
+    color: #666;
+    margin: 5px 0;
+}
+
+.emergency-details .urgency {
+    color: #dc3545;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.emergency-call {
+    background-color: #dc3545;
+    color: white;
+}
+
+.emergency-call:hover {
+    background-color: #a71d2a;
+}
+
+.emergency-location {
+    background-color: #007bff;
+    color: white;
+}
+
+.emergency-location:hover {
+    background-color: #0056b3;
+}

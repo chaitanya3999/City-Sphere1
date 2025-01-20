@@ -1,0 +1,92 @@
+/* Metro Booking Page Styles */
+.metro-booking-section {
+  padding: 50px 0;
+  background-color: #f9f9f9;
+  text-align: center;
+}
+
+.metro-booking-section h2 {
+  color: #ff6600;
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.metro-card {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin: 20px auto;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 600px;
+  transition: all 0.3s ease-in-out;
+}
+
+.metro-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.metro-details {
+  text-align: left;
+}
+
+.metro-details h3 {
+  color: #ff6600;
+  margin-bottom: 10px;
+}
+
+.metro-details p {
+  color: #666;
+  margin: 5px 0;
+}
+
+.metro-details .price {
+  color: #28a745;
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin-top: 10px;
+}
+
+/* Buttons */
+.buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.button {
+  padding: 10px 15px;
+  background-color: #ff6600;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-weight: bold;
+}
+
+.button:hover {
+  background-color: #cc5500;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .metro-card {
+    flex-direction: column;
+    text-align: center;
+    padding: 15px;
+  }
+
+  .buttons {
+    width: 100%;
+    align-items: center;
+  }
+
+  .button {
+    width: 100%;
+    padding: 12px;
+  }
+}

@@ -1,105 +1,182 @@
+// Cache DOM elements
+const elements = {
+    greeting: document.getElementById('greeting'),
+    time: document.getElementById('time'),
+    date: document.getElementById('date'),
+    hamburger: document.querySelector('.hamburger'),
+    navWrapper: document.querySelector('.nav-wrapper'),
+    serviceCards: document.querySelectorAll('.service-card'),
+    featureCards: document.querySelectorAll('.feature-card')
+};
+
+// Debounce function for performance optimization
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
 // Update greeting based on time of day
 function updateGreeting() {
-    const hour = new Date().getHours();
-    const greeting = document.getElementById('greeting');
-    
-    if (hour >= 5 && hour < 12) {
-        greeting.textContent = 'Good Morning!';
-    } else if (hour >= 12 && hour < 17) {
-        greeting.textContent = 'Good Afternoon!';
-    } else if (hour >= 17 && hour < 22) {
-        greeting.textContent = 'Good Evening!';
-    } else {
-        greeting.textContent = 'Good Night!';
+    try {
+        const hour = new Date().getHours();
+        
+        let greetingText;
+        if (hour >= 5 && hour < 12) {
+            greetingText = 'Good Morning!';
+        } else if (hour >= 12 && hour < 17) {
+            greetingText = 'Good Afternoon!';
+        } else if (hour >= 17 && hour < 22) {
+            greetingText = 'Good Evening!';
+        } else {
+            greetingText = 'Good Night!';
+        }
+
+        if (elements.greeting) {
+            elements.greeting.textContent = greetingText;
+        }
+    } catch (error) {
+        console.error('Error updating greeting:', error);
     }
 }
 
-// Update time and date
-function updateDateTime() {
-    const timeElement = document.getElementById('time');
-    const dateElement = document.getElementById('date');
-    const now = new Date();
+// Update time and date with performance optimization
+const updateDateTime = debounce(() => {
+    try {
+        const now = new Date();
 
-    // Format time
-    const timeString = now.toLocaleTimeString('en-US', {
-        hour: 'numeric',
-        minute: '2-digit',
-        hour12: true
-    });
+        if (elements.time) {
+            elements.time.textContent = now.toLocaleTimeString('en-US', {
+                hour: 'numeric',
+                minute: '2-digit',
+                hour12: true
+            });
+        }
 
-    // Format date
-    const dateString = now.toLocaleDateString('en-US', {
-        weekday: 'long',
-        month: 'long',
-        day: 'numeric'
-    });
+        if (elements.date) {
+            elements.date.textContent = now.toLocaleDateString('en-US', {
+                weekday: 'long',
+                month: 'long',
+                day: 'numeric'
+            });
+        }
+    } catch (error) {
+        console.error('Error updating date/time:', error);
+    }
+}, 1000);
 
-    timeElement.textContent = timeString;
-    dateElement.textContent = dateString;
-}
-
-// Mobile menu functionality
+// Mobile menu functionality with improved touch handling
 function initMobileMenu() {
-    const hamburger = document.querySelector('.hamburger');
-    const navContent = document.querySelector('.nav-wrapper');
-    
-    hamburger.addEventListener('click', () => {
-        hamburger.classList.toggle('active');
-        navContent.classList.toggle('active');
+    if (!elements.hamburger || !elements.navWrapper) return;
+
+    const toggleMenu = () => {
+        elements.hamburger.classList.toggle('active');
+        elements.navWrapper.classList.toggle('active');
+    };
+
+    elements.hamburger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleMenu();
     });
 
     // Close mobile menu when clicking outside
     document.addEventListener('click', (e) => {
-        if (!hamburger.contains(e.target) && !navContent.contains(e.target)) {
-            hamburger.classList.remove('active');
-            navContent.classList.remove('active');
+        if (elements.navWrapper.classList.contains('active') &&
+            !elements.hamburger.contains(e.target) && 
+            !elements.navWrapper.contains(e.target)) {
+            toggleMenu();
         }
     });
+
+    // Handle touch events
+    document.addEventListener('touchstart', (e) => {
+        if (elements.navWrapper.classList.contains('active') &&
+            !elements.hamburger.contains(e.target) && 
+            !elements.navWrapper.contains(e.target)) {
+            toggleMenu();
+        }
+    }, { passive: true });
 }
 
-// Scroll animations
+// Scroll animations with Intersection Observer and performance optimization
 function initScrollAnimations() {
-    const elements = document.querySelectorAll('.service-card, .feature-card');
-    
-    const observer = new IntersectionObserver((entries) => {
+    if (!elements.serviceCards.length && !elements.featureCards.length) return;
+
+    const observerCallback = (entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('animate');
+                // Unobserve after animation to save resources
+                observer.unobserve(entry.target);
             }
         });
-    }, {
-        threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver(observerCallback, {
+        threshold: 0.1,
+        rootMargin: '50px'
     });
 
-    elements.forEach(element => observer.observe(element));
+    [...elements.serviceCards, ...elements.featureCards].forEach(element => {
+        observer.observe(element);
+    });
 }
+
+// Smooth scroll with performance optimization
+const smoothScroll = debounce((target) => {
+    target.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+    });
+}, 100);
 
 // Initialize everything when the DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    updateGreeting();
-    updateDateTime();
-    initMobileMenu();
-    initScrollAnimations();
+    try {
+        updateGreeting();
+        updateDateTime();
+        initMobileMenu();
+        initScrollAnimations();
 
-    // Update time every minute
-    setInterval(updateDateTime, 60000);
-    // Update greeting every hour
-    setInterval(updateGreeting, 3600000);
-});
+        // Update time every minute instead of every second for better performance
+        setInterval(updateDateTime, 60000);
+        // Update greeting every hour
+        setInterval(updateGreeting, 3600000);
 
-// Smooth scroll functionality
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
+        // Smooth scroll functionality
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    smoothScroll(target);
+                }
             });
-        }
-    });
+        });
+
+    } catch (error) {
+        console.error('Error initializing app:', error);
+    }
 });
+
+// Add service worker registration for offline functionality
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js')
+            .then(registration => {
+                console.log('ServiceWorker registration successful');
+            })
+            .catch(error => {
+                console.error('ServiceWorker registration failed:', error);
+            });
+    });
+}
 
 // Newsletter subscription
 const newsletterForm = document.querySelector('.newsletter-form');
