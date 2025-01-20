@@ -4,8 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>City Sphere - My City in My Phone</title>
-    <link rel="manifest" href="../manifest.json">
-    <meta name="theme-color" content="#0066CC">    <link
+    <link rel="manifest" href="../manifest.json" />
+    <meta name="theme-color" content="#0066CC" />
+    <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
     />
@@ -233,6 +234,17 @@
               <button type="submit">Subscribe</button>
             </form>
           </div>
+          <div class="footer-section">
+            <h3>Contact Us</h3>
+            <p>Email: info@citysphere.com</p>
+            <p>Phone: +1 234 567 890</p>
+            <div class="social-links">
+              <a href="#"><i class="fab fa-facebook"></i></a>
+              <a href="#"><i class="fab fa-twitter"></i></a>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="#"><i class="fab fa-linkedin"></i></a>
+            </div>
+          </div>
         </div>
         <div class="footer-bottom">
           <p>&copy; 2024 City Sphere. All rights reserved.</p>
@@ -242,16 +254,21 @@
 
     <script src="../js/home.js"></script>
     <script>
-        if ("serviceWorker" in navigator) {
-            window.addEventListener("load", () => {
-                navigator.serviceWorker.register("../service-worker.js")
-                    .then(registration => {
-                        console.log("Service Worker registered successfully:", registration.scope);
-                    })
-                    .catch(error => {
-                        console.error("Service Worker registration failed:", error);
-                    });
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker
+            .register("../service-worker.js")
+            .then((registration) => {
+              console.log(
+                "Service Worker registered successfully:",
+                registration.scope
+              );
+            })
+            .catch((error) => {
+              console.error("Service Worker registration failed:", error);
             });
-        }
-    </script>  </body>
+        });
+      }
+    </script>
+  </body>
 </html>
