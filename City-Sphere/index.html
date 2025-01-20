@@ -3,148 +3,221 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CITY SPHERE</title>
-    <link rel="stylesheet" href=" home.css" />
-    <link rel="icon" type="image/x-icon" href="City Sphere.jpg" />
+    <title>City Sphere - My City in My Phone</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="home.css" />
   </head>
-
   <body>
-    <div class="logo-container">
-      <img id="logo" src="City Sphere.jpg" alt="logo" />
-    </div>
     <header>
-      <h1>CITY SPHERE</h1>
-      <h3>MY CITY IN MY PHONE</h3>
-      <nav>
-        <ul class="menu">
-          <li>
-            <a href="index.html"><b>Home</b></a>
-          </li>
-          <li>
-            <a href="aboutus.html" target="_main"><b>About Us</b></a>
-          </li>
-          <li>
-            <a href="contact.html" target="_main"><b>Contact Us</b></a>
-          </li>
-          <li>
-            <a href="services.html" target="_main"><b>Services</b></a>
-          </li>
-          <li>
-            <a href="providers.html" target="_main"><b>Providers</b></a>
-          </li>
-        </ul>
-        <div class="search-bar">
-          <input type="text" placeholder="Search..." id="searchInput" />
-          <button onclick="searchFunction()">Search</button>
+      <div class="top-header">
+        <div class="container">
+          <div class="logo-container">
+            <div class="logo-circle">
+              <img
+                src="City Sphere Final copy.png"
+                alt="City Sphere Logo"
+                class="logo-image"
+              />
+            </div>
+            <div class="logo-text">
+              <h1>City Sphere</h1>
+              <p class="tagline">My City in My Phone</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <nav class="navbar">
+        <div class="container">
+          <div class="nav-wrapper">
+            <ul class="nav-links">
+              <li>
+                <a href="#services"><i class="fas fa-cogs"></i>Services</a>
+              </li>
+              <li>
+                <a href="#features"><i class="fas fa-star"></i>Features</a>
+              </li>
+              <li>
+                <a href="aboutus.html"><i class="fas fa-users"></i>About Us</a>
+              </li>
+              <li>
+                <a href="contact.html"><i class="fas fa-envelope"></i>Contact</a>
+              </li>
+            </ul>
+            <div class="nav-buttons">
+              <a href="wallet.html" class="btn btn-wallet"><i class="fas fa-wallet"></i>Wallet</a>
+              <a href="Register-Login.html" class="btn btn-login"><i class="fas fa-user"></i>Login</a>
+              <a href="Register-Login.html" class="btn btn-signup">Sign Up<i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+          <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
         </div>
       </nav>
-      <div class="login">
-        <button id="login" onclick="redirectToLogin()" type="button" href="">
-          Login
-        </button>
-        <button id="signin" onclick="redirectToSignUp()" type="button" href="">
-          Sign Up
-        </button>
-      </div>
     </header>
+
     <main>
-      <div class="service-container">
-        <div class="category-button" onclick="location.href='vegetables.html';">
-          <img
-            src="Vegitabls1-removebg-preview.png"
-            alt="Vegetables"
-            class="icon"
-          />
-          <p>Vegetables</p>
+      <section class="welcome-section">
+        <div class="container">
+          <div class="welcome-content">
+            <div id="greeting"></div>
+            <p class="welcome-message">
+              Welcome to City Sphere, where your city meets convenience.
+            </p>
+            <div class="welcome-time">
+              <div class="time-wrapper">
+                <i class="fas fa-clock"></i>
+                <div id="time"></div>
+              </div>
+              <div class="date-wrapper">
+                <i class="fas fa-calendar"></i>
+                <div id="date"></div>
+              </div>
+            </div>
+          </div>
         </div>
+      </section>
 
-        <div class="category-button" onclick="location.href='doctors.html';">
-          <img src="Doctor-removebg-preview.png" alt="Doctors" class="icon" />
-          <p>Doctors</p>
+      <section id="services" class="services section-first">
+        <div class="container">
+          <h2>Essential City Services at Your Fingertips</h2>
+          <p class="section-description">Save time and effort by accessing everyday services through our platform</p>
+          <div class="services-grid">
+            <div class="service-card">
+              <a href="services/doctors.html">
+                <i class="fas fa-user-md"></i>
+                <h3>Doctors</h3>
+                <p>Find doctors and book appointments</p>
+              </a>
+            </div>
+            <div class="service-card">
+              <a href="services/lawyers.html">
+                <i class="fas fa-balance-scale"></i>
+                <h3>Lawyers</h3>
+                <p>Connect with legal professionals</p>
+              </a>
+            </div>
+            <div class="service-card">
+              <a href="services/bus-booking.html">
+                <i class="fas fa-bus"></i>
+                <h3>Bus Tickets</h3>
+                <p>Book bus tickets online</p>
+              </a>
+            </div>
+            <div class="service-card">
+              <a href="services/train-booking.html">
+                <i class="fas fa-train"></i>
+                <h3>Train Tickets</h3>
+                <p>Book train tickets easily</p>
+              </a>
+            </div>
+            <div class="service-card">
+              <a href="services/metro-booking.html">
+                <i class="fas fa-subway"></i>
+                <h3>Metro Tickets</h3>
+                <p>Quick metro ticket booking</p>
+              </a>
+            </div>
+            <div class="service-card">
+              <a href="services/flight-booking.html">
+                <i class="fas fa-plane"></i>
+                <h3>Flight Booking</h3>
+                <p>Book flights with ease</p>
+              </a>
+            </div>
+            <div class="service-card">
+              <a href="services/groceries.html">
+                <i class="fas fa-shopping-basket"></i>
+                <h3>Groceries</h3>
+                <p>Order groceries from local stores</p>
+              </a>
+            </div>
+            <div class="service-card">
+              <a href="services/restaurants.html">
+                <i class="fas fa-utensils"></i>
+                <h3>Restaurants</h3>
+                <p>Discover and order from local restaurants</p>
+              </a>
+            </div>
+          </div>
         </div>
+      </section>
 
-        <div
-          class="category-button"
-          onclick="location.href='restaurants.html';"
-        >
-          <img
-            src="Restorents-removebg-preview.png"
-            alt="Restaurants"
-            class="icon"
-          />
-          <p>Restaurants</p>
+      <section id="features" class="features">
+        <div class="container">
+          <h2>Why Choose City Sphere?</h2>
+          <p class="section-description">
+            Your time is valuable. Let us help you make the most of it.
+          </p>
+          <div class="features-grid">
+            <div class="feature-card">
+              <i class="fas fa-clock"></i>
+              <h3>Save Time</h3>
+              <p>Access all services instantly without waiting in queues</p>
+            </div>
+            <div class="feature-card">
+              <i class="fas fa-mobile-alt"></i>
+              <h3>Everything in One App</h3>
+              <p>All city services integrated into a single platform</p>
+            </div>
+            <div class="feature-card">
+              <i class="fas fa-shield-alt"></i>
+              <h3>Safe & Secure</h3>
+              <p>Your data is protected with industry-standard security</p>
+            </div>
+            <div class="feature-card">
+              <i class="fas fa-hand-holding-usd"></i>
+              <h3>Save Money</h3>
+              <p>Get the best deals and offers on all services</p>
+            </div>
+          </div>
         </div>
-
-        <div class="category-button" onclick="location.href='groceries.html';">
-          <img
-            src="Grocery-removebg-preview.png"
-            alt="Groceries"
-            class="icon"
-          />
-          <p>Groceries</p>
-        </div>
-        <div class="category-button" onclick="location.href='medicine.html';">
-          <img
-            src="Medicine-removebg-preview.png"
-            alt="Petrol Pumps"
-            class="icon"
-          />
-          <p>Medical Stores</p>
-        </div>
-
-        <div class="category-button">
-          <img src="Bus-removebg-preview.png" alt="Petrol Pumps" class="icon" />
-          <p>Bus</p>
-        </div>
-
-        <div
-          class="category-button"
-          onclick="location.href='https://mahametropune-alpha.billeasy.in/?t=aec289';"
-        >
-          <img
-            src="Metro-removebg-preview.png"
-            alt="Petrol Pumps"
-            class="icon"
-          />
-          <p>Metro</p>
-        </div>
-
-        <div
-          class="category-button"
-          onclick="location.href='https://www.utsonmobile.indianrail.gov.in/login;id=C2F2EABD7950A2FFB8EDD2623785DAF2?0';"
-        >
-          <img
-            src="Train-removebg-preview.png"
-            alt="Petrol Pumps"
-            class="icon"
-          />
-          <p>Train</p>
-        </div>
-      </div>
+      </section>
     </main>
-    <!-- Chatbot Button -->
-    <button id="chatbot-button" onclick="toggleChat()">Chat with AI</button>
 
-    <!-- Chat Interface -->
-    <div id="chat-container" class="hidden">
-      <div id="chat-header">
-        <h3>City Sphere AI Assistant</h3>
-        <button id="close-chat" onclick="closeChat()">X</button>
+    <footer>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h3>Contact Us</h3>
+            <p><i class="fas fa-phone"></i> +1 234 567 890</p>
+            <p><i class="fas fa-envelope"></i> info@citysphere.com</p>
+            <div class="social-links">
+              <a href="#"><i class="fab fa-facebook"></i></a>
+              <a href="#"><i class="fab fa-twitter"></i></a>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="#"><i class="fab fa-linkedin"></i></a>
+            </div>
+          </div>
+          <div class="footer-section">
+            <h3>Quick Links</h3>
+            <ul>
+              <li><a href="#services">Services</a></li>
+              <li><a href="#features">Features</a></li>
+              <li><a href="aboutus.html">About Us</a></li>
+              <li><a href="contact.html">Contact</a></li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h3>Newsletter</h3>
+            <p>Subscribe to our newsletter for updates</p>
+            <form class="newsletter-form">
+              <input type="email" placeholder="Enter your email" />
+              <button type="submit">Subscribe</button>
+            </form>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2024 City Sphere. All rights reserved.</p>
+        </div>
       </div>
-      <div id="chat-box"></div>
-      <input type="text" id="chat-input" placeholder="Type your message..." />
-      <button id="send-btn" onclick="sendMessage()">Send</button>
-    </div>
-    <input id="pac-input" type="text" placeholder="Search for a place" />
-    <button id="search-btn">Search</button>
-    <div id="map"></div>
-    <footer></footer>
-    <!-- Load the Google Maps JavaScript API with the Places library -->
-    <script
-      async
-      defer
-      src="https://maps.gomaps.pro/maps/api/js?key=AlzaSyX1jqO6ZlY2uvEvBhRk9I29YIafmbOEmAI&libraries=geometry,places&callback=initMap"
-    ></script>
+    </footer>
+
     <script src="home.js"></script>
   </body>
 </html>

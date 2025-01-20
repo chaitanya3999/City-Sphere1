@@ -3,115 +3,135 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lawyers</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="Laywers.css">
+    <title>City Sphere - Lawyers</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="lawyers.css">
 </head>
 <body>
-    <h1>Lawyers</h1>
-    <div class="bake">
-      <button id="home" onclick="redirectToHome()">Back</button>
-    </div>
-    <nav>
-        <ul class="menu">
-          <li>
-            <a href="index.html"><b>Home</b></a>
-          </li>
-          <li>
-            <a href="aboutus.html" target="_main"><b>About Us</b></a>
-          </li>
-          <li>
-            <a href="contact.html" target="_main"><b>Contact Us</b></a>
-          </li>
-          <li>
-            <a href="services.html" target="_main"><b>Services</b></a>
-          </li>
-          <li>
-            <a href="providers.html" target="_main"><b>Providers</b></a>
-          </li>
-        </ul>
-        <div class="search-bar">
-          <input type="text" placeholder="Search..." id="searchInput" />
-          <button onclick="searchFunction()">Search</button>
+    <header>
+        <div class="top-header">
+            <div class="container">
+                <div class="logo-container">
+                    <div class="logo-circle">
+                        <img src="City Sphere Final copy.png" alt="City Sphere Logo" class="logo-image">
+                    </div>
+                    <div class="logo-text">
+                        <h1>City Sphere</h1>
+                        <p class="tagline">My City in My Phone</p>
+                    </div>
+                </div>
+            </div>
         </div>
-      </nav>
-    <div class="login">
-        <button id="login" onclick="redirectToLogin()" type="button" href="">
-          Login
-        </button>
-        <button id="signin" onclick="redirectToSignUp()" type="button" href="">
-          Sign Up
-        </button>
-    </div>
-
-    <p class="line">Connecting you with the best legal professionals in your city.</p>
-
-    <div class="container">
-        <section class="section">
-            <h2>Services Offered</h2>
-            <div class="services">
-                <div class="service">
-                    <h3>Family Law</h3>
-                    <p>Helping you navigate through family matters including divorce, child custody, and more.</p>
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-wrapper">
+                    <ul class="nav-links">
+                        <li><a href="index.html"><i class="fas fa-home"></i>Home</a></li>
+                        <li><a href="#services"><i class="fas fa-cogs"></i>Services</a></li>
+                        <li><a href="aboutus.html"><i class="fas fa-users"></i>About Us</a></li>
+                        <li><a href="contact.html"><i class="fas fa-envelope"></i>Contact</a></li>
+                    </ul>
+                    <div class="nav-buttons">
+                        <a href="wallet.html" class="btn btn-wallet">
+                            <i class="fas fa-wallet"></i>Wallet
+                        </a>
+                        <a href="Register-Login.html" class="btn btn-login">
+                            <i class="fas fa-user"></i>Login
+                        </a>
+                        <a href="Register-Login.html" class="btn btn-signup">
+                            Sign Up<i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
                 </div>
-                <div class="service">
-                    <h3>Corporate Law</h3>
-                    <p>Providing legal solutions for businesses and corporations.</p>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
                 </div>
-                <div class="service">
-                    <h3>Criminal Defense</h3>
-                    <p>Defending your rights with experienced criminal defense lawyers.</p>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="lawyers-section section-first">
+            <div class="container">
+                <h2>Find Legal Help</h2>
+                <p class="section-description">Connect with experienced lawyers for professional legal assistance</p>
+                <div class="lawyers-grid">
+                    <div class="lawyer-card">
+                        <img src="lawyer1.jpg" alt="Lawyer 1">
+                        <div class="lawyer-info">
+                            <h3>Adv. Rajesh Kumar</h3>
+                            <p>Specialization: Corporate Law</p>
+                            <p>Experience: 15 years</p>
+                            <p>Languages: English, Hindi, Marathi</p>
+                            <p>Location: Law College Road, Pune</p>
+                            <button class="btn-consult">Schedule Consultation</button>
+                        </div>
+                    </div>
+                    <div class="lawyer-card">
+                        <img src="lawyer2.jpg" alt="Lawyer 2">
+                        <div class="lawyer-info">
+                            <h3>Adv. Priya Sharma</h3>
+                            <p>Specialization: Family Law</p>
+                            <p>Experience: 10 years</p>
+                            <p>Languages: English, Hindi</p>
+                            <p>Location: FC Road, Pune</p>
+                            <button class="btn-consult">Schedule Consultation</button>
+                        </div>
+                    </div>
+                    <div class="lawyer-card">
+                        <img src="lawyer3.jpg" alt="Lawyer 3">
+                        <div class="lawyer-info">
+                            <h3>Adv. Amit Desai</h3>
+                            <p>Specialization: Criminal Law</p>
+                            <p>Experience: 20 years</p>
+                            <p>Languages: English, Hindi, Gujarati</p>
+                            <p>Location: MG Road, Pune</p>
+                            <button class="btn-consult">Schedule Consultation</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
+    </main>
 
-        <div class="lawyer-card">
-            <img src="" alt="Lawyer 1 Photo">
-            <div class="lawyer-bio">
-                <h2>Adv. Chaitanya</h2>
-                <p>Specialization: </p>
-                <p>Qualifications: </p>
-                <p>Experience: 10 years</p>
-                <p>Address: Sadashiv Peth, Pune-411030</p>
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About City Sphere</h3>
+                    <p>Your one-stop solution for all city services. Making urban life easier, one service at a time.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="aboutus.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Us</h3>
+                    <p>Email: info@citysphere.com</p>
+                    <p>Phone: +1 234 567 890</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
             </div>
-            <div class="buttons">
-                <button class="button">Book Consultation</button>
-            </div>
-        </div>
-    
-        <div class="lawyer-card">
-            <img src="" alt="Lawyer 2 Photo">
-            <div class="lawyer-bio">
-                <h2>Adv. Devika</h2>
-                <p>Specialization: </p>
-                <p>Qualifications: </p>
-                <p>Experience: 8 years</p>
-                <p>Address: Latur</p>
-            </div>
-            <div class="buttons">
-                <button class="button">Book Consultation</button>
-            </div>
-        </div>
-    
-        <div class="lawyer-card">
-            <img src="" alt="Lawyer 3 Photo">
-            <div class="lawyer-bio">
-                <h2>Dr. Anurag</h2>
-                <p>Specialization: </p>
-                <p>Qualifications: </p>
-                <p>Experience: 16 years</p>
-                <p>Address: Bibwewadi, Pune-411037</p>
-            </div>
-            <div class="buttons">
-                <button class="button">Book Consultation</button>
+            <div class="footer-bottom">
+                <p>&copy; 2024 City Sphere. All rights reserved.</p>
             </div>
         </div>
-    </div>
-
-    <footer style="text-align: center; padding: 10px">
-        <p>© City Sphere 2024. All Rights Reserved.</p>
     </footer>
 
-    <script src="Lawyers.js"></script>
+    <script src="home.js"></script>
+    <script src="lawyers.js"></script>
 </body>
 </html>

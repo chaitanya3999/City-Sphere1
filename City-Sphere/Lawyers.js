@@ -1,100 +1,170 @@
-function redirectToHome() {
-    window.location.href = "index.html";
-}
+document.addEventListener('DOMContentLoaded', function() {
+    // Mobile Menu Toggle
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks = document.querySelector('.nav-links');
+    const navButtons = document.querySelector('.nav-buttons');
 
-function redirectToLogin() {
-    window.location.href = "Register-login.html";
-    document.getElementById("login-tab");
-}
-function redirectToSignUp() {
-    const signup = document.getElementById("register-tab");
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-    const container = document.querySelector(".container");
-
-    // Function to create and display the form dynamically
-    function displayForm(action, lawyerName) {
-        const existingForm = document.getElementById("dynamic-form");
-
-        // Remove any existing form before creating a new one
-        if (existingForm) {
-            existingForm.remove();
-        }
-
-        // Create the form container
-        const form = document.createElement("form");
-        form.id = "dynamic-form";
-        form.style.border = "1px solid #ccc";
-        form.style.padding = "15px";
-        form.style.marginTop = "20px";
-        form.style.background = "#f9f9f9";
-
-        // Add heading
-        const heading = document.createElement("h3");
-        heading.textContent = `${action} for ${lawyerName}`;
-        form.appendChild(heading);
-
-        // Add input fields
-        const nameField = document.createElement("input");
-        nameField.type = "text";
-        nameField.name = "clientName";
-        nameField.placeholder = "Enter your name";
-        nameField.required = true;
-        nameField.style.margin = "10px 0";
-        nameField.style.display = "block";
-        form.appendChild(nameField);
-
-        const contactField = document.createElement("input");
-        contactField.type = "text";
-        contactField.name = "contact";
-        contactField.placeholder = "Enter your contact details";
-        contactField.required = true;
-        contactField.style.margin = "10px 0";
-        contactField.style.display = "block";
-        form.appendChild(contactField);
-
-        if (action === "Book Consultation") {
-            const dateField = document.createElement("input");
-            dateField.type = "date";
-            dateField.name = "consultationDate";
-            dateField.required = true;
-            dateField.style.margin = "10px 0";
-            dateField.style.display = "block";
-            form.appendChild(dateField);
-        }
-
-        // Add submit button
-        const submitButton = document.createElement("button");
-        submitButton.type = "submit";
-        submitButton.textContent = `Submit ${action}`;
-        submitButton.style.display = "block";
-        submitButton.style.marginTop = "10px";
-        form.appendChild(submitButton);
-
-        // Append the form to the container
-        container.appendChild(form);
-
-        // Scroll to the form 
-        form.scrollIntoView({ behavior: "smooth" });
-
-        // Add event listener for form submission
-        form.addEventListener("submit", (e) => {
-            e.preventDefault();
-            alert(`${action} submitted successfully!`);
-            form.remove();
+    if (hamburger) {
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+            navButtons.classList.toggle('active');
         });
     }
 
-    // Attach event listeners to the buttons
-    document.querySelectorAll(".lawyer-card .button").forEach((button) => {
-        button.addEventListener("click", (event) => {
-            const lawyerCard = button.closest(".lawyer-card");
-            const lawyerName = lawyerCard.querySelector("h2").textContent;
-
-            if (button.textContent.trim() === "Book Consultation") {
-                displayForm("Book Consultation", lawyerName);
-            }
+    // Filter Buttons
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Remove active class from all buttons
+            filterBtns.forEach(b => b.classList.remove('active'));
+            // Add active class to clicked button
+            btn.classList.add('active');
+            
+            // Add filter logic here
+            const specialty = btn.textContent.toLowerCase();
+            filterLawyers(specialty);
         });
     });
+
+    // Search Functionality
+    const searchInput = document.querySelector('.search-bar input');
+    const searchBtn = document.querySelector('.search-bar button');
+
+    function performSearch() {
+        const searchTerm = searchInput.value.toLowerCase();
+        // Add search logic here
+        searchLawyers(searchTerm);
+    }
+
+    if (searchBtn) {
+        searchBtn.addEventListener('click', performSearch);
+    }
+
+    if (searchInput) {
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
+        });
+    }
+
+    // Load More Button
+    const loadMoreBtn = document.querySelector('.btn-load-more');
+    
+    if (loadMoreBtn) {
+        loadMoreBtn.addEventListener('click', () => {
+            // Add load more logic here
+            loadMoreLawyers();
+        });
+    }
+
+    // Book Consultation Button
+    const consultBtns = document.querySelectorAll('.btn-consult');
+    
+    consultBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const card = this.closest('.lawyer-card');
+            const name = card.querySelector('h3').textContent;
+            const fee = card.querySelector('.consultation-fee').textContent;
+            bookConsultation(name, fee);
+        });
+    });
+
+    // Animation Observer
+    const observerOptions = {
+        threshold: 0.2,
+        rootMargin: '0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    // Observe lawyer cards
+    const lawyerCards = document.querySelectorAll('.lawyer-card');
+    lawyerCards.forEach(card => {
+        observer.observe(card);
+    });
+
+    // Observe feature cards
+    const featureCards = document.querySelectorAll('.feature-card');
+    featureCards.forEach(card => {
+        observer.observe(card);
+    });
+
+    // Helper Functions
+    function filterLawyers(specialty) {
+        const lawyers = document.querySelectorAll('.lawyer-card');
+        
+        lawyers.forEach(lawyer => {
+            const lawyerSpecialty = lawyer.querySelector('.specialty').textContent.toLowerCase();
+            
+            if (specialty === 'all' || lawyerSpecialty === specialty) {
+                lawyer.style.display = 'block';
+            } else {
+                lawyer.style.display = 'none';
+            }
+        });
+    }
+
+    function searchLawyers(term) {
+        const lawyers = document.querySelectorAll('.lawyer-card');
+        
+        lawyers.forEach(lawyer => {
+            const name = lawyer.querySelector('h3').textContent.toLowerCase();
+            const description = lawyer.querySelector('.description').textContent.toLowerCase();
+            const specialty = lawyer.querySelector('.specialty').textContent.toLowerCase();
+            
+            if (name.includes(term) || description.includes(term) || specialty.includes(term)) {
+                lawyer.style.display = 'block';
+            } else {
+                lawyer.style.display = 'none';
+            }
+        });
+    }
+
+    function loadMoreLawyers() {
+        // Example: Add 3 more lawyer cards
+        const lawyersGrid = document.querySelector('.lawyers-grid');
+        
+        // Add loading state
+        const loadMoreBtn = document.querySelector('.btn-load-more');
+        loadMoreBtn.innerHTML = 'Loading... <i class="fas fa-spinner fa-spin"></i>';
+        
+        // Simulate loading delay
+        setTimeout(() => {
+            // Add new lawyer cards here
+            // This is just an example - in a real app, you'd fetch data from a server
+            
+            // Reset button state
+            loadMoreBtn.innerHTML = 'Load More <i class="fas fa-chevron-down"></i>';
+        }, 1000);
+    }
+
+    function bookConsultation(name, fee) {
+        // Add booking logic here
+        showMessage(`Consultation request sent for ${name}!`, 'success');
+    }
+
+    function showMessage(message, type) {
+        // Create message element
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `message ${type}`;
+        messageDiv.textContent = message;
+        
+        // Add to document
+        document.body.appendChild(messageDiv);
+        
+        // Remove after 3 seconds
+        setTimeout(() => {
+            messageDiv.remove();
+        }, 3000);
+    }
 });

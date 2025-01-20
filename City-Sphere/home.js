@@ -1,119 +1,142 @@
-// Redirect functions
+// Update greeting based on time of day
+function updateGreeting() {
+    const hour = new Date().getHours();
+    const greeting = document.getElementById('greeting');
+    
+    if (hour >= 5 && hour < 12) {
+        greeting.textContent = 'Good Morning!';
+    } else if (hour >= 12 && hour < 17) {
+        greeting.textContent = 'Good Afternoon!';
+    } else if (hour >= 17 && hour < 22) {
+        greeting.textContent = 'Good Evening!';
+    } else {
+        greeting.textContent = 'Good Night!';
+    }
+}
+
+// Update time and date
+function updateDateTime() {
+    const timeElement = document.getElementById('time');
+    const dateElement = document.getElementById('date');
+    const now = new Date();
+
+    // Format time
+    const timeString = now.toLocaleTimeString('en-US', {
+        hour: 'numeric',
+        minute: '2-digit',
+        hour12: true
+    });
+
+    // Format date
+    const dateString = now.toLocaleDateString('en-US', {
+        weekday: 'long',
+        month: 'long',
+        day: 'numeric'
+    });
+
+    timeElement.textContent = timeString;
+    dateElement.textContent = dateString;
+}
+
+// Mobile menu functionality
+function initMobileMenu() {
+    const hamburger = document.querySelector('.hamburger');
+    const navContent = document.querySelector('.nav-wrapper');
+    
+    hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        navContent.classList.toggle('active');
+    });
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!hamburger.contains(e.target) && !navContent.contains(e.target)) {
+            hamburger.classList.remove('active');
+            navContent.classList.remove('active');
+        }
+    });
+}
+
+// Scroll animations
+function initScrollAnimations() {
+    const elements = document.querySelectorAll('.service-card, .feature-card');
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate');
+            }
+        });
+    }, {
+        threshold: 0.1
+    });
+
+    elements.forEach(element => observer.observe(element));
+}
+
+// Initialize everything when the DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    updateGreeting();
+    updateDateTime();
+    initMobileMenu();
+    initScrollAnimations();
+
+    // Update time every minute
+    setInterval(updateDateTime, 60000);
+    // Update greeting every hour
+    setInterval(updateGreeting, 3600000);
+});
+
+// Smooth scroll functionality
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    });
+});
+
+// Newsletter subscription
+const newsletterForm = document.querySelector('.newsletter-form');
+if (newsletterForm) {
+    newsletterForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = newsletterForm.querySelector('input[type="email"]').value;
+        
+        // Show success message
+        showNotification('Thank you for subscribing to our newsletter!');
+        newsletterForm.reset();
+    });
+}
+
+// Notification system
+function showNotification(message) {
+    const notification = document.createElement('div');
+    notification.className = 'notification';
+    notification.textContent = message;
+    
+    document.body.appendChild(notification);
+    
+    // Trigger animation
+    setTimeout(() => notification.classList.add('show'), 10);
+    
+    // Remove notification after 3 seconds
+    setTimeout(() => {
+        notification.classList.remove('show');
+        setTimeout(() => document.body.removeChild(notification), 300);
+    }, 3000);
+}
+
+// Login and Register redirects
 function redirectToLogin() {
-  window.location.href = "Register-login.html";
+    window.location.href = 'Register-Login.html';
 }
 
 function redirectToSignUp() {
-  window.location.href = "Register-login.html";
-  document.getElementById("register-tab").click();
-}
-
-// Get elements for Chatbot
-const chatbotButton = document.getElementById("chatbot-button");
-const chatContainer = document.getElementById("chat-container");
-const closeChatButton = document.getElementById("close-chat");
-const chatBox = document.getElementById("chat-box");
-const chatInput = document.getElementById("chat-input");
-
-// Toggle chat visibility and button text
-chatbotButton.addEventListener("click", () => {
-  // Toggle visibility of chat container
-  chatContainer.classList.toggle("hidden");
-
-  // Change button text based on the state of the chat container
-  if (chatContainer.classList.contains("hidden")) {
-    chatbotButton.innerHTML = "Chat with AI";
-  } else {
-    chatbotButton.innerHTML = "Close Chat";
-  }
-});
-
-//Open and close chatbox
-
-// Close chat when 'X' button is clicked
-closeChatButton.addEventListener("click", () => {
-  chatContainer.classList.add("hidden");
-  chatbotButton.innerHTML = "Chat with AI";
-});
-
-// Send message to the AI
-function sendMessage() {
-  const userMessage = chatInput.value;
-  if (userMessage.trim()) {
-    chatBox.innerHTML += `<div>User: ${userMessage}</div>`;
-    chatInput.value = ""; // Clear input field
-    runGeminiAI(userMessage);
-  }
-}
-
-// Gemini AI Integration (Assuming you have your API key and required library set up)
-const { GoogleGenerativeAI } = require("@google/generative-ai");
-const apiKey = "AIzaSyCsEYM772Kc3u1i5F-tpvPinpbGKIJgV2sY"; // Keep this private
-const genAI = new GoogleGenerativeAI(apiKey);
-
-const model = genAI.getGenerativeModel({
-  model: "gemini-2.0-flash-exp",
-});
-
-const generationConfig = {
-  temperature: 1,
-  topP: 0.95,
-  topK: 40,
-  maxOutputTokens: 8192,
-  responseMimeType: "text/plain",
-};
-
-async function runGeminiAI(userInput) {
-  const chatSession = model.startChat({
-    generationConfig,
-    history: [
-      {
-        role: "user",
-        parts: [{ text: userInput }],
-      },
-    ],
-  });
-
-  try {
-    const result = await chatSession.sendMessage(userInput);
-    chatBox.innerHTML += `<div>AI: ${result.response.text()}</div>`;
-    chatBox.scrollTop = chatBox.scrollHeight; // Auto-scroll to bottom
-  } catch (error) {
-    console.error("Error with Gemini AI:", error);
-  }
-}
-
-// Google Maps initialization
-let map, autocomplete;
-
-function initMap() {
-  const defaultLocation = { lat: 18.5204, lng: 73.8567 }; // Pune coordinates
-
-  map = new google.maps.Map(document.getElementById("map"), {
-    center: defaultLocation,
-    zoom: 13,
-  });
-
-  // Initialize autocomplete for search
-  const input = document.getElementById("pac-input");
-  autocomplete = new google.maps.places.Autocomplete(input);
-  autocomplete.bindTo("bounds", map);
-
-  autocomplete.addListener("place_changed", () => {
-    const place = autocomplete.getPlace();
-    if (place.geometry) {
-      if (place.geometry.viewport) {
-        map.fitBounds(place.geometry.viewport);
-      } else {
-        map.setCenter(place.geometry.location);
-        map.setZoom(17);
-      }
-
-      // Place a marker on selected location
-      new google.maps.Marker({
-        position: place.geometry.location,
-        map: map,
-      });
-    }
-  });
+    window.location.href = 'Register-Login.html';
 }

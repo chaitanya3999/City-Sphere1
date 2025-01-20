@@ -1,89 +1,138 @@
-function redirectToHome() {
-  window.location.href = "index.html";
-}
-document.addEventListener("DOMContentLoaded", () => {
-  const categories = document.querySelectorAll(".category");
-  const restaurants = document.querySelectorAll(".restaurant");
+document.addEventListener('DOMContentLoaded', function() {
+    // Mobile Menu Toggle
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks = document.querySelector('.nav-links');
+    const navButtons = document.querySelector('.nav-buttons');
 
-  // Function to reset the filters
-  function resetFilters() {
-    categories.forEach((cat) => {
-      cat.classList.remove("active"); // Deselect all categories
-      cat.querySelector(".clear").style.display = "none"; // Hide all cross icons
+    if (hamburger) {
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+            navButtons.classList.toggle('active');
+        });
+    }
+
+    // Filter Buttons
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Remove active class from all buttons
+            filterBtns.forEach(b => b.classList.remove('active'));
+            // Add active class to clicked button
+            btn.classList.add('active');
+            
+            // Add filter logic here
+            const category = btn.textContent.toLowerCase();
+            filterRestaurants(category);
+        });
     });
 
-    // Show all restaurants when no categories are selected
-    restaurants.forEach((restaurant) => {
-      restaurant.style.display = "block";
+    // Search Functionality
+    const searchInput = document.querySelector('.search-bar input');
+    const searchBtn = document.querySelector('.search-bar button');
+
+    function performSearch() {
+        const searchTerm = searchInput.value.toLowerCase();
+        // Add search logic here
+        searchRestaurants(searchTerm);
+    }
+
+    if (searchBtn) {
+        searchBtn.addEventListener('click', performSearch);
+    }
+
+    if (searchInput) {
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
+        });
+    }
+
+    // Load More Button
+    const loadMoreBtn = document.querySelector('.btn-load-more');
+    
+    if (loadMoreBtn) {
+        loadMoreBtn.addEventListener('click', () => {
+            // Add load more logic here
+            loadMoreRestaurants();
+        });
+    }
+
+    // Restaurant Card Animation
+    const restaurantCards = document.querySelectorAll('.restaurant-card');
+    
+    const observerOptions = {
+        threshold: 0.2,
+        rootMargin: '0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    restaurantCards.forEach(card => {
+        observer.observe(card);
     });
-  }
 
-  // Add click event listeners to each category (for selecting/deselecting)
-  categories.forEach((category) => {
-    category.addEventListener("click", (e) => {
-      // Ignore click if the cross icon was clicked (no toggling)
-      if (e.target.classList.contains("clear")) return;
-
-      const selectedCategory = category.getAttribute("data-category");
-      const isActive = category.classList.contains("active");
-
-      // Toggle the active state of the category
-      if (isActive) {
-        category.classList.remove("active");
-        category.querySelector(".clear").style.display = "none"; // Hide the cross icon
-      } else {
-        category.classList.add("active");
-        category.querySelector(".clear").style.display = "block"; // Show the cross icon
-      }
-
-      // Filter restaurants based on selected categories
-      filterRestaurants();
+    // Feature Card Animation
+    const featureCards = document.querySelectorAll('.feature-card');
+    
+    featureCards.forEach(card => {
+        observer.observe(card);
     });
-  });
 
-  // Add function to handle deselecting a category using the cross icon
-  window.clearCategory = (event) => {
-    event.stopPropagation(); // Prevent the click from triggering the category event
-    const category = event.target.parentElement;
-    category.classList.remove("active");
-    category.querySelector(".clear").style.display = "none"; // Hide cross icon
+    // Helper Functions
+    function filterRestaurants(category) {
+        const restaurants = document.querySelectorAll('.restaurant-card');
+        
+        restaurants.forEach(restaurant => {
+            const cuisine = restaurant.querySelector('.cuisine').textContent.toLowerCase();
+            
+            if (category === 'all' || cuisine.includes(category)) {
+                restaurant.style.display = 'block';
+            } else {
+                restaurant.style.display = 'none';
+            }
+        });
+    }
 
-    // Filter restaurants after deselecting a category
-    filterRestaurants();
-  };
+    function searchRestaurants(term) {
+        const restaurants = document.querySelectorAll('.restaurant-card');
+        
+        restaurants.forEach(restaurant => {
+            const name = restaurant.querySelector('h3').textContent.toLowerCase();
+            const cuisine = restaurant.querySelector('.cuisine').textContent.toLowerCase();
+            
+            if (name.includes(term) || cuisine.includes(term)) {
+                restaurant.style.display = 'block';
+            } else {
+                restaurant.style.display = 'none';
+            }
+        });
+    }
 
-  // Function to filter restaurants based on selected categories
-  function filterRestaurants() {
-    // Get all selected categories
-    const activeCategories = Array.from(categories)
-      .filter((cat) => cat.classList.contains("active"))
-      .map((cat) => cat.getAttribute("data-category"));
-
-    // Show restaurants that match any of the selected categories
-    restaurants.forEach((restaurant) => {
-      const restaurantCategory = restaurant.getAttribute("data-category");
-      if (
-        activeCategories.length === 0 ||
-        activeCategories.includes(restaurantCategory)
-      ) {
-        restaurant.style.display = "block"; // Show matching restaurants
-      } else {
-        restaurant.style.display = "none"; // Hide non-matching restaurants
-      }
-    });
-  }
-
-  // Handle click event on the clear icon (cross icon)
-  const clearIcons = document.querySelectorAll(".clear");
-  clearIcons.forEach((icon) => {
-    icon.addEventListener("click", function (event) {
-      event.stopPropagation(); // Stop event from propagating to the parent
-      const category = icon.parentElement; // Get the parent category div
-      category.classList.remove("active"); // Remove active class
-      category.querySelector(".clear").style.display = "none"; // Hide the cross icon
-
-      // Re-filter restaurants after deselection
-      filterRestaurants();
-    });
-  });
+    function loadMoreRestaurants() {
+        // Example: Add 3 more restaurant cards
+        const restaurantsGrid = document.querySelector('.restaurants-grid');
+        
+        // Add loading state
+        const loadMoreBtn = document.querySelector('.btn-load-more');
+        loadMoreBtn.innerHTML = 'Loading... <i class="fas fa-spinner fa-spin"></i>';
+        
+        // Simulate loading delay
+        setTimeout(() => {
+            // Add new restaurant cards here
+            // This is just an example - in a real app, you'd fetch data from a server
+            
+            // Reset button state
+            loadMoreBtn.innerHTML = 'Load More <i class="fas fa-chevron-down"></i>';
+        }, 1000);
+    }
 });

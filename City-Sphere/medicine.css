@@ -1,5 +1,5 @@
-/* Restaurants Section */
-.restaurants-section {
+/* Medicine Section */
+.medicine-section {
     padding: 4rem 0;
     background: var(--bg-light);
 }
@@ -8,7 +8,7 @@
     padding-top: 6rem;
 }
 
-.restaurants-section h2 {
+.medicine-section h2 {
     text-align: center;
     color: var(--text-color);
     margin-bottom: 1rem;
@@ -79,15 +79,71 @@
     border-color: var(--primary-color);
 }
 
-/* Restaurant Grid */
-.restaurants-grid {
+/* Upload Prescription */
+.upload-prescription {
+    max-width: 600px;
+    margin: 0 auto 3rem;
+}
+
+.upload-box {
+    background: white;
+    border: 2px dashed var(--primary-color);
+    border-radius: 15px;
+    padding: 2rem;
+    text-align: center;
+    transition: var(--transition);
+}
+
+.upload-box:hover {
+    border-color: var(--accent-color);
+    background: var(--bg-light);
+}
+
+.upload-box i {
+    font-size: 3rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.upload-box h3 {
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+}
+
+.upload-box p {
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+}
+
+.btn-upload {
+    display: inline-block;
+    padding: 0.8rem 2rem;
+    background: var(--primary-color);
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-upload:hover {
+    background: var(--accent-color);
+}
+
+.btn-upload i {
+    font-size: 1rem;
+    color: white;
+    margin: 0 0 0 0.5rem;
+}
+
+/* Medicine Grid */
+.medicine-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 2rem;
     margin-bottom: 3rem;
 }
 
-.restaurant-card {
+.medicine-card {
     background: white;
     border-radius: 15px;
     overflow: hidden;
@@ -95,23 +151,23 @@
     transition: var(--transition);
 }
 
-.restaurant-card:hover {
+.medicine-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
 }
 
-.restaurant-image {
+.medicine-image {
     position: relative;
     height: 200px;
 }
 
-.restaurant-image img {
+.medicine-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
-.rating {
+.category {
     position: absolute;
     top: 1rem;
     right: 1rem;
@@ -122,49 +178,50 @@
     color: var(--primary-color);
 }
 
-.rating i {
-    color: #ffd700;
-    margin-right: 0.3rem;
-}
-
-.restaurant-info {
+.medicine-info {
     padding: 1.5rem;
 }
 
-.restaurant-info h3 {
+.medicine-info h3 {
     margin-bottom: 0.5rem;
     color: var(--text-color);
 }
 
-.cuisine {
+.manufacturer {
     color: var(--text-muted);
     margin-bottom: 0.5rem;
     font-size: 0.9rem;
 }
 
-.location {
+.description {
     color: var(--text-muted);
     font-size: 0.9rem;
     margin-bottom: 1rem;
 }
 
-.location i {
-    margin-right: 0.5rem;
-    color: var(--primary-color);
-}
-
-.restaurant-footer {
+.medicine-footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
+.price-info {
+    display: flex;
+    flex-direction: column;
+}
+
 .price {
     color: var(--text-color);
     font-weight: bold;
+    font-size: 1.1rem;
 }
 
-.btn-order {
+.quantity {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+}
+
+.btn-add {
     padding: 0.5rem 1rem;
     background: var(--primary-color);
     color: white;
@@ -174,7 +231,7 @@
     transition: var(--transition);
 }
 
-.btn-order:hover {
+.btn-add:hover {
     background: var(--accent-color);
 }
 
@@ -262,7 +319,7 @@
         padding: 1rem;
     }
 
-    .restaurants-grid {
+    .medicine-grid {
         grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
         gap: 1.5rem;
     }
@@ -274,7 +331,7 @@
 }
 
 @media (max-width: 576px) {
-    .restaurants-section,
+    .medicine-section,
     .features-section {
         padding: 3rem 0;
     }
@@ -283,11 +340,15 @@
         padding-top: 5rem;
     }
 
-    .restaurant-image {
+    .medicine-image {
         height: 150px;
     }
 
-    .restaurant-info {
+    .medicine-info {
         padding: 1rem;
+    }
+
+    .upload-box {
+        padding: 1.5rem;
     }
 }

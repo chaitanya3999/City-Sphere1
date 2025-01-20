@@ -1,5 +1,5 @@
-/* Restaurants Section */
-.restaurants-section {
+/* Lawyers Section */
+.lawyers-section {
     padding: 4rem 0;
     background: var(--bg-light);
 }
@@ -8,7 +8,7 @@
     padding-top: 6rem;
 }
 
-.restaurants-section h2 {
+.lawyers-section h2 {
     text-align: center;
     color: var(--text-color);
     margin-bottom: 1rem;
@@ -79,15 +79,15 @@
     border-color: var(--primary-color);
 }
 
-/* Restaurant Grid */
-.restaurants-grid {
+/* Lawyers Grid */
+.lawyers-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 2rem;
     margin-bottom: 3rem;
 }
 
-.restaurant-card {
+.lawyer-card {
     background: white;
     border-radius: 15px;
     overflow: hidden;
@@ -95,23 +95,23 @@
     transition: var(--transition);
 }
 
-.restaurant-card:hover {
+.lawyer-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
 }
 
-.restaurant-image {
+.lawyer-image {
     position: relative;
-    height: 200px;
+    height: 250px;
 }
 
-.restaurant-image img {
+.lawyer-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
-.rating {
+.specialty {
     position: absolute;
     top: 1rem;
     right: 1rem;
@@ -122,49 +122,45 @@
     color: var(--primary-color);
 }
 
-.rating i {
-    color: #ffd700;
-    margin-right: 0.3rem;
-}
-
-.restaurant-info {
+.lawyer-info {
     padding: 1.5rem;
 }
 
-.restaurant-info h3 {
+.lawyer-info h3 {
     margin-bottom: 0.5rem;
     color: var(--text-color);
 }
 
-.cuisine {
+.experience {
     color: var(--text-muted);
     margin-bottom: 0.5rem;
     font-size: 0.9rem;
 }
 
-.location {
+.description {
     color: var(--text-muted);
     font-size: 0.9rem;
     margin-bottom: 1rem;
 }
 
-.location i {
-    margin-right: 0.5rem;
-    color: var(--primary-color);
+.rating {
+    color: #ffd700;
+    margin-bottom: 1rem;
 }
 
-.restaurant-footer {
+.lawyer-footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.price {
+.consultation-fee {
     color: var(--text-color);
     font-weight: bold;
+    font-size: 1.1rem;
 }
 
-.btn-order {
+.btn-consult {
     padding: 0.5rem 1rem;
     background: var(--primary-color);
     color: white;
@@ -174,7 +170,7 @@
     transition: var(--transition);
 }
 
-.btn-order:hover {
+.btn-consult:hover {
     background: var(--accent-color);
 }
 
@@ -251,6 +247,37 @@
     line-height: 1.5;
 }
 
+/* Message Styles */
+.message {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    color: white;
+    animation: slideIn 0.3s ease-out;
+    z-index: 1000;
+}
+
+.message.success {
+    background: #4caf50;
+}
+
+.message.error {
+    background: #f44336;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .search-bar {
@@ -262,7 +289,7 @@
         padding: 1rem;
     }
 
-    .restaurants-grid {
+    .lawyers-grid {
         grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
         gap: 1.5rem;
     }
@@ -274,7 +301,7 @@
 }
 
 @media (max-width: 576px) {
-    .restaurants-section,
+    .lawyers-section,
     .features-section {
         padding: 3rem 0;
     }
@@ -283,11 +310,11 @@
         padding-top: 5rem;
     }
 
-    .restaurant-image {
-        height: 150px;
+    .lawyer-image {
+        height: 200px;
     }
 
-    .restaurant-info {
+    .lawyer-info {
         padding: 1rem;
     }
 }
