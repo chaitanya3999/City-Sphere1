@@ -3,13 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>City Sphere - About Us</title>
-    <link
+    <title>City Sphere - Lawyers</title>
+    <link rel="manifest" href="../manifest.json">
+    <meta name="theme-color" content="#0066CC">    <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
     />
-    <link rel="stylesheet" href="home.css" />
-    <link rel="stylesheet" href="aboutus.css" />
+    <!-- <link rel="stylesheet" href="../css/home.css" /> -->
+    <link rel="stylesheet" href="../css/Laywers.css" />
+    <link rel="stylesheet" href="../css/footer.css" />
+    <link rel="stylesheet" href="../css/header.css" />
   </head>
   <body>
     <header>
@@ -18,7 +21,7 @@
           <div class="logo-container">
             <div class="logo-circle">
               <img
-                src="City Sphere Final copy.png"
+                src="../images/City Sphere Final copy.png"
                 alt="City Sphere Logo"
                 class="logo-image"
               />
@@ -41,9 +44,7 @@
                 <a href="#services"><i class="fas fa-cogs"></i>Services</a>
               </li>
               <li>
-                <a href="aboutus.html" class="active"
-                  ><i class="fas fa-users"></i>About Us</a
-                >
+                <a href="aboutus.html"><i class="fas fa-users"></i>About Us</a>
               </li>
               <li>
                 <a href="contact.html"
@@ -73,73 +74,51 @@
     </header>
 
     <main>
-      <section class="about-section section-first">
+      <section class="lawyers-section">
         <div class="container">
-          <h2>About City Sphere</h2>
+          <h2>Find Legal Help</h2>
           <p class="section-description">
-            Transforming urban living through innovative digital solutions
+            Connect with experienced lawyers for professional legal assistance
           </p>
-
-          <div class="about-grid">
-            <div class="about-card mission">
-              <i class="fas fa-bullseye"></i>
-              <h3>Our Mission</h3>
-              <p>
-                To simplify urban living by providing easy access to essential
-                city services through a single, user-friendly platform.
-              </p>
-            </div>
-
-            <div class="about-card vision">
-              <i class="fas fa-eye"></i>
-              <h3>Our Vision</h3>
-              <p>
-                To become the leading digital platform that connects citizens
-                with city services, making urban life more efficient and
-                enjoyable.
-              </p>
-            </div>
-
-            <div class="about-card values">
-              <i class="fas fa-heart"></i>
-              <h3>Our Values</h3>
-              <ul>
-                <li>Customer First</li>
-                <li>Innovation</li>
-                <li>Reliability</li>
-                <li>Transparency</li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="team-section">
-            <h3>Our Team</h3>
-            <div class="team-grid">
-              <div class="team-member">
-                <img src="team1.jpg" alt="Team Member" />
-                <h4>Chaitanya Deshmukh</h4>
-                <p>Head of Development</p>
+          <div class="lawyers-grid">
+            <div class="lawyer-card">
+              <img src="lawyer1.jpg" alt="Lawyer 1" />
+              <div class="lawyer-info">
+                <h3>Adv. Rajesh Kumar</h3>
+                <p>Specialization: Corporate Law</p>
+                <p>Experience: 15 years</p>
+                <p>Languages: English, Hindi, Marathi</p>
+                <p>Location: Law College Road, Pune</p>
+                <button class="btn-consult">Schedule Consultation</button>
               </div>
-              <div class="team-member">
-                <img src="team2.jpg" alt="Team Member" />
-                <h4>Devika Deshmukh</h4>
-                <p>Head of Marketing</p>
+            </div>
+            <div class="lawyer-card">
+              <img src="lawyer2.jpg" alt="Lawyer 2" />
+              <div class="lawyer-info">
+                <h3>Adv. Priya Sharma</h3>
+                <p>Specialization: Family Law</p>
+                <p>Experience: 10 years</p>
+                <p>Languages: English, Hindi</p>
+                <p>Location: FC Road, Pune</p>
+                <button class="btn-consult">Schedule Consultation</button>
               </div>
-              <div class="team-member">
-                <img src="team3.jpg" alt="Team Member" />
-                <h4>Anurag Deshmukh</h4>
-                <p>CTO</p>
-              </div>
-              <div class="team-member">
-                <img src="team4.jpg" alt="Team Member" />
-                <h4>Shreya Desai</h4>
-                <p>Head of Operations</p>
+            </div>
+            <div class="lawyer-card">
+              <img src="lawyer3.jpg" alt="Lawyer 3" />
+              <div class="lawyer-info">
+                <h3>Adv. Amit Desai</h3>
+                <p>Specialization: Criminal Law</p>
+                <p>Experience: 20 years</p>
+                <p>Languages: English, Hindi, Gujarati</p>
+                <p>Location: MG Road, Pune</p>
+                <button class="btn-consult">Schedule Consultation</button>
               </div>
             </div>
           </div>
         </div>
       </section>
     </main>
+
     <footer>
       <div class="container">
         <div class="footer-content">
@@ -177,7 +156,19 @@
       </div>
     </footer>
 
-    <script src="home.js"></script>
-    <script src="aboutus.js"></script>
-  </body>
+    <script src="../js/home.js"></script>
+    <script src="../js/lawyers.js"></script>
+    <script>
+        if ("serviceWorker" in navigator) {
+            window.addEventListener("load", () => {
+                navigator.serviceWorker.register("../service-worker.js")
+                    .then(registration => {
+                        console.log("Service Worker registered successfully:", registration.scope);
+                    })
+                    .catch(error => {
+                        console.error("Service Worker registration failed:", error);
+                    });
+            });
+        }
+    </script>  </body>
 </html>

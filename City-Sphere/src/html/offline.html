@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Offline - City Sphere</title>
-    <style>
+    <link rel="manifest" href="../manifest.json">
+    <meta name="theme-color" content="#0066CC">    <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -67,5 +68,17 @@
         <p>Please check your connection and try again.</p>
         <button class="retry-button" onclick="window.location.reload()">Try Again</button>
     </div>
-</body>
+    <script>
+        if ("serviceWorker" in navigator) {
+            window.addEventListener("load", () => {
+                navigator.serviceWorker.register("../service-worker.js")
+                    .then(registration => {
+                        console.log("Service Worker registered successfully:", registration.scope);
+                    })
+                    .catch(error => {
+                        console.error("Service Worker registration failed:", error);
+                    });
+            });
+        }
+    </script></body>
 </html>

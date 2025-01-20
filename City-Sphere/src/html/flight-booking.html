@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>City Sphere - Emergency Services</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="home.css">
-    <link rel="stylesheet" href="emergency-services.css">
+    <title>City Sphere - Flight Booking</title>
+    <link rel="manifest" href="../manifest.json">
+    <meta name="theme-color" content="#0066CC">    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/home.css">
+    <link rel="stylesheet" href="../css/flight-booking.css">
 </head>
 <body>
     <header>
@@ -14,7 +15,7 @@
             <div class="container">
                 <div class="logo-container">
                     <div class="logo-circle">
-                        <img src="City Sphere Final copy.png" alt="City Sphere Logo" class="logo-image">
+                        <img src="../images/City Sphere Final copy.png" alt="City Sphere Logo" class="logo-image">
                     </div>
                     <div class="logo-text">
                         <h1>City Sphere</h1>
@@ -54,64 +55,69 @@
     </header>
 
     <main>
-        <section class="emergency-services-section section-first">
+        <section class="flight-booking-section section-first">
             <div class="container">
-                <h2>Emergency Services</h2>
-                <p class="section-description">Immediate help when you need it most</p>
-                
-                <div class="emergency-card">
-                    <div class="emergency-details">
-                        <h3>Police Emergency</h3>
-                        <p>Service: Law Enforcement</p>
-                        <p>Response Time: Immediate</p>
-                        <p>Coverage: Entire City</p>
-                        <p>Helpline: 100</p>
-                        <p class="urgency">High Priority Service</p>
+                <h2>Book Flight Tickets</h2>
+                <p class="section-description">Easy and convenient flight ticket booking for your travel needs</p>
+                <div class="flight-card">
+                    <div class="flight-details">
+                        <h3>Pune to Mumbai - IndiGo</h3>
+                        <p>Flight Number: 6E 2345</p>
+                        <p>Route: Pune (PNQ) to Mumbai (BOM)</p>
+                        <p>Departure: Pune Airport</p>
+                        <p>Arrival: Mumbai Airport</p>
+                        <p>Departure Time: 07:30 AM</p>
+                        <p>Duration: 1 hour</p>
+                        <p class="price">Price: ₹3500</p>
                     </div>
                     <div class="buttons">
-                        <button class="button emergency-call">
-                            Call Police
+                        <button class="button">
+                            Book Ticket
                         </button>
-                        <button class="button emergency-location">
-                            Share Location
+                        <button class="button">
+                            View Details
                         </button>
                     </div>
                 </div>
 
-                <div class="emergency-card">
-                    <div class="emergency-details">
-                        <h3>Ambulance Services</h3>
-                        <p>Service: Medical Emergency</p>
-                        <p>Response Time: Within 15 minutes</p>
-                        <p>Coverage: Metropolitan Area</p>
-                        <p>Helpline: 102</p>
-                        <p class="urgency">Critical Care Support</p>
+                <div class="flight-card">
+                    <div class="flight-details">
+                        <h3>Mumbai to Delhi - Air India</h3>
+                        <p>Flight Number: AI 9876</p>
+                        <p>Route: Mumbai (BOM) to Delhi (DEL)</p>
+                        <p>Departure: Mumbai Airport</p>
+                        <p>Arrival: Delhi Airport</p>
+                        <p>Departure Time: 02:00 PM</p>
+                        <p>Duration: 2 hours 15 minutes</p>
+                        <p class="price">Price: ₹5000</p>
                     </div>
                     <div class="buttons">
-                        <button class="button emergency-call">
-                            Call Ambulance
+                        <button class="button">
+                            Book Ticket
                         </button>
-                        <button class="button emergency-location">
-                            Share Location
+                        <button class="button">
+                            View Details
                         </button>
                     </div>
                 </div>
 
-                <div class="emergency-card">
-                    <div class="emergency-details">
-                        <h3>Fire Department</h3>
-                        <p>Service: Fire & Rescue</p>
-                        <p>Response Time: Within 10 minutes</p>
-                        <p>Coverage: City Limits</p>
-                        <p>Helpline: 101</p>
-                        <p class="urgency">Emergency Rescue</p>
+                <div class="flight-card">
+                    <div class="flight-details">
+                        <h3>Pune to Bangalore - SpiceJet</h3>
+                        <p>Flight Number: SG 3456</p>
+                        <p>Route: Pune (PNQ) to Bangalore (BLR)</p>
+                        <p>Departure: Pune Airport</p>
+                        <p>Arrival: Bangalore Airport</p>
+                        <p>Departure Time: 09:45 PM</p>
+                        <p>Duration: 1 hour 30 minutes</p>
+                        <p class="price">Price: ₹4200</p>
                     </div>
                     <div class="buttons">
-                        <button class="button emergency-call">
-                            Call Fire Brigade
+                        <button class="button">
+                            Book Ticket
                         </button>
-                        <button class="button emergency-location">
-                            Share Location
+                        <button class="button">
+                            View Details
                         </button>
                     </div>
                 </div>
@@ -153,7 +159,19 @@
         </div>
     </footer>
 
-    <script src="home.js"></script>
-    <script src="emergency-services.js"></script>
-</body>
+    <script src="../js/home.js"></script>
+    <script src="../js/flight-booking.js"></script>
+    <script>
+        if ("serviceWorker" in navigator) {
+            window.addEventListener("load", () => {
+                navigator.serviceWorker.register("../service-worker.js")
+                    .then(registration => {
+                        console.log("Service Worker registered successfully:", registration.scope);
+                    })
+                    .catch(error => {
+                        console.error("Service Worker registration failed:", error);
+                    });
+            });
+        }
+    </script></body>
 </html>

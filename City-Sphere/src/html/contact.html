@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>City Sphere - Contact Us</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="home.css">
-    <link rel="stylesheet" href="contact.css">
+    <link rel="manifest" href="../manifest.json">
+    <meta name="theme-color" content="#0066CC">    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/home.css">
+    <link rel="stylesheet" href="../css/contact.css">
 </head>
 <body>
     <header>
@@ -14,7 +15,7 @@
             <div class="container">
                 <div class="logo-container">
                     <div class="logo-circle">
-                        <img src="City Sphere Final copy.png" alt="City Sphere Logo" class="logo-image">
+                        <img src="../images/City Sphere Final copy.png" alt="City Sphere Logo" class="logo-image">
                     </div>
                     <div class="logo-text">
                         <h1>City Sphere</h1>
@@ -144,7 +145,19 @@
         </div>
     </footer>
 
-    <script src="home.js"></script>
-    <script src="contact.js"></script>
-</body>
+    <script src="../js/home.js"></script>
+    <script src="../js/contact.js"></script>
+    <script>
+        if ("serviceWorker" in navigator) {
+            window.addEventListener("load", () => {
+                navigator.serviceWorker.register("../service-worker.js")
+                    .then(registration => {
+                        console.log("Service Worker registered successfully:", registration.scope);
+                    })
+                    .catch(error => {
+                        console.error("Service Worker registration failed:", error);
+                    });
+            });
+        }
+    </script></body>
 </html>

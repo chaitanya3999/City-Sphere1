@@ -4,7 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Services-Doctor</title>
-    
+    <link rel="manifest" href="../manifest.json">
+    <meta name="theme-color" content="#0066CC">    
   </head>
   <script></script>
   <body>
@@ -328,5 +329,17 @@
         <button type="submit">Submit</button>
       </form>
     </div>
-    </body>
+    <script>
+        if ("serviceWorker" in navigator) {
+            window.addEventListener("load", () => {
+                navigator.serviceWorker.register("../service-worker.js")
+                    .then(registration => {
+                        console.log("Service Worker registered successfully:", registration.scope);
+                    })
+                    .catch(error => {
+                        console.error("Service Worker registration failed:", error);
+                    });
+            });
+        }
+    </script>    </body>
 </html>

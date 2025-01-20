@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>City Sphere - Bus Tickets</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="home.css">
-    <link rel="stylesheet" href="bus-booking.css">
+    <title>City Sphere - Metro Tickets</title>
+    <link rel="manifest" href="../manifest.json">
+    <meta name="theme-color" content="#0066CC">    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/home.css">
+    <link rel="stylesheet" href="../css/metro-booking.css">
 </head>
 <body>
     <header>
@@ -14,7 +15,7 @@
             <div class="container">
                 <div class="logo-container">
                     <div class="logo-circle">
-                        <img src="City Sphere Final copy.png" alt="City Sphere Logo" class="logo-image">
+                        <img src="../images/City Sphere Final copy.png" alt="City Sphere Logo" class="logo-image">
                     </div>
                     <div class="logo-text">
                         <h1>City Sphere</h1>
@@ -54,66 +55,69 @@
     </header>
 
     <main>
-        <section class="bus-booking-section section-first">
+        <section class="metro-booking-section section-first">
             <div class="container">
-                <h2>Book Bus Tickets</h2>
-                <p class="section-description">Easy and convenient bus ticket booking for your travel needs</p>
-                <div class="bus-card">
-                    <div class="bus-details">
-                        <h3>Pune to Mumbai Express</h3>
-                        <p>Operator: Maharashtra State Road Transport Corporation (MSRTC)</p>
-                        <p>Departure: Pune Railway Station</p>
-                        <p>Arrival: Mumbai Central</p>
-                        <p>Departure Time: 06:00 AM</p>
-                        <p>Duration: 3 hours 30 minutes</p>
-                        <p class="price">Price: ₹450</p>
+                <h2>Book Metro Tickets</h2>
+                <p class="section-description">Easy and convenient metro ticket booking for your travel needs</p>
+                <div class="metro-card">
+                    <div class="metro-details">
+                        <h3>Pune Metro - Blue Line</h3>
+                        <p>Route: Vanaz to Ramwadi</p>
+                        <p>Departure: Vanaz Station</p>
+                        <p>Arrival: Ramwadi Station</p>
+                        <p>First Train: 06:00 AM</p>
+                        <p>Last Train: 10:00 PM</p>
+                        <p>Frequency: Every 10 minutes</p>
+                        <p class="price">Single Journey: ₹20</p>
                     </div>
                     <div class="buttons">
                         <button class="button">
                             Book Ticket
                         </button>
                         <button class="button">
-                            View Details
+                            View Route
                         </button>
                     </div>
                 </div>
 
-                <div class="bus-card">
-                    <div class="bus-details">
-                        <h3>Mumbai to Nashik Volvo</h3>
-                        <p>Operator: Neeta Tours and Travels</p>
-                        <p>Departure: Mumbai Central</p>
-                        <p>Arrival: Nashik Bus Stand</p>
-                        <p>Departure Time: 08:30 AM</p>
-                        <p>Duration: 4 hours</p>
-                        <p class="price">Price: ₹650</p>
+                <div class="metro-card">
+                    <div class="metro-details">
+                        <h3>Pune Metro - Red Line</h3>
+                        <p>Route: Swargate to Shivaji Nagar</p>
+                        <p>Departure: Swargate Station</p>
+                        <p>Arrival: Shivaji Nagar Station</p>
+                        <p>First Train: 05:30 AM</p>
+                        <p>Last Train: 10:30 PM</p>
+                        <p>Frequency: Every 12 minutes</p>
+                        <p class="price">Single Journey: ₹25</p>
                     </div>
                     <div class="buttons">
                         <button class="button">
                             Book Ticket
                         </button>
                         <button class="button">
-                            View Details
+                            View Route
                         </button>
                     </div>
                 </div>
 
-                <div class="bus-card">
-                    <div class="bus-details">
-                        <h3>Pune to Bangalore Sleeper</h3>
-                        <p>Operator: Shivshahi Travels</p>
-                        <p>Departure: Pune Swargate</p>
-                        <p>Arrival: Bangalore Majestic</p>
-                        <p>Departure Time: 10:00 PM</p>
-                        <p>Duration: 12 hours</p>
-                        <p class="price">Price: ₹1200</p>
+                <div class="metro-card">
+                    <div class="metro-details">
+                        <h3>Pune Metro - Green Line</h3>
+                        <p>Route: Pimpri to Chinchwad</p>
+                        <p>Departure: Pimpri Station</p>
+                        <p>Arrival: Chinchwad Station</p>
+                        <p>First Train: 05:45 AM</p>
+                        <p>Last Train: 10:15 PM</p>
+                        <p>Frequency: Every 15 minutes</p>
+                        <p class="price">Single Journey: ₹30</p>
                     </div>
                     <div class="buttons">
                         <button class="button">
                             Book Ticket
                         </button>
                         <button class="button">
-                            View Details
+                            View Route
                         </button>
                     </div>
                 </div>
@@ -155,7 +159,19 @@
         </div>
     </footer>
 
-    <script src="home.js"></script>
-    <script src="bus-booking.js"></script>
-</body>
+    <script src="../js/home.js"></script>
+    <script src="../js/metro-booking.js"></script>
+    <script>
+        if ("serviceWorker" in navigator) {
+            window.addEventListener("load", () => {
+                navigator.serviceWorker.register("../service-worker.js")
+                    .then(registration => {
+                        console.log("Service Worker registered successfully:", registration.scope);
+                    })
+                    .catch(error => {
+                        console.error("Service Worker registration failed:", error);
+                    });
+            });
+        }
+    </script></body>
 </html>

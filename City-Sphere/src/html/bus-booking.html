@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>City Sphere - Flight Booking</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="home.css">
-    <link rel="stylesheet" href="flight-booking.css">
+    <title>City Sphere - Bus Tickets</title>
+    <link rel="manifest" href="../manifest.json">
+    <meta name="theme-color" content="#0066CC">    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/home.css">
+    <link rel="stylesheet" href="../css/bus-booking.css">
 </head>
 <body>
     <header>
@@ -14,7 +15,7 @@
             <div class="container">
                 <div class="logo-container">
                     <div class="logo-circle">
-                        <img src="City Sphere Final copy.png" alt="City Sphere Logo" class="logo-image">
+                        <img src="../images/City Sphere Final copy.png" alt="City Sphere Logo" class="logo-image">
                     </div>
                     <div class="logo-text">
                         <h1>City Sphere</h1>
@@ -54,20 +55,19 @@
     </header>
 
     <main>
-        <section class="flight-booking-section section-first">
+        <section class="bus-booking-section section-first">
             <div class="container">
-                <h2>Book Flight Tickets</h2>
-                <p class="section-description">Easy and convenient flight ticket booking for your travel needs</p>
-                <div class="flight-card">
-                    <div class="flight-details">
-                        <h3>Pune to Mumbai - IndiGo</h3>
-                        <p>Flight Number: 6E 2345</p>
-                        <p>Route: Pune (PNQ) to Mumbai (BOM)</p>
-                        <p>Departure: Pune Airport</p>
-                        <p>Arrival: Mumbai Airport</p>
-                        <p>Departure Time: 07:30 AM</p>
-                        <p>Duration: 1 hour</p>
-                        <p class="price">Price: ₹3500</p>
+                <h2>Book Bus Tickets</h2>
+                <p class="section-description">Easy and convenient bus ticket booking for your travel needs</p>
+                <div class="bus-card">
+                    <div class="bus-details">
+                        <h3>Pune to Mumbai Express</h3>
+                        <p>Operator: Maharashtra State Road Transport Corporation (MSRTC)</p>
+                        <p>Departure: Pune Railway Station</p>
+                        <p>Arrival: Mumbai Central</p>
+                        <p>Departure Time: 06:00 AM</p>
+                        <p>Duration: 3 hours 30 minutes</p>
+                        <p class="price">Price: ₹450</p>
                     </div>
                     <div class="buttons">
                         <button class="button">
@@ -79,16 +79,15 @@
                     </div>
                 </div>
 
-                <div class="flight-card">
-                    <div class="flight-details">
-                        <h3>Mumbai to Delhi - Air India</h3>
-                        <p>Flight Number: AI 9876</p>
-                        <p>Route: Mumbai (BOM) to Delhi (DEL)</p>
-                        <p>Departure: Mumbai Airport</p>
-                        <p>Arrival: Delhi Airport</p>
-                        <p>Departure Time: 02:00 PM</p>
-                        <p>Duration: 2 hours 15 minutes</p>
-                        <p class="price">Price: ₹5000</p>
+                <div class="bus-card">
+                    <div class="bus-details">
+                        <h3>Mumbai to Nashik Volvo</h3>
+                        <p>Operator: Neeta Tours and Travels</p>
+                        <p>Departure: Mumbai Central</p>
+                        <p>Arrival: Nashik Bus Stand</p>
+                        <p>Departure Time: 08:30 AM</p>
+                        <p>Duration: 4 hours</p>
+                        <p class="price">Price: ₹650</p>
                     </div>
                     <div class="buttons">
                         <button class="button">
@@ -100,16 +99,15 @@
                     </div>
                 </div>
 
-                <div class="flight-card">
-                    <div class="flight-details">
-                        <h3>Pune to Bangalore - SpiceJet</h3>
-                        <p>Flight Number: SG 3456</p>
-                        <p>Route: Pune (PNQ) to Bangalore (BLR)</p>
-                        <p>Departure: Pune Airport</p>
-                        <p>Arrival: Bangalore Airport</p>
-                        <p>Departure Time: 09:45 PM</p>
-                        <p>Duration: 1 hour 30 minutes</p>
-                        <p class="price">Price: ₹4200</p>
+                <div class="bus-card">
+                    <div class="bus-details">
+                        <h3>Pune to Bangalore Sleeper</h3>
+                        <p>Operator: Shivshahi Travels</p>
+                        <p>Departure: Pune Swargate</p>
+                        <p>Arrival: Bangalore Majestic</p>
+                        <p>Departure Time: 10:00 PM</p>
+                        <p>Duration: 12 hours</p>
+                        <p class="price">Price: ₹1200</p>
                     </div>
                     <div class="buttons">
                         <button class="button">
@@ -158,7 +156,19 @@
         </div>
     </footer>
 
-    <script src="home.js"></script>
-    <script src="flight-booking.js"></script>
-</body>
+    <script src="../js/home.js"></script>
+    <script src="../js/bus-booking.js"></script>
+    <script>
+        if ("serviceWorker" in navigator) {
+            window.addEventListener("load", () => {
+                navigator.serviceWorker.register("../service-worker.js")
+                    .then(registration => {
+                        console.log("Service Worker registered successfully:", registration.scope);
+                    })
+                    .catch(error => {
+                        console.error("Service Worker registration failed:", error);
+                    });
+            });
+        }
+    </script></body>
 </html>
