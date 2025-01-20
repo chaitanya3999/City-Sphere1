@@ -1,24 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>City Sphere - Lawyers</title>
-    <link rel="manifest" href="../manifest.json">
-    <meta name="theme-color" content="#0066CC">    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-    />
-    <!-- <link rel="stylesheet" href="../css/home.css" /> -->
-    <link rel="stylesheet" href="../css/Laywers.css" />
-    <link rel="stylesheet" href="../css/footer.css" />
-    <link rel="stylesheet" href="../css/header.css" />
-      <link rel="stylesheet" href="../css/navigation.css" />
-</head>
-  <body>
+#!/bin/bash
 
-    
+# Directory containing HTML files
+HTML_DIR="/Users/chaitanya/Documents/GitHub/City-Sphere1/City-Sphere/src/html"
 
+# Temporary file for processing
+TEMP_FILE=$(mktemp)
+
+# Navigation template
+read -r -d '' NAV_TEMPLATE << EOM
 <header>
     <div class="top-header">
         <div class="container">
@@ -46,10 +35,14 @@
                     <a href="wallet.html" class="btn btn-wallet">
                         <i class="fas fa-wallet"></i>Wallet
                     </a>
-                    <a href="auth.html" class="btn btn-login">
+                    <a href="Register-Login.html" class="btn btn-login">
                         <i class="fas fa-user"></i>Login
                     </a>
-                </div>            </div>
+                    <a href="Register-Login.html" class="btn btn-signup">
+                        Sign Up<i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
             <div class="hamburger">
                 <span></span>
                 <span></span>
@@ -58,60 +51,10 @@
         </div>
     </nav>
 </header>
-<main>
-      <section class="lawyers-section">
-        <div class="container">
-          <h2>Find Legal Help</h2>
-          <p class="section-description">
-            Connect with experienced lawyers for professional legal assistance
-          </p>
-          <div class="lawyers-grid">
-            <div class="lawyer-card">
-              <img src="lawyer1.jpg" alt="Lawyer 1" />
-              <div class="lawyer-info">
-                <h3>Adv. Rajesh Kumar</h3>
-                <p>Specialization: Corporate Law</p>
-                <p>Experience: 15 years</p>
-                <p>Languages: English, Hindi, Marathi</p>
-                <p>Location: Law College Road, Pune</p>
-                <button class="btn-consult">Schedule Consultation</button>
-              </div>
-            </div>
-            <div class="lawyer-card">
-              <img src="lawyer2.jpg" alt="Lawyer 2" />
-              <div class="lawyer-info">
-                <h3>Adv. Priya Sharma</h3>
-                <p>Specialization: Family Law</p>
-                <p>Experience: 10 years</p>
-                <p>Languages: English, Hindi</p>
-                <p>Location: FC Road, Pune</p>
-                <button class="btn-consult">Schedule Consultation</button>
-              </div>
-            </div>
-            <div class="lawyer-card">
-              <img src="lawyer3.jpg" alt="Lawyer 3" />
-              <div class="lawyer-info">
-                <h3>Adv. Amit Desai</h3>
-                <p>Specialization: Criminal Law</p>
-                <p>Experience: 20 years</p>
-                <p>Languages: English, Hindi, Gujarati</p>
-                <p>Location: MG Road, Pune</p>
-                <button class="btn-consult">Schedule Consultation</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-    </main>
+EOM
 
-
-    <script src="../js/home.js"></script>
-    <script src="../js/lawyers.js"></script>
-      
-
-
-
-    <script src="../js/navigation.js"></script>
+# Footer template
+read -r -d '' FOOTER_TEMPLATE << EOM
 <footer>
     <div class="container">
         <div class="footer-content">
@@ -144,6 +87,10 @@
         </div>
     </div>
 </footer>
+EOM
+
+# Service Worker Registration Script
+read -r -d '' SW_SCRIPT << EOM
 <script>
     if ("serviceWorker" in navigator) {
         window.addEventListener("load", () => {
@@ -161,5 +108,60 @@
         });
     }
 </script>
-</body>
-</html>
+EOM
+
+# Exclude these files from modification
+EXCLUDE_FILES=(
+    "offline.html"
+)
+
+# Process each HTML file
+for file in "$HTML_DIR"/*.html; do
+    filename=$(basename "$file")
+    
+    # Skip excluded files
+    skip=0
+    for excluded in "${EXCLUDE_FILES[@]}"; do
+        if [[ "$filename" == "$excluded" ]]; then
+            skip=1
+            break
+        fi
+    done
+    
+    if [[ $skip -eq 1 ]]; then
+        echo "Skipping $filename"
+        continue
+    fi
+
+    echo "Processing $filename"
+    
+    # Create a temporary file
+    cp "$file" "$TEMP_FILE"
+    
+    # Remove existing header and footer
+    sed -i '' '/<header>/,/<\/header>/d' "$TEMP_FILE"
+    sed -i '' '/<footer>/,/<\/footer>/d' "$TEMP_FILE"
+    
+    # Remove existing service worker script
+    sed -i '' '/<script>.*serviceWorker.*<\/script>/d' "$TEMP_FILE"
+    
+    # Insert navigation template before <main>
+    sed -i '' "/<main>/i\\
+$NAV_TEMPLATE" "$TEMP_FILE"
+    
+    # Insert footer template before </body>
+    sed -i '' "/<\/body>/i\\
+$FOOTER_TEMPLATE" "$TEMP_FILE"
+    
+    # Insert service worker script before </body>
+    sed -i '' "/<\/body>/i\\
+$SW_SCRIPT" "$TEMP_FILE"
+    
+    # Overwrite original file
+    mv "$TEMP_FILE" "$file"
+done
+
+# Clean up
+rm -f "$TEMP_FILE"
+
+echo "HTML template update complete!"

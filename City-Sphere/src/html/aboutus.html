@@ -12,6 +12,7 @@
     />
     <link rel="stylesheet" href="../css/home.css" />
     <link rel="stylesheet" href="../css/aboutus.css" />
+    <link rel="stylesheet" href="../css/navigation.css" />
   </head>
   <body>
     <header>
@@ -40,13 +41,13 @@
                 <a href="index.html"><i class="fas fa-home"></i>Home</a>
               </li>
               <li>
-                <a href="#services"><i class="fas fa-cogs"></i>Services</a>
+                <a href="services.html"><i class="fas fa-cogs"></i>Services</a>
               </li>
               <li>
                 <a href="aboutus.html"><i class="fas fa-users"></i>About Us</a>
               </li>
               <li>
-                <a href="contact.html" class="active"
+                <a href="contact.html"
                   ><i class="fas fa-envelope"></i>Contact</a
                 >
               </li>
@@ -55,11 +56,8 @@
               <a href="wallet.html" class="btn btn-wallet">
                 <i class="fas fa-wallet"></i>Wallet
               </a>
-              <a href="Register-Login.html" class="btn btn-login">
+              <a href="auth.html" class="btn btn-login">
                 <i class="fas fa-user"></i>Login
-              </a>
-              <a href="Register-Login.html" class="btn btn-signup">
-                Sign Up<i class="fas fa-arrow-right"></i>
               </a>
             </div>
           </div>
@@ -71,7 +69,6 @@
         </div>
       </nav>
     </header>
-
     <main>
       <section class="about-hero">
         <div class="container">
@@ -164,6 +161,7 @@
       </section>
     </main>
 
+    <script src="../js/navigation.js"></script>
     <footer>
       <div class="container">
         <div class="footer-content">
@@ -196,7 +194,6 @@
         </div>
       </div>
     </footer>
-
     <script>
       if ("serviceWorker" in navigator) {
         window.addEventListener("load", () => {
