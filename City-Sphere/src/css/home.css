@@ -149,6 +149,38 @@ header {
   margin-left: auto;
 }
 
+/* Profile Picture Styling */
+.nav-buttons .profile-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: var(--text-color);
+  transition: var(--transition);
+}
+
+.nav-buttons .profile-link .profile-pic {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+  border: 2px solid var(--primary-color);
+  transition: var(--transition);
+}
+
+.nav-buttons .profile-link:hover .profile-pic {
+  transform: scale(1.1);
+  box-shadow: 0 0 10px rgba(255, 107, 0, 0.3);
+}
+
+.nav-buttons .profile-link span {
+  font-weight: 600;
+  max-width: 100px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 /* Button Styles */
 .btn {
   display: inline-flex;
@@ -411,6 +443,7 @@ header {
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 2rem;
   padding: 1rem;
+  margin-top: 2rem;
 }
 
 .feature-card {

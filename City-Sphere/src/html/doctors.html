@@ -40,15 +40,16 @@
                     <li><a href="aboutus.html"><i class="fas fa-users"></i>About Us</a></li>
                     <li><a href="contact.html"><i class="fas fa-envelope"></i>Contact</a></li>
                 </ul>
-                <div class="nav-buttons">
-                    <a href="wallet.html" class="btn btn-wallet">
-                        <i class="fas fa-wallet"></i>Wallet
-                    </a>
-                    <a href="auth.html" class="btn btn-login">
-                        <i class="fas fa-user"></i>Login
-                    </a>
-                </div>            </div>
-            <div class="hamburger">
+            <div class="nav-buttons">
+              <a href="wallet.html" class="btn btn-wallet">
+                <i class="fas fa-wallet"></i>Wallet
+              </a>
+              <div id="authSection">
+                <a href="auth.html" class="btn btn-login">
+                  <i class="fas fa-user"></i>Login
+                </a>
+              </div>
+            </div>            <div class="hamburger">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -115,13 +116,13 @@
     </main>
 
 
-    <script src="../js/home.js"></script>
-    <script src="../js/doctors.js"></script>
+    <script type="module" src="../js/home.js"></script>
+    <script type="module" src="../js/doctors.js"></script>
       
 
 
 
-    <script src="../js/navigation.js"></script>
+    <script type="module" src="../js/navigation.js"></script>
 <footer>
     <div class="container">
         <div class="footer-content">
@@ -175,5 +176,5 @@
         });
     }
 </script>
-</body>
+    <script type="module" src="../js/custom-auth.js"></script></body>
 </html>

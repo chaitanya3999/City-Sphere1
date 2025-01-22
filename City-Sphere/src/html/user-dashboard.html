@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>City Sphere - User Dashboard</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="manifest" href="../manifest.json" />
+    <meta name="theme-color" content="#ff6b00" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../css/home.css" />
+    <link rel="stylesheet" href="../css/navigation.css" />
+    <link rel="stylesheet" href="../css/dashboard.css" />
+  </head>
+  <body>
+    <header>
+      <div class="top-header">
+        <div class="container">
+          <div class="logo-container">
+            <div class="logo-circle">
+              <img
+                src="../images/City Sphere Final copy.png"
+                alt="City Sphere Logo"
+                class="logo-image"
+              />
+            </div>
+            <div class="logo-text">
+              <h1>City Sphere</h1>
+              <p class="tagline">My City in My Phone</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <nav class="navbar">
+        <div class="container">
+          <div class="nav-wrapper">
+            <ul class="nav-links">
+              <li>
+                <a href="index.html"><i class="fas fa-home"></i>Home</a>
+              </li>
+              <li>
+                <a href="services.html"><i class="fas fa-cogs"></i>Services</a>
+              </li>
+              <li>
+                <a href="aboutus.html"><i class="fas fa-users"></i>About Us</a>
+              </li>
+              <li>
+                <a href="contact.html"
+                  ><i class="fas fa-envelope"></i>Contact</a
+                >
+              </li>
+            </ul>
+            <div class="nav-buttons">
+              <a href="wallet.html" class="btn btn-wallet">
+                <i class="fas fa-wallet"></i>Wallet
+              </a>
+              <div id="authSection">
+                <a href="auth.html" class="btn btn-login">
+                  <i class="fas fa-user"></i>Login
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="dashboard-container">
+      <div class="sidebar">
+        <div class="profile-summary">
+          <img
+            src="../images/default-avatar.png"
+            alt="Profile Picture"
+            class="profile-pic"
+            id="profilePicture"
+          />
+          <h2 id="userName">User Name</h2>
+          <p id="userEmail">user@example.com</p>
+        </div>
+        <nav class="dashboard-nav">
+          <ul>
+            <li class="active" data-section="profile">
+              <i class="fas fa-user"></i> Profile
+            </li>
+            <li data-section="preferences">
+              <i class="fas fa-cog"></i> Preferences
+            </li>
+            <li data-section="services">
+              <i class="fas fa-tasks"></i> My Services
+            </li>
+            <li data-section="security">
+              <i class="fas fa-lock"></i> Security
+            </li>
+            <li data-section="recommendations">
+              <i class="fas fa-lightbulb"></i> Recommendations
+            </li>
+            <li data-section="userDetails">
+              <i class="fas fa-info-circle"></i> User Details
+            </li>
+          </ul>
+        </nav>
+      </div>
+
+      <div class="dashboard-content">
+        <section id="profileSection" class="active-section">
+          <h1>Complete Your Profile</h1>
+          <form id="profileCompletionForm">
+            <div class="form-row">
+              <div class="form-group">
+                <label>Date of Birth</label>
+                <input type="date" name="dob" id="dobInput" />
+              </div>
+              <div class="form-group">
+                <label>Gender</label>
+                <select name="gender" id="genderInput">
+                  <option value="">Select Gender</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                  <option value="other">Other</option>
+                  <option value="prefer-not-to-say">Prefer Not to Say</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Occupation</label>
+                <input
+                  type="text"
+                  name="occupation"
+                  id="occupationInput"
+                  placeholder="Your profession"
+                />
+              </div>
+              <div class="form-group">
+                <label>Income Range</label>
+                <select name="income" id="incomeInput">
+                  <option value="">Select Income Range</option>
+                  <option value="0-25000">₹0 - ₹25,000</option>
+                  <option value="25000-50000">₹25,000 - ₹50,000</option>
+                  <option value="50000-100000">₹50,000 - ₹1,00,000</option>
+                  <option value="100000+">₹1,00,000+</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="family-members-section">
+              <h3>Family Members</h3>
+              <div class="family-members">
+                <!-- Initial family member input will be dynamically added here -->
+              </div>
+              <button type="button" class="add-member btn-secondary">
+                <i class="fas fa-plus"></i> Add Family Member
+              </button>
+            </div>
+
+            <div class="form-group">
+              <label>City Interests</label>
+              <div class="interests-grid">
+                <label class="interest-checkbox">
+                  <input type="checkbox" name="interests" value="sports" />
+                  <span>Sports</span>
+                </label>
+                <label class="interest-checkbox">
+                  <input type="checkbox" name="interests" value="culture" />
+                  <span>Culture</span>
+                </label>
+                <label class="interest-checkbox">
+                  <input type="checkbox" name="interests" value="technology" />
+                  <span>Technology</span>
+                </label>
+                <label class="interest-checkbox">
+                  <input type="checkbox" name="interests" value="environment" />
+                  <span>Environment</span>
+                </label>
+                <label class="interest-checkbox">
+                  <input type="checkbox" name="interests" value="education" />
+                  <span>Education</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Profile Picture</label>
+              <input
+                type="file"
+                name="profilePicture"
+                accept="image/*"
+                id="profilePictureUpload"
+              />
+            </div>
+
+            <button type="submit" class="btn-primary">Save Profile</button>
+          </form>
+        </section>
+
+        <section id="preferencesSection" class="preferences-container">
+          <h1>My Service Preferences</h1>
+
+          <div class="preferences-grid">
+            <!-- Transportation Preferences -->
+            <div class="preference-card">
+              <div class="preference-card-header">
+                <i class="fas fa-bus"></i>
+                <h3>Transportation</h3>
+              </div>
+              <div class="preference-card-content">
+                <div class="preference-group">
+                  <h4>Preferred Modes</h4>
+                  <div class="preference-options">
+                    <label class="preference-toggle">
+                      <input
+                        type="checkbox"
+                        name="transportPreferences"
+                        value="bus"
+                        checked
+                      />
+                      <span class="toggle-indicator"></span>
+                      Bus
+                    </label>
+                    <label class="preference-toggle">
+                      <input
+                        type="checkbox"
+                        name="transportPreferences"
+                        value="metro"
+                      />
+                      <span class="toggle-indicator"></span>
+                      Metro
+                    </label>
+                    <label class="preference-toggle">
+                      <input
+                        type="checkbox"
+                        name="transportPreferences"
+                        value="train"
+                      />
+                      <span class="toggle-indicator"></span>
+                      Train
+                    </label>
+                  </div>
+                </div>
+
+                <div class="preference-group">
+                  <h4>Commute Preferences</h4>
+                  <div class="preference-dropdown">
+                    <select name="commuteFrequency">
+                      <option value="">Select Commute Frequency</option>
+                      <option value="daily">Daily</option>
+                      <option value="weekly">Weekly</option>
+                      <option value="occasional">Occasional</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- City Services Preferences -->
+            <div class="preference-card">
+              <div class="preference-card-header">
+                <i class="fas fa-city"></i>
+                <h3>City Services</h3>
+              </div>
+              <div class="preference-card-content">
+                <div class="preference-group">
+                  <h4>Notification Preferences</h4>
+                  <div class="preference-options">
+                    <label class="preference-toggle">
+                      <input
+                        type="checkbox"
+                        name="serviceNotifications"
+                        value="events"
+                        checked
+                      />
+                      <span class="toggle-indicator"></span>
+                      City Events
+                    </label>
+                    <label class="preference-toggle">
+                      <input
+                        type="checkbox"
+                        name="serviceNotifications"
+                        value="maintenance"
+                      />
+                      <span class="toggle-indicator"></span>
+                      Maintenance Alerts
+                    </label>
+                    <label class="preference-toggle">
+                      <input
+                        type="checkbox"
+                        name="serviceNotifications"
+                        value="emergencies"
+                        checked
+                      />
+                      <span class="toggle-indicator"></span>
+                      Emergency Alerts
+                    </label>
+                  </div>
+                </div>
+
+                <div class="preference-group">
+                  <h4>Preferred Services</h4>
+                  <div class="service-chips">
+                    <span class="chip active">Healthcare</span>
+                    <span class="chip">Education</span>
+                    <span class="chip">Parks & Recreation</span>
+                    <span class="chip active">Public Safety</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Communication Preferences -->
+            <div class="preference-card">
+              <div class="preference-card-header">
+                <i class="fas fa-comment-dots"></i>
+                <h3>Communication</h3>
+              </div>
+              <div class="preference-card-content">
+                <div class="preference-group">
+                  <h4>Contact Preferences</h4>
+                  <div class="preference-options">
+                    <label class="preference-toggle">
+                      <input
+                        type="checkbox"
+                        name="contactMethod"
+                        value="email"
+                        checked
+                      />
+                      <span class="toggle-indicator"></span>
+                      Email
+                    </label>
+                    <label class="preference-toggle">
+                      <input type="checkbox" name="contactMethod" value="sms" />
+                      <span class="toggle-indicator"></span>
+                      SMS
+                    </label>
+                    <label class="preference-toggle">
+                      <input
+                        type="checkbox"
+                        name="contactMethod"
+                        value="phone"
+                      />
+                      <span class="toggle-indicator"></span>
+                      Phone Call
+                    </label>
+                  </div>
+                </div>
+
+                <div class="preference-group">
+                  <h4>Language Preference</h4>
+                  <div class="preference-dropdown">
+                    <select name="languagePreference">
+                      <option value="en">English</option>
+                      <option value="hi">Hindi</option>
+                      <option value="mr">Marathi</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Accessibility Preferences -->
+            <div class="preference-card">
+              <div class="preference-card-header">
+                <i class="fas fa-universal-access"></i>
+                <h3>Accessibility</h3>
+              </div>
+              <div class="preference-card-content">
+                <div class="accessibility-toggle-group">
+                  <div class="accessibility-toggle-info">
+                    <h4>Screen Reader Support</h4>
+                    <p>Enable comprehensive screen reader compatibility</p>
+                  </div>
+                  <div class="advanced-toggle-switch">
+                    <input
+                      type="checkbox"
+                      id="screenReaderToggle"
+                      class="toggle-input"
+                    />
+                    <label for="screenReaderToggle" class="toggle-label">
+                      <span class="toggle-button"></span>
+                    </label>
+                  </div>
+                </div>
+                <div class="screen-reader-options" id="screenReaderOptions">
+                  <div class="option-group">
+                    <h5>Voice Feedback</h5>
+                    <div class="preference-options">
+                      <label class="preference-toggle">
+                        <input
+                          type="checkbox"
+                          name="voiceFeedback"
+                          value="navigation"
+                        />
+                        <span class="toggle-indicator"></span>
+                        Navigation Descriptions
+                      </label>
+                      <label class="preference-toggle">
+                        <input
+                          type="checkbox"
+                          name="voiceFeedback"
+                          value="errors"
+                        />
+                        <span class="toggle-indicator"></span>
+                        Error Announcements
+                      </label>
+                    </div>
+                  </div>
+                  <div class="option-group">
+                    <h5>Text Adjustments</h5>
+                    <div class="preference-options">
+                      <label class="preference-toggle">
+                        <input
+                          type="checkbox"
+                          name="textAdjustment"
+                          value="highContrast"
+                        />
+                        <span class="toggle-indicator"></span>
+                        High Contrast Mode
+                      </label>
+                      <label class="preference-toggle">
+                        <input
+                          type="checkbox"
+                          name="textAdjustment"
+                          value="largeText"
+                        />
+                        <span class="toggle-indicator"></span>
+                        Large Text
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="preferences-actions">
+            <button class="btn-primary save-preferences">
+              Save Preferences
+            </button>
+            <button class="btn-secondary reset-preferences">
+              Reset to Default
+            </button>
+          </div>
+        </section>
+
+        <section id="servicesSection">
+          <h1>My City Services</h1>
+          <div class="services-grid">
+            <div class="service-card active">
+              <i class="fas fa-shopping-cart"></i>
+              <h3>Groceries</h3>
+              <p>Last used: 2 days ago</p>
+            </div>
+            <div class="service-card">
+              <i class="fas fa-ambulance"></i>
+              <h3>Emergency Services</h3>
+              <p>Not used recently</p>
+            </div>
+            <!-- More service cards -->
+          </div>
+        </section>
+
+        <section id="securitySection" class="security-preferences">
+          <h1>Account Security & Privacy</h1>
+          <div class="security-grid">
+            <!-- Two-Factor Authentication -->
+            <div class="security-card">
+              <div class="security-card-header">
+                <i class="fas fa-shield-alt"></i>
+                <h3>Two-Factor Authentication</h3>
+              </div>
+              <div class="security-card-content">
+                <div class="security-toggle-group">
+                  <div class="security-toggle-info">
+                    <h4>Enable Two-Factor Authentication</h4>
+                    <p>
+                      Add an extra layer of security to protect your account
+                    </p>
+                  </div>
+                  <div class="advanced-toggle-switch">
+                    <input
+                      type="checkbox"
+                      id="twoFactorToggle"
+                      class="toggle-input"
+                    />
+                    <label for="twoFactorToggle" class="toggle-label">
+                      <span class="toggle-button"></span>
+                    </label>
+                  </div>
+                </div>
+                <div class="two-factor-methods" id="twoFactorMethods">
+                  <div class="method-option">
+                    <i class="fas fa-mobile-alt"></i>
+                    <span>SMS Authentication</span>
+                    <input type="radio" name="twoFactorMethod" value="sms" />
+                  </div>
+                  <div class="method-option">
+                    <i class="fas fa-envelope"></i>
+                    <span>Email Authentication</span>
+                    <input type="radio" name="twoFactorMethod" value="email" />
+                  </div>
+                  <div class="method-option">
+                    <i class="fas fa-key"></i>
+                    <span>Authenticator App</span>
+                    <input type="radio" name="twoFactorMethod" value="app" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Login Activity -->
+            <div class="security-card">
+              <div class="security-card-header">
+                <i class="fas fa-history"></i>
+                <h3>Login Activity</h3>
+              </div>
+              <div class="security-card-content">
+                <ul class="login-activity-list">
+                  <li>
+                    <span class="device-icon"
+                      ><i class="fas fa-desktop"></i
+                    ></span>
+                    <div class="login-details">
+                      <span class="login-location">Mumbai, India</span>
+                      <span class="login-time">Today at 10:30 AM</span>
+                    </div>
+                    <span class="device-type">Desktop</span>
+                  </li>
+                  <li>
+                    <span class="device-icon"
+                      ><i class="fas fa-mobile-alt"></i
+                    ></span>
+                    <div class="login-details">
+                      <span class="login-location">Bangalore, India</span>
+                      <span class="login-time">Yesterday at 2:15 PM</span>
+                    </div>
+                    <span class="device-type">Mobile</span>
+                  </li>
+                </ul>
+                <button class="btn-primary view-all-activity">
+                  View All Activity
+                </button>
+              </div>
+            </div>
+
+            <!-- Password Management -->
+            <div class="security-card">
+              <div class="security-card-header">
+                <i class="fas fa-key"></i>
+                <h3>Password Management</h3>
+              </div>
+              <div class="security-card-content">
+                <div class="password-strength">
+                  <span class="strength-label">Password Strength:</span>
+                  <div class="strength-meter">
+                    <div class="strength-bar" style="width: 70%"></div>
+                  </div>
+                  <span class="strength-text">Strong</span>
+                </div>
+                <button class="btn-primary change-password">
+                  Change Password
+                </button>
+                <p class="password-last-changed">Last changed: 2 months ago</p>
+              </div>
+            </div>
+
+            <!-- Privacy Controls -->
+            <div class="security-card">
+              <div class="security-card-header">
+                <i class="fas fa-user-shield"></i>
+                <h3>Privacy Controls</h3>
+              </div>
+              <div class="security-card-content">
+                <div class="privacy-option">
+                  <label class="privacy-toggle">
+                    <input type="checkbox" checked />
+                    <span class="slider"></span>
+                    Profile Visibility
+                  </label>
+                </div>
+                <div class="privacy-option">
+                  <label class="privacy-toggle">
+                    <input type="checkbox" />
+                    <span class="slider"></span>
+                    Location Sharing
+                  </label>
+                </div>
+                <div class="privacy-option">
+                  <label class="privacy-toggle">
+                    <input type="checkbox" checked />
+                    <span class="slider"></span>
+                    Activity Tracking
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="recommendationsSection">
+          <h1>Personalized Recommendations</h1>
+          <div class="recommendations-grid">
+            <div class="recommendation-card">
+              <img
+                src="../images/service-recommendation.jpg"
+                alt="Recommended Service"
+              />
+              <div class="recommendation-details">
+                <h3>Healthcare Services</h3>
+                <p>Based on your profile and location</p>
+                <button>Explore</button>
+              </div>
+            </div>
+            <!-- More recommendation cards -->
+          </div>
+        </section>
+
+        <section id="userDetailsSection">
+          <h1>Complete Your Profile</h1>
+          <form id="userDetailsForm">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="userPhone">Phone Number</label>
+                <div class="input-wrapper">
+                  <i class="fas fa-phone"></i>
+                  <input
+                    type="tel"
+                    id="userPhone"
+                    name="phone"
+                    placeholder="Enter your phone number"
+                    pattern="[0-9]{10}"
+                    title="Please enter a 10-digit phone number"
+                  />
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="userAddress">Home Address</label>
+                <div class="input-wrapper">
+                  <i class="fas fa-map-marker-alt"></i>
+                  <input
+                    type="text"
+                    id="userAddress"
+                    name="address"
+                    placeholder="Enter your full home address"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="userWorkplace">Workplace/Organization</label>
+                <div class="input-wrapper">
+                  <i class="fas fa-building"></i>
+                  <input
+                    type="text"
+                    id="userWorkplace"
+                    name="workplace"
+                    placeholder="Enter your workplace (optional)"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Most Used City Services</label>
+              <div class="checkbox-group">
+                <label class="checkbox-container">
+                  <input
+                    type="checkbox"
+                    name="services"
+                    value="transportation"
+                  />
+                  <span class="checkmark"></span>
+                  Transportation
+                </label>
+                <label class="checkbox-container">
+                  <input type="checkbox" name="services" value="healthcare" />
+                  <span class="checkmark"></span>
+                  Healthcare
+                </label>
+                <label class="checkbox-container">
+                  <input type="checkbox" name="services" value="groceries" />
+                  <span class="checkmark"></span>
+                  Groceries
+                </label>
+                <label class="checkbox-container">
+                  <input type="checkbox" name="services" value="legal" />
+                  <span class="checkmark"></span>
+                  Legal Services
+                </label>
+                <label class="checkbox-container">
+                  <input type="checkbox" name="services" value="emergency" />
+                  <span class="checkmark"></span>
+                  Emergency Services
+                </label>
+              </div>
+            </div>
+
+            <button type="submit" class="btn-primary">Save Details</button>
+          </form>
+        </section>
+      </div>
+    </main>
+
+    <footer>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h3>Quick Links</h3>
+            <ul>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="services.html">Services</a></li>
+              <li><a href="aboutus.html">About Us</a></li>
+              <li><a href="contact.html">Contact</a></li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h3>Services</h3>
+            <ul>
+              <li><a href="bus-booking.html">Bus Booking</a></li>
+              <li><a href="groceries.html">Groceries</a></li>
+              <li><a href="medicine.html">Medicine</a></li>
+              <li><a href="emergency-services.html">Emergency Services</a></li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h3>Legal</h3>
+            <ul>
+              <li>
+                <a href="../resources/Privecy Policy.pdf" target="_blank"
+                  >Privacy Policy</a
+                >
+              </li>
+              <li><a href="#">Terms of Service</a></li>
+              <li><a href="#">Refund Policy</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2024 City Sphere. All Rights Reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="../js/user-dashboard.js"></script>
+    <script type="module" src="../js/auth-new.js"></script>
+    <script type="module" src="../js/custom-auth.js"></script>
+    <script type="module" src="../js/home.js"></script>
+    <script src="../js/user-details.js"></script>
+  </body>
+</html>

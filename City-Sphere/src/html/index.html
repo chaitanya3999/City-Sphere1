@@ -55,10 +55,12 @@
               <a href="wallet.html" class="btn btn-wallet">
                 <i class="fas fa-wallet"></i>Wallet
               </a>
-              <a href="auth.html" class="btn btn-login">
-                <i class="fas fa-user"></i>Login
-              </a>
-            </div>
+              <div id="authSection">
+                <a href="auth.html" class="btn btn-login">
+                  <i class="fas fa-user"></i>Login
+                </a>
+              </div>
+            </div>            </div>
           </div>
           <div class="hamburger">
             <span></span>
@@ -90,7 +92,7 @@
         </div>
       </section>
 
-      <section id="services" class="services section-first">
+      <section id="services" class="services">
         <div class="container">
           <h2>Essential City Services at Your Fingertips</h2>
           <p class="section-description">
@@ -211,9 +213,9 @@
       </section>
     </main>
 
-    <script src="../js/home.js"></script>
+    <script type="module" src="../js/home.js"></script>
 
-    <script src="../js/navigation.js"></script>
+    <script type="module" src="../js/navigation.js"></script>
     <footer>
       <div class="container">
         <div class="footer-content">
@@ -267,5 +269,5 @@
         });
       }
     </script>
-  </body>
+    <script type="module" src="../js/custom-auth.js"></script>  </body>
 </html>

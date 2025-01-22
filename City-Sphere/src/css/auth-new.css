@@ -101,14 +101,15 @@
     border-radius: 6px;
     font-size: 16px;
     transition: border-color 0.3s ease;
+    padding-left: 40px;
 }
 
 .input-icon {
     position: absolute;
     left: 15px;
-    top: 42px;
+    top: 50px;
     transform: translateY(-50%);
-    color: #999;
+    color: #888;
 }
 
 .password-group {
@@ -126,27 +127,21 @@
     color: #999;
 }
 
-.btn-submit {
-    width: 100%;
-    padding: 12px;
-    background-color: var(--primary-color);
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.btn-submit:hover {
-    background-color: var(--secondary-color);
-}
-
-.form-options {
+.checkbox-group {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.checkbox-group .checkbox-container {
+    display: flex;
     align-items: center;
-    margin-bottom: 15px;
+    cursor: pointer;
+}
+
+.checkbox-group .checkbox-container input[type="checkbox"] {
+    margin-right: 10px;
 }
 
 .checkbox-container {
@@ -178,6 +173,29 @@
 
 .checkbox-container input:checked ~ .checkmark {
     background-color: var(--primary-color);
+}
+
+.btn-submit {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--primary-color);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-submit:hover {
+    background-color: var(--secondary-color);
+}
+
+.form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
 }
 
 .forgot-password {

@@ -53,11 +53,15 @@
               </li>
             </ul>
             <div class="nav-buttons">
-              <a href="auth.html" class="btn btn-login">
-                <i class="fas fa-user"></i>Login
+              <a href="wallet.html" class="btn btn-wallet">
+                <i class="fas fa-wallet"></i>Wallet
               </a>
-            </div>
-          </div>
+              <div id="authSection">
+                <a href="auth.html" class="btn btn-login">
+                  <i class="fas fa-user"></i>Login
+                </a>
+              </div>
+            </div>          </div>
           <div class="hamburger">
             <span></span>
             <span></span>
@@ -172,10 +176,10 @@
       </div>
     </div>
 
-    <script src="../js/home.js"></script>
-    <script src="../js/wallet.js"></script>
+    <script type="module" src="../js/home.js"></script>
+    <script type="module" src="../js/wallet.js"></script>
 
-    <script src="../js/navigation.js"></script>
+    <script type="module" src="../js/navigation.js"></script>
     <footer>
       <div class="container">
         <div class="footer-content">
@@ -229,5 +233,5 @@
         });
       }
     </script>
-  </body>
+    <script type="module" src="../js/custom-auth.js"></script>  </body>
 </html>

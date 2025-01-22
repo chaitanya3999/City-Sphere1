@@ -2,23 +2,37 @@
   "name": "city-sphere",
   "version": "1.0.0",
   "description": "Urban Services Platform",
-  "main": "index.html",
+  "main": "server.js",
   "scripts": {
-    "start": "npx serve src",
+    "start": "node server.js",
+    "dev": "nodemon server.js",
     "build": "npm run optimize-images && npm run minify-css && npm run minify-js",
     "optimize-images": "imagemin src/images/* --out-dir=src/images",
     "minify-css": "cleancss -o src/css/styles.min.css src/css/*.css",
     "minify-js": "terser src/js/*.js -o src/js/script.min.js",
     "deploy": "gh-pages -d src"
   },
-  "keywords": ["urban", "services", "city", "platform"],
+  "keywords": [
+    "urban",
+    "services",
+    "city",
+    "platform"
+  ],
   "author": "City Sphere Team",
   "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "sqlite3": "^5.1.7"
+  },
   "devDependencies": {
     "clean-css-cli": "^5.5.2",
     "gh-pages": "^4.0.0",
     "imagemin-cli": "^7.0.0",
+    "nodemon": "^2.0.22",
     "serve": "^14.1.2",
-    "terser": "^5.16.1"
+    "terser": "^5.17.1"
   }
 }
