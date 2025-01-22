@@ -3,15 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>City Sphere - Flight Booking</title>
+    <title>City Sphere - Lawyers</title>
     <link rel="manifest" href="../manifest.json" />
     <meta name="theme-color" content="#0066CC" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
     />
-    <link rel="stylesheet" href="../css/home.css" />
-    <link rel="stylesheet" href="../css/flight-booking.css" />
+    <!-- <link rel="stylesheet" href="../css/home.css" /> -->
+    <link rel="stylesheet" href="../css/Laywers.css" />
+    <link rel="stylesheet" href="../css/footer.css" />
+    <link rel="stylesheet" href="../css/header.css" />
     <link rel="stylesheet" href="../css/navigation.css" />
   </head>
   <body>
@@ -56,12 +58,11 @@
               <a href="wallet.html" class="btn btn-wallet">
                 <i class="fas fa-wallet"></i>Wallet
               </a>
-              <div id="authSection">
-                <a href="auth.html" class="btn btn-login">
-                  <i class="fas fa-user"></i>Login
-                </a>
-              </div>
-            </div>          </div>
+              <a href="auth.html" class="btn btn-login">
+                <i class="fas fa-user"></i>Login
+              </a>
+            </div>
+          </div>
           <div class="hamburger">
             <span></span>
             <span></span>
@@ -71,60 +72,45 @@
       </nav>
     </header>
     <main>
-      <section class="flight-booking-section section-first">
+      <section class="lawyers-section">
         <div class="container">
-          <h2>Book Flight Tickets</h2>
+          <h2>Find Legal Help</h2>
           <p class="section-description">
-            Easy and convenient flight ticket booking for your travel needs
+            Connect with experienced lawyers for professional legal assistance
           </p>
-          <div class="flight-card">
-            <div class="flight-details">
-              <h3>Pune to Mumbai - IndiGo</h3>
-              <p>Flight Number: 6E 2345</p>
-              <p>Route: Pune (PNQ) to Mumbai (BOM)</p>
-              <p>Departure: Pune Airport</p>
-              <p>Arrival: Mumbai Airport</p>
-              <p>Departure Time: 07:30 AM</p>
-              <p>Duration: 1 hour</p>
-              <p class="price">Price: ₹3500</p>
+          <div class="lawyers-grid">
+            <div class="lawyer-card">
+              <img src="lawyer1.jpg" alt="Lawyer 1" />
+              <div class="lawyer-info">
+                <h3>Adv. Rajesh Kumar</h3>
+                <p>Specialization: Corporate Law</p>
+                <p>Experience: 15 years</p>
+                <p>Languages: English, Hindi, Marathi</p>
+                <p>Location: Law College Road, Pune</p>
+                <button class="btn-consult">Schedule Consultation</button>
+              </div>
             </div>
-            <div class="buttons">
-              <button class="button">Book Ticket</button>
-              <button class="button">View Details</button>
+            <div class="lawyer-card">
+              <img src="lawyer2.jpg" alt="Lawyer 2" />
+              <div class="lawyer-info">
+                <h3>Adv. Priya Sharma</h3>
+                <p>Specialization: Family Law</p>
+                <p>Experience: 10 years</p>
+                <p>Languages: English, Hindi</p>
+                <p>Location: FC Road, Pune</p>
+                <button class="btn-consult">Schedule Consultation</button>
+              </div>
             </div>
-          </div>
-
-          <div class="flight-card">
-            <div class="flight-details">
-              <h3>Mumbai to Delhi - Air India</h3>
-              <p>Flight Number: AI 9876</p>
-              <p>Route: Mumbai (BOM) to Delhi (DEL)</p>
-              <p>Departure: Mumbai Airport</p>
-              <p>Arrival: Delhi Airport</p>
-              <p>Departure Time: 02:00 PM</p>
-              <p>Duration: 2 hours 15 minutes</p>
-              <p class="price">Price: ₹5000</p>
-            </div>
-            <div class="buttons">
-              <button class="button">Book Ticket</button>
-              <button class="button">View Details</button>
-            </div>
-          </div>
-
-          <div class="flight-card">
-            <div class="flight-details">
-              <h3>Pune to Bangalore - SpiceJet</h3>
-              <p>Flight Number: SG 3456</p>
-              <p>Route: Pune (PNQ) to Bangalore (BLR)</p>
-              <p>Departure: Pune Airport</p>
-              <p>Arrival: Bangalore Airport</p>
-              <p>Departure Time: 09:45 PM</p>
-              <p>Duration: 1 hour 30 minutes</p>
-              <p class="price">Price: ₹4200</p>
-            </div>
-            <div class="buttons">
-              <button class="button">Book Ticket</button>
-              <button class="button">View Details</button>
+            <div class="lawyer-card">
+              <img src="lawyer3.jpg" alt="Lawyer 3" />
+              <div class="lawyer-info">
+                <h3>Adv. Amit Desai</h3>
+                <p>Specialization: Criminal Law</p>
+                <p>Experience: 20 years</p>
+                <p>Languages: English, Hindi, Gujarati</p>
+                <p>Location: MG Road, Pune</p>
+                <button class="btn-consult">Schedule Consultation</button>
+              </div>
             </div>
           </div>
         </div>
@@ -132,7 +118,7 @@
     </main>
 
     <script src="../js/home.js"></script>
-    <script src="../js/flight-booking.js"></script>
+    <script src="../js/lawyers.js"></script>
 
     <script src="../js/navigation.js"></script>
     <footer>

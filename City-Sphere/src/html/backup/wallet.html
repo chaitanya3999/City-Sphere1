@@ -3,15 +3,15 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>City Sphere - Flight Booking</title>
+    <title>City Sphere - Wallet</title>
     <link rel="manifest" href="../manifest.json" />
     <meta name="theme-color" content="#0066CC" />
+    <link rel="stylesheet" href="../css/home.css" />
+    <link rel="stylesheet" href="../css/wallet.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
     />
-    <link rel="stylesheet" href="../css/home.css" />
-    <link rel="stylesheet" href="../css/flight-booking.css" />
     <link rel="stylesheet" href="../css/navigation.css" />
   </head>
   <body>
@@ -53,15 +53,11 @@
               </li>
             </ul>
             <div class="nav-buttons">
-              <a href="wallet.html" class="btn btn-wallet">
-                <i class="fas fa-wallet"></i>Wallet
+              <a href="auth.html" class="btn btn-login">
+                <i class="fas fa-user"></i>Login
               </a>
-              <div id="authSection">
-                <a href="auth.html" class="btn btn-login">
-                  <i class="fas fa-user"></i>Login
-                </a>
-              </div>
-            </div>          </div>
+            </div>
+          </div>
           <div class="hamburger">
             <span></span>
             <span></span>
@@ -70,69 +66,114 @@
         </div>
       </nav>
     </header>
-    <main>
-      <section class="flight-booking-section section-first">
-        <div class="container">
-          <h2>Book Flight Tickets</h2>
-          <p class="section-description">
-            Easy and convenient flight ticket booking for your travel needs
+
+    <!-- Welcome Section -->
+    <section class="welcome-section">
+      <div class="container">
+        <div class="welcome-content">
+          <div id="greeting"></div>
+          <p class="welcome-message">
+            Manage your City Sphere wallet with ease
           </p>
-          <div class="flight-card">
-            <div class="flight-details">
-              <h3>Pune to Mumbai - IndiGo</h3>
-              <p>Flight Number: 6E 2345</p>
-              <p>Route: Pune (PNQ) to Mumbai (BOM)</p>
-              <p>Departure: Pune Airport</p>
-              <p>Arrival: Mumbai Airport</p>
-              <p>Departure Time: 07:30 AM</p>
-              <p>Duration: 1 hour</p>
-              <p class="price">Price: ₹3500</p>
+          <div class="welcome-time">
+            <div class="time-wrapper">
+              <i class="fas fa-clock"></i>
+              <div id="time"></div>
             </div>
-            <div class="buttons">
-              <button class="button">Book Ticket</button>
-              <button class="button">View Details</button>
-            </div>
-          </div>
-
-          <div class="flight-card">
-            <div class="flight-details">
-              <h3>Mumbai to Delhi - Air India</h3>
-              <p>Flight Number: AI 9876</p>
-              <p>Route: Mumbai (BOM) to Delhi (DEL)</p>
-              <p>Departure: Mumbai Airport</p>
-              <p>Arrival: Delhi Airport</p>
-              <p>Departure Time: 02:00 PM</p>
-              <p>Duration: 2 hours 15 minutes</p>
-              <p class="price">Price: ₹5000</p>
-            </div>
-            <div class="buttons">
-              <button class="button">Book Ticket</button>
-              <button class="button">View Details</button>
-            </div>
-          </div>
-
-          <div class="flight-card">
-            <div class="flight-details">
-              <h3>Pune to Bangalore - SpiceJet</h3>
-              <p>Flight Number: SG 3456</p>
-              <p>Route: Pune (PNQ) to Bangalore (BLR)</p>
-              <p>Departure: Pune Airport</p>
-              <p>Arrival: Bangalore Airport</p>
-              <p>Departure Time: 09:45 PM</p>
-              <p>Duration: 1 hour 30 minutes</p>
-              <p class="price">Price: ₹4200</p>
-            </div>
-            <div class="buttons">
-              <button class="button">Book Ticket</button>
-              <button class="button">View Details</button>
+            <div class="date-wrapper">
+              <i class="fas fa-calendar"></i>
+              <div id="date"></div>
             </div>
           </div>
         </div>
-      </section>
-    </main>
+      </div>
+    </section>
+
+    <!-- Wallet Section -->
+    <section class="wallet-section">
+      <div class="container">
+        <div class="wallet-grid">
+          <!-- Balance Card -->
+          <div class="wallet-card balance-card">
+            <div class="card-icon">
+              <i class="fas fa-wallet"></i>
+            </div>
+            <h3>Current Balance</h3>
+            <div class="balance-amount">
+              ₹<span id="balance">1,000.00</span>
+            </div>
+            <button class="btn-add-money" onclick="showAddMoneyModal()">
+              Add Money
+            </button>
+          </div>
+
+          <!-- Recent Transactions -->
+          <div class="wallet-card transactions-card">
+            <h3>Recent Transactions</h3>
+            <div class="transactions-list" id="transactionsList">
+              <!-- Transactions will be added here dynamically -->
+            </div>
+          </div>
+
+          <!-- Quick Actions -->
+          <div class="wallet-card actions-card">
+            <h3>Quick Actions</h3>
+            <div class="quick-actions">
+              <button class="action-btn" onclick="showSendMoneyModal()">
+                <i class="fas fa-paper-plane"></i>
+                Send Money
+              </button>
+              <button class="action-btn" onclick="showRequestMoneyModal()">
+                <i class="fas fa-hand-holding-usd"></i>
+                Request Money
+              </button>
+              <button class="action-btn" onclick="showTransactionHistory()">
+                <i class="fas fa-history"></i>
+                Transaction History
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Add Money Modal -->
+    <div id="addMoneyModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Add Money to Wallet</h2>
+        <form id="addMoneyForm">
+          <div class="form-group">
+            <label for="amount">Amount (₹)</label>
+            <input type="number" id="amount" name="amount" min="1" required />
+          </div>
+          <div class="payment-options">
+            <h3>Payment Method</h3>
+            <div class="payment-grid">
+              <label class="payment-option">
+                <input type="radio" name="payment" value="upi" checked />
+                <i class="fas fa-mobile-alt"></i>
+                <span>UPI</span>
+              </label>
+              <label class="payment-option">
+                <input type="radio" name="payment" value="card" />
+                <i class="fas fa-credit-card"></i>
+                <span>Card</span>
+              </label>
+              <label class="payment-option">
+                <input type="radio" name="payment" value="netbanking" />
+                <i class="fas fa-university"></i>
+                <span>Net Banking</span>
+              </label>
+            </div>
+          </div>
+          <button type="submit" class="btn-proceed">Proceed to Pay</button>
+        </form>
+      </div>
+    </div>
 
     <script src="../js/home.js"></script>
-    <script src="../js/flight-booking.js"></script>
+    <script src="../js/wallet.js"></script>
 
     <script src="../js/navigation.js"></script>
     <footer>

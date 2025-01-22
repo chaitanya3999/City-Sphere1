@@ -6,7 +6,8 @@ const elements = {
     hamburger: document.querySelector('.hamburger'),
     navWrapper: document.querySelector('.nav-wrapper'),
     serviceCards: document.querySelectorAll('.service-card'),
-    featureCards: document.querySelectorAll('.feature-card')
+    featureCards: document.querySelectorAll('.feature-card'),
+    authSection: document.getElementById('authSection')
 };
 
 // Debounce function for performance optimization
@@ -159,6 +160,51 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
         });
+
+        // Login State Management
+        const signupData = localStorage.getItem('userSignupData');
+        const profileData = localStorage.getItem('userProfileData');
+
+        if (signupData) {
+            const userData = JSON.parse(signupData);
+            const profilePicUrl = profileData ? 
+                JSON.parse(profileData).profilePicture || '../images/default-avatar.png' 
+                : '../images/default-avatar.png';
+
+            // Replace login button with profile picture
+            elements.authSection.innerHTML = `
+                <a href="user-dashboard.html" class="profile-link">
+                    <img src="${profilePicUrl}" alt="Profile" class="profile-pic">
+                    <span>${userData.name || 'User'}</span>
+                </a>
+            `;
+
+            // Update greeting if user is logged in
+            if (elements.greeting) {
+                const currentHour = new Date().getHours();
+                let greeting = 'Hello';
+
+                if (currentHour < 12) {
+                    greeting = 'Good Morning';
+                } else if (currentHour < 18) {
+                    greeting = 'Good Afternoon';
+                } else {
+                    greeting = 'Good Evening';
+                }
+
+                elements.greeting.innerHTML = `
+                    <h1>${greeting}, ${userData.name || 'User'}!</h1>
+                    <p>Welcome back to City Sphere</p>
+                `;
+            }
+        }
+
+        // Logout functionality
+        window.logout = () => {
+            localStorage.removeItem('userSignupData');
+            localStorage.removeItem('userProfileData');
+            window.location.href = 'index.html';
+        };
 
     } catch (error) {
         console.error('Error initializing app:', error);

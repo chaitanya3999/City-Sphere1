@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>City Sphere - Flight Booking</title>
+    <title>City Sphere - Bus Tickets</title>
     <link rel="manifest" href="../manifest.json" />
     <meta name="theme-color" content="#0066CC" />
     <link
@@ -11,7 +11,7 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
     />
     <link rel="stylesheet" href="../css/home.css" />
-    <link rel="stylesheet" href="../css/flight-booking.css" />
+    <link rel="stylesheet" href="../css/bus-booking.css" />
     <link rel="stylesheet" href="../css/navigation.css" />
   </head>
   <body>
@@ -56,12 +56,11 @@
               <a href="wallet.html" class="btn btn-wallet">
                 <i class="fas fa-wallet"></i>Wallet
               </a>
-              <div id="authSection">
-                <a href="auth.html" class="btn btn-login">
-                  <i class="fas fa-user"></i>Login
-                </a>
-              </div>
-            </div>          </div>
+              <a href="auth.html" class="btn btn-login">
+                <i class="fas fa-user"></i>Login
+              </a>
+            </div>
+          </div>
           <div class="hamburger">
             <span></span>
             <span></span>
@@ -71,22 +70,23 @@
       </nav>
     </header>
     <main>
-      <section class="flight-booking-section section-first">
+      <section class="bus-booking-section section-first">
         <div class="container">
-          <h2>Book Flight Tickets</h2>
+          <h2>Book Bus Tickets</h2>
           <p class="section-description">
-            Easy and convenient flight ticket booking for your travel needs
+            Easy and convenient bus ticket booking for your travel needs
           </p>
-          <div class="flight-card">
-            <div class="flight-details">
-              <h3>Pune to Mumbai - IndiGo</h3>
-              <p>Flight Number: 6E 2345</p>
-              <p>Route: Pune (PNQ) to Mumbai (BOM)</p>
-              <p>Departure: Pune Airport</p>
-              <p>Arrival: Mumbai Airport</p>
-              <p>Departure Time: 07:30 AM</p>
-              <p>Duration: 1 hour</p>
-              <p class="price">Price: ₹3500</p>
+          <div class="bus-card">
+            <div class="bus-details">
+              <h3>Pune to Mumbai Express</h3>
+              <p>
+                Operator: Maharashtra State Road Transport Corporation (MSRTC)
+              </p>
+              <p>Departure: Pune Railway Station</p>
+              <p>Arrival: Mumbai Central</p>
+              <p>Departure Time: 06:00 AM</p>
+              <p>Duration: 3 hours 30 minutes</p>
+              <p class="price">Price: ₹450</p>
             </div>
             <div class="buttons">
               <button class="button">Book Ticket</button>
@@ -94,16 +94,15 @@
             </div>
           </div>
 
-          <div class="flight-card">
-            <div class="flight-details">
-              <h3>Mumbai to Delhi - Air India</h3>
-              <p>Flight Number: AI 9876</p>
-              <p>Route: Mumbai (BOM) to Delhi (DEL)</p>
-              <p>Departure: Mumbai Airport</p>
-              <p>Arrival: Delhi Airport</p>
-              <p>Departure Time: 02:00 PM</p>
-              <p>Duration: 2 hours 15 minutes</p>
-              <p class="price">Price: ₹5000</p>
+          <div class="bus-card">
+            <div class="bus-details">
+              <h3>Mumbai to Nashik Volvo</h3>
+              <p>Operator: Neeta Tours and Travels</p>
+              <p>Departure: Mumbai Central</p>
+              <p>Arrival: Nashik Bus Stand</p>
+              <p>Departure Time: 08:30 AM</p>
+              <p>Duration: 4 hours</p>
+              <p class="price">Price: ₹650</p>
             </div>
             <div class="buttons">
               <button class="button">Book Ticket</button>
@@ -111,16 +110,15 @@
             </div>
           </div>
 
-          <div class="flight-card">
-            <div class="flight-details">
-              <h3>Pune to Bangalore - SpiceJet</h3>
-              <p>Flight Number: SG 3456</p>
-              <p>Route: Pune (PNQ) to Bangalore (BLR)</p>
-              <p>Departure: Pune Airport</p>
-              <p>Arrival: Bangalore Airport</p>
-              <p>Departure Time: 09:45 PM</p>
-              <p>Duration: 1 hour 30 minutes</p>
-              <p class="price">Price: ₹4200</p>
+          <div class="bus-card">
+            <div class="bus-details">
+              <h3>Pune to Bangalore Sleeper</h3>
+              <p>Operator: Shivshahi Travels</p>
+              <p>Departure: Pune Swargate</p>
+              <p>Arrival: Bangalore Majestic</p>
+              <p>Departure Time: 10:00 PM</p>
+              <p>Duration: 12 hours</p>
+              <p class="price">Price: ₹1200</p>
             </div>
             <div class="buttons">
               <button class="button">Book Ticket</button>
@@ -132,7 +130,7 @@
     </main>
 
     <script src="../js/home.js"></script>
-    <script src="../js/flight-booking.js"></script>
+    <script src="../js/bus-booking.js"></script>
 
     <script src="../js/navigation.js"></script>
     <footer>

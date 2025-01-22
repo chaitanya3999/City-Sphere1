@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>City Sphere - Medicine Delivery</title>
+    <title>City Sphere - Restaurants</title>
     <link rel="manifest" href="../manifest.json" />
     <meta name="theme-color" content="#0066CC" />
     <link
@@ -11,7 +11,7 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
     />
     <link rel="stylesheet" href="../css/home.css" />
-    <link rel="stylesheet" href="../css/medicine.css" />
+    <link rel="stylesheet" href="../css/restaurants.css" />
     <link rel="stylesheet" href="../css/navigation.css" />
   </head>
   <body>
@@ -56,12 +56,11 @@
               <a href="wallet.html" class="btn btn-wallet">
                 <i class="fas fa-wallet"></i>Wallet
               </a>
-              <div id="authSection">
-                <a href="auth.html" class="btn btn-login">
-                  <i class="fas fa-user"></i>Login
-                </a>
-              </div>
-            </div>          </div>
+              <a href="auth.html" class="btn btn-login">
+                <i class="fas fa-user"></i>Login
+              </a>
+            </div>
+          </div>
           <div class="hamburger">
             <span></span>
             <span></span>
@@ -71,101 +70,87 @@
       </nav>
     </header>
     <main>
-      <section class="medicine-section section-first">
+      <section class="restaurants-section section-first">
         <div class="container">
-          <h2>Medicine Delivery</h2>
+          <h2>Restaurants Near You</h2>
           <p class="section-description">
-            Order medicines and healthcare products from trusted pharmacies near
-            you
+            Discover and order from the best restaurants in your area
           </p>
 
           <div class="search-filter-container">
             <div class="search-bar">
               <input
                 type="text"
-                placeholder="Search medicines, healthcare products..."
+                placeholder="Search restaurants or cuisines..."
               />
               <button><i class="fas fa-search"></i></button>
             </div>
             <div class="filters">
               <button class="filter-btn active">All</button>
-              <button class="filter-btn">Prescription</button>
-              <button class="filter-btn">OTC</button>
-              <button class="filter-btn">Healthcare</button>
-              <button class="filter-btn">Wellness</button>
+              <button class="filter-btn">Indian</button>
+              <button class="filter-btn">Chinese</button>
+              <button class="filter-btn">Italian</button>
+              <button class="filter-btn">Fast Food</button>
             </div>
           </div>
 
-          <div class="upload-prescription">
-            <div class="upload-box">
-              <i class="fas fa-file-medical"></i>
-              <h3>Upload Prescription</h3>
-              <p>Upload your prescription for accurate order processing</p>
-              <label for="prescription-upload" class="btn-upload">
-                Upload Now <i class="fas fa-upload"></i>
-              </label>
-              <input type="file" id="prescription-upload" hidden />
-            </div>
-          </div>
-
-          <div class="medicine-grid">
-            <!-- Medicine Cards -->
-            <div class="medicine-card">
-              <div class="medicine-image">
-                <img src="medicine1.jpg" alt="Medicine 1" />
-                <span class="category">Prescription</span>
+          <div class="restaurants-grid">
+            <!-- Restaurant Cards -->
+            <div class="restaurant-card">
+              <div class="restaurant-image">
+                <img src="restaurant1.jpg" alt="Restaurant 1" />
+                <span class="rating"><i class="fas fa-star"></i> 4.5</span>
               </div>
-              <div class="medicine-info">
-                <h3>Paracetamol 500mg</h3>
-                <p class="manufacturer">By XYZ Pharmaceuticals</p>
-                <p class="description">Fever & Pain Relief</p>
-                <div class="medicine-footer">
-                  <div class="price-info">
-                    <span class="price">₹50</span>
-                    <span class="quantity">Strip of 10 tablets</span>
-                  </div>
-                  <button class="btn-add">Add to Cart</button>
+              <div class="restaurant-info">
+                <h3>Spice Garden</h3>
+                <p class="cuisine">Indian, Chinese</p>
+                <p class="location">
+                  <i class="fas fa-map-marker-alt"></i> 2.5 km away
+                </p>
+                <div class="restaurant-footer">
+                  <span class="price">₹200 for two</span>
+                  <button class="btn-order">Order Now</button>
                 </div>
               </div>
             </div>
 
-            <div class="medicine-card">
-              <div class="medicine-image">
-                <img src="medicine2.jpg" alt="Medicine 2" />
-                <span class="category">OTC</span>
+            <div class="restaurant-card">
+              <div class="restaurant-image">
+                <img src="restaurant2.jpg" alt="Restaurant 2" />
+                <span class="rating"><i class="fas fa-star"></i> 4.2</span>
               </div>
-              <div class="medicine-info">
-                <h3>Vitamin C 1000mg</h3>
-                <p class="manufacturer">By ABC Healthcare</p>
-                <p class="description">Immunity Booster</p>
-                <div class="medicine-footer">
-                  <div class="price-info">
-                    <span class="price">₹200</span>
-                    <span class="quantity">Bottle of 30 tablets</span>
-                  </div>
-                  <button class="btn-add">Add to Cart</button>
+              <div class="restaurant-info">
+                <h3>Pizza Paradise</h3>
+                <p class="cuisine">Italian, Fast Food</p>
+                <p class="location">
+                  <i class="fas fa-map-marker-alt"></i> 1.8 km away
+                </p>
+                <div class="restaurant-footer">
+                  <span class="price">₹300 for two</span>
+                  <button class="btn-order">Order Now</button>
                 </div>
               </div>
             </div>
 
-            <div class="medicine-card">
-              <div class="medicine-image">
-                <img src="medicine3.jpg" alt="Medicine 3" />
-                <span class="category">Healthcare</span>
+            <div class="restaurant-card">
+              <div class="restaurant-image">
+                <img src="restaurant3.jpg" alt="Restaurant 3" />
+                <span class="rating"><i class="fas fa-star"></i> 4.8</span>
               </div>
-              <div class="medicine-info">
-                <h3>Digital Thermometer</h3>
-                <p class="manufacturer">By MedTech Devices</p>
-                <p class="description">Accurate Temperature Measurement</p>
-                <div class="medicine-footer">
-                  <div class="price-info">
-                    <span class="price">₹300</span>
-                    <span class="quantity">1 Unit</span>
-                  </div>
-                  <button class="btn-add">Add to Cart</button>
+              <div class="restaurant-info">
+                <h3>Dragon House</h3>
+                <p class="cuisine">Chinese, Asian</p>
+                <p class="location">
+                  <i class="fas fa-map-marker-alt"></i> 3.0 km away
+                </p>
+                <div class="restaurant-footer">
+                  <span class="price">₹400 for two</span>
+                  <button class="btn-order">Order Now</button>
                 </div>
               </div>
             </div>
+
+            <!-- Add more restaurant cards as needed -->
           </div>
 
           <div class="load-more">
@@ -178,27 +163,27 @@
 
       <section class="features-section">
         <div class="container">
-          <h2>Why Choose Our Medicine Delivery</h2>
+          <h2>Why Order with City Sphere</h2>
           <div class="features-grid">
             <div class="feature-card">
-              <i class="fas fa-shipping-fast"></i>
+              <i class="fas fa-truck"></i>
               <h3>Fast Delivery</h3>
-              <p>Same-day delivery for urgent medicines</p>
+              <p>Quick and reliable delivery to your doorstep</p>
             </div>
             <div class="feature-card">
-              <i class="fas fa-certificate"></i>
-              <h3>Genuine Products</h3>
-              <p>100% authentic medicines from licensed pharmacies</p>
+              <i class="fas fa-utensils"></i>
+              <h3>Quality Food</h3>
+              <p>Partner with top-rated restaurants</p>
             </div>
             <div class="feature-card">
-              <i class="fas fa-tag"></i>
-              <h3>Best Prices</h3>
-              <p>Competitive prices and regular discounts</p>
+              <i class="fas fa-percent"></i>
+              <h3>Best Offers</h3>
+              <p>Regular discounts and special deals</p>
             </div>
             <div class="feature-card">
-              <i class="fas fa-user-md"></i>
-              <h3>Expert Support</h3>
-              <p>24/7 pharmacist consultation available</p>
+              <i class="fas fa-headset"></i>
+              <h3>24/7 Support</h3>
+              <p>Always here to help you</p>
             </div>
           </div>
         </div>
@@ -206,7 +191,7 @@
     </main>
 
     <script src="../js/home.js"></script>
-    <script src="../js/medicine.js"></script>
+    <script src="../js/restaurants.js"></script>
 
     <script src="../js/navigation.js"></script>
     <footer>

@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>City Sphere - User Dashboard</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="manifest" href="../manifest.json" />
+    <meta name="theme-color" content="#ff6b00" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../css/home.css" />
+    <link rel="stylesheet" href="../css/navigation.css" />
+    <link rel="stylesheet" href="../css/dashboard.css" />
+  </head>
+  <body>
+    <header>
+      <div class="top-header">
+        <div class="container">
+          <div class="logo-container">
+            <div class="logo-circle">
+              <img
+                src="../images/City Sphere Final copy.png"
+                alt="City Sphere Logo"
+                class="logo-image"
+              />
+            </div>
+            <div class="logo-text">
+              <h1>City Sphere</h1>
+              <p class="tagline">My City in My Phone</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <nav class="navbar">
+        <div class="container">
+          <div class="nav-wrapper">
+            <ul class="nav-links">
+              <li>
+                <a href="index.html"><i class="fas fa-home"></i>Home</a>
+              </li>
+              <li>
+                <a href="services.html"><i class="fas fa-cogs"></i>Services</a>
+              </li>
+              <li>
+                <a href="aboutus.html"><i class="fas fa-users"></i>About Us</a>
+              </li>
+              <li>
+                <a href="contact.html"
+                  ><i class="fas fa-envelope"></i>Contact</a
+                >
+              </li>
+            </ul>
+            <div class="nav-buttons">
+              <a href="wallet.html" class="btn btn-wallet">
+                <i class="fas fa-wallet"></i>Wallet
+              </a>
+              <div id="authSection">
+                <a href="auth.html" class="btn btn-login">
+                  <i class="fas fa-user"></i>Login
+                </a>
+              </div>
+            </div>          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="dashboard-container">
+      <div class="sidebar">
+        <div class="profile-summary">
+          <img
+            src="../images/default-avatar.png"
+            alt="Profile Picture"
+            class="profile-pic"
+            id="profilePicture"
+          />
+          <h2 id="userName">User Name</h2>
+          <p id="userEmail">user@example.com</p>
+        </div>
+        <nav class="dashboard-nav">
+          <ul>
+            <li class="active" data-section="profile">
+              <i class="fas fa-user"></i> Profile
+            </li>
+            <li data-section="preferences">
+              <i class="fas fa-cog"></i> Preferences
+            </li>
+            <li data-section="services">
+              <i class="fas fa-tasks"></i> My Services
+            </li>
+            <li data-section="security">
+              <i class="fas fa-lock"></i> Security
+            </li>
+            <li data-section="recommendations">
+              <i class="fas fa-lightbulb"></i> Recommendations
+            </li>
+          </ul>
+        </nav>
+      </div>
+
+      <div class="dashboard-content">
+        <section id="profileSection" class="active-section">
+          <h1>Complete Your Profile</h1>
+          <form id="profileCompletionForm">
+            <div class="form-row">
+              <div class="form-group">
+                <label>Date of Birth</label>
+                <input type="date" name="dob" id="dobInput" />
+              </div>
+              <div class="form-group">
+                <label>Gender</label>
+                <select name="gender" id="genderInput">
+                  <option value="">Select Gender</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                  <option value="other">Other</option>
+                  <option value="prefer-not-to-say">Prefer Not to Say</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Occupation</label>
+                <input
+                  type="text"
+                  name="occupation"
+                  id="occupationInput"
+                  placeholder="Your profession"
+                />
+              </div>
+              <div class="form-group">
+                <label>Income Range</label>
+                <select name="income" id="incomeInput">
+                  <option value="">Select Income Range</option>
+                  <option value="0-25000">₹0 - ₹25,000</option>
+                  <option value="25000-50000">₹25,000 - ₹50,000</option>
+                  <option value="50000-100000">₹50,000 - ₹1,00,000</option>
+                  <option value="100000+">₹1,00,000+</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Family Members</label>
+              <div class="family-members">
+                <div class="member-input">
+                  <input type="text" name="familyMember" placeholder="Name" />
+                  <select name="familyMemberRelation">
+                    <option value="">Relation</option>
+                    <option value="spouse">Spouse</option>
+                    <option value="child">Child</option>
+                    <option value="parent">Parent</option>
+                    <option value="sibling">Sibling</option>
+                  </select>
+                  <button type="button" class="add-member">+</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>City Interests</label>
+              <div class="interests-grid">
+                <label class="interest-checkbox">
+                  <input type="checkbox" name="interests" value="sports" />
+                  <span>Sports</span>
+                </label>
+                <label class="interest-checkbox">
+                  <input type="checkbox" name="interests" value="culture" />
+                  <span>Culture</span>
+                </label>
+                <label class="interest-checkbox">
+                  <input type="checkbox" name="interests" value="technology" />
+                  <span>Technology</span>
+                </label>
+                <label class="interest-checkbox">
+                  <input type="checkbox" name="interests" value="environment" />
+                  <span>Environment</span>
+                </label>
+                <label class="interest-checkbox">
+                  <input type="checkbox" name="interests" value="education" />
+                  <span>Education</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Profile Picture</label>
+              <input
+                type="file"
+                name="profilePicture"
+                accept="image/*"
+                id="profilePictureUpload"
+              />
+            </div>
+
+            <button type="submit" class="btn-primary">Save Profile</button>
+          </form>
+        </section>
+
+        <section id="preferencesSection">
+          <h1>Service Preferences</h1>
+          <div class="preferences-grid">
+            <div class="preference-card">
+              <i class="fas fa-bus"></i>
+              <h3>Transportation</h3>
+              <div class="preference-options">
+                <label>
+                  <input
+                    type="checkbox"
+                    name="transportPreferences"
+                    value="bus"
+                  />
+                  Bus
+                </label>
+                <label>
+                  <input
+                    type="checkbox"
+                    name="transportPreferences"
+                    value="metro"
+                  />
+                  Metro
+                </label>
+                <label>
+                  <input
+                    type="checkbox"
+                    name="transportPreferences"
+                    value="train"
+                  />
+                  Train
+                </label>
+              </div>
+            </div>
+            <!-- More preference cards for other services -->
+          </div>
+        </section>
+
+        <section id="servicesSection">
+          <h1>My City Services</h1>
+          <div class="services-grid">
+            <div class="service-card active">
+              <i class="fas fa-shopping-cart"></i>
+              <h3>Groceries</h3>
+              <p>Last used: 2 days ago</p>
+            </div>
+            <div class="service-card">
+              <i class="fas fa-ambulance"></i>
+              <h3>Emergency Services</h3>
+              <p>Not used recently</p>
+            </div>
+            <!-- More service cards -->
+          </div>
+        </section>
+
+        <section id="securitySection">
+          <h1>Account Security</h1>
+          <div class="security-options">
+            <div class="security-card">
+              <i class="fas fa-key"></i>
+              <h3>Change Password</h3>
+              <button>Update</button>
+            </div>
+            <div class="security-card">
+              <i class="fas fa-shield-alt"></i>
+              <h3>Two-Factor Authentication</h3>
+              <button>Enable</button>
+            </div>
+          </div>
+        </section>
+
+        <section id="recommendationsSection">
+          <h1>Personalized Recommendations</h1>
+          <div class="recommendations-grid">
+            <div class="recommendation-card">
+              <img
+                src="../images/service-recommendation.jpg"
+                alt="Recommended Service"
+              />
+              <div class="recommendation-details">
+                <h3>Healthcare Services</h3>
+                <p>Based on your profile and location</p>
+                <button>Explore</button>
+              </div>
+            </div>
+            <!-- More recommendation cards -->
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h3>Quick Links</h3>
+            <ul>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="services.html">Services</a></li>
+              <li><a href="aboutus.html">About Us</a></li>
+              <li><a href="contact.html">Contact</a></li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h3>Services</h3>
+            <ul>
+              <li><a href="bus-booking.html">Bus Booking</a></li>
+              <li><a href="groceries.html">Groceries</a></li>
+              <li><a href="medicine.html">Medicine</a></li>
+              <li><a href="emergency-services.html">Emergency Services</a></li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h3>Legal</h3>
+            <ul>
+              <li>
+                <a href="../resources/Privecy Policy.pdf" target="_blank"
+                  >Privacy Policy</a
+                >
+              </li>
+              <li><a href="#">Terms of Service</a></li>
+              <li><a href="#">Refund Policy</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2024 City Sphere. All Rights Reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="../js/auth-new.js"></script>
+    <script src="../js/user-dashboard.js"></script>
+    <script src="../js/home.js"></script>  </body>
+</html>

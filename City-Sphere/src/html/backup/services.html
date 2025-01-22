@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>City Sphere - My City in My Phone</title>
+    <title>City Sphere - Services</title>
     <link rel="manifest" href="../manifest.json" />
     <meta name="theme-color" content="#0066CC" />
     <link
@@ -11,6 +11,7 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
     />
     <link rel="stylesheet" href="../css/home.css" />
+    <link rel="stylesheet" href="../css/services.css" />
     <link rel="stylesheet" href="../css/navigation.css" />
   </head>
   <body>
@@ -55,12 +56,10 @@
               <a href="wallet.html" class="btn btn-wallet">
                 <i class="fas fa-wallet"></i>Wallet
               </a>
-              <div id="authSection">
-                <a href="auth.html" class="btn btn-login">
-                  <i class="fas fa-user"></i>Login
-                </a>
-              </div>
-            </div>            </div>
+              <a href="auth.html" class="btn btn-login">
+                <i class="fas fa-user"></i>Login
+              </a>
+            </div>
           </div>
           <div class="hamburger">
             <span></span>
@@ -70,35 +69,16 @@
         </div>
       </nav>
     </header>
+    <br />
     <main>
-      <section class="welcome-section">
+      <section class="services-section">
         <div class="container">
-          <div class="welcome-content">
-            <div id="greeting"></div>
-            <p class="welcome-message">
-              Welcome to City Sphere, where your city meets convenience.
-            </p>
-            <div class="welcome-time">
-              <div class="time-wrapper">
-                <i class="fas fa-clock"></i>
-                <div id="time"></div>
-              </div>
-              <div class="date-wrapper">
-                <i class="fas fa-calendar"></i>
-                <div id="date"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="services" class="services section-first">
-        <div class="container">
-          <h2>Essential City Services at Your Fingertips</h2>
+          <h2>Our Services</h2>
           <p class="section-description">
-            Save time and effort by accessing everyday services through our
-            platform
+            Explore our comprehensive range of city services designed to make
+            your life easier
           </p>
+
           <div class="services-grid">
             <div class="service-card">
               <a href="doctors.html">
@@ -181,32 +161,29 @@
         </div>
       </section>
 
-      <section id="features" class="features">
+      <section class="features-section">
         <div class="container">
-          <h2>Why Choose City Sphere?</h2>
-          <p class="section-description">
-            Your time is valuable. Let us help you make the most of it.
-          </p>
+          <h2>Why Choose Our Services ?</h2>
           <div class="features-grid">
             <div class="feature-card">
               <i class="fas fa-clock"></i>
-              <h3>Save Time</h3>
-              <p>Access all services instantly without waiting in queues</p>
-            </div>
-            <div class="feature-card">
-              <i class="fas fa-mobile-alt"></i>
-              <h3>Everything in One App</h3>
-              <p>All city services integrated into a single platform</p>
+              <h3>24/7 Availability</h3>
+              <p>Access our services anytime, anywhere</p>
             </div>
             <div class="feature-card">
               <i class="fas fa-shield-alt"></i>
-              <h3>Safe & Secure</h3>
-              <p>Your data is protected with industry-standard security</p>
+              <h3>Secure & Reliable</h3>
+              <p>Your safety and security is our priority</p>
             </div>
             <div class="feature-card">
               <i class="fas fa-hand-holding-usd"></i>
-              <h3>Save Money</h3>
-              <p>Get the best deals and offers on all services</p>
+              <h3>Best Prices</h3>
+              <p>Competitive prices and great deals</p>
+            </div>
+            <div class="feature-card">
+              <i class="fas fa-headset"></i>
+              <h3>Expert Support</h3>
+              <p>Get help from our dedicated support team</p>
             </div>
           </div>
         </div>
@@ -214,6 +191,7 @@
     </main>
 
     <script src="../js/home.js"></script>
+    <script src="../js/services.js"></script>
 
     <script src="../js/navigation.js"></script>
     <footer>
@@ -247,7 +225,7 @@
         </div>
         <div class="footer-bottom">
           <p>&copy; 2024 City Sphere. All Rights Reserved. 
-            <a href="./resources/Privacy Policy.pdf" style="color: white; margin-left: 15px;" target="_blank">Privacy Policy</a>
+            <a href="../resources/Privecy Policy.pdf" style="color: white; margin-left: 15px;" target="_blank">Privacy Policy</a>
           </p>
         </div>
       </div>

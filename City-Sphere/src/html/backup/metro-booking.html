@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>City Sphere - Flight Booking</title>
+    <title>City Sphere - Metro Tickets</title>
     <link rel="manifest" href="../manifest.json" />
     <meta name="theme-color" content="#0066CC" />
     <link
@@ -11,7 +11,7 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
     />
     <link rel="stylesheet" href="../css/home.css" />
-    <link rel="stylesheet" href="../css/flight-booking.css" />
+    <link rel="stylesheet" href="../css/metro-booking.css" />
     <link rel="stylesheet" href="../css/navigation.css" />
   </head>
   <body>
@@ -56,12 +56,11 @@
               <a href="wallet.html" class="btn btn-wallet">
                 <i class="fas fa-wallet"></i>Wallet
               </a>
-              <div id="authSection">
-                <a href="auth.html" class="btn btn-login">
-                  <i class="fas fa-user"></i>Login
-                </a>
-              </div>
-            </div>          </div>
+              <a href="auth.html" class="btn btn-login">
+                <i class="fas fa-user"></i>Login
+              </a>
+            </div>
+          </div>
           <div class="hamburger">
             <span></span>
             <span></span>
@@ -71,60 +70,60 @@
       </nav>
     </header>
     <main>
-      <section class="flight-booking-section section-first">
+      <section class="metro-booking-section section-first">
         <div class="container">
-          <h2>Book Flight Tickets</h2>
+          <h2>Book Metro Tickets</h2>
           <p class="section-description">
-            Easy and convenient flight ticket booking for your travel needs
+            Easy and convenient metro ticket booking for your travel needs
           </p>
-          <div class="flight-card">
-            <div class="flight-details">
-              <h3>Pune to Mumbai - IndiGo</h3>
-              <p>Flight Number: 6E 2345</p>
-              <p>Route: Pune (PNQ) to Mumbai (BOM)</p>
-              <p>Departure: Pune Airport</p>
-              <p>Arrival: Mumbai Airport</p>
-              <p>Departure Time: 07:30 AM</p>
-              <p>Duration: 1 hour</p>
-              <p class="price">Price: ₹3500</p>
+          <div class="metro-card">
+            <div class="metro-details">
+              <h3>Pune Metro - Blue Line</h3>
+              <p>Route: Vanaz to Ramwadi</p>
+              <p>Departure: Vanaz Station</p>
+              <p>Arrival: Ramwadi Station</p>
+              <p>First Train: 06:00 AM</p>
+              <p>Last Train: 10:00 PM</p>
+              <p>Frequency: Every 10 minutes</p>
+              <p class="price">Single Journey: ₹20</p>
             </div>
             <div class="buttons">
               <button class="button">Book Ticket</button>
-              <button class="button">View Details</button>
+              <button class="button">View Route</button>
             </div>
           </div>
 
-          <div class="flight-card">
-            <div class="flight-details">
-              <h3>Mumbai to Delhi - Air India</h3>
-              <p>Flight Number: AI 9876</p>
-              <p>Route: Mumbai (BOM) to Delhi (DEL)</p>
-              <p>Departure: Mumbai Airport</p>
-              <p>Arrival: Delhi Airport</p>
-              <p>Departure Time: 02:00 PM</p>
-              <p>Duration: 2 hours 15 minutes</p>
-              <p class="price">Price: ₹5000</p>
+          <div class="metro-card">
+            <div class="metro-details">
+              <h3>Pune Metro - Red Line</h3>
+              <p>Route: Swargate to Shivaji Nagar</p>
+              <p>Departure: Swargate Station</p>
+              <p>Arrival: Shivaji Nagar Station</p>
+              <p>First Train: 05:30 AM</p>
+              <p>Last Train: 10:30 PM</p>
+              <p>Frequency: Every 12 minutes</p>
+              <p class="price">Single Journey: ₹25</p>
             </div>
             <div class="buttons">
               <button class="button">Book Ticket</button>
-              <button class="button">View Details</button>
+              <button class="button">View Route</button>
             </div>
           </div>
 
-          <div class="flight-card">
-            <div class="flight-details">
-              <h3>Pune to Bangalore - SpiceJet</h3>
-              <p>Flight Number: SG 3456</p>
-              <p>Route: Pune (PNQ) to Bangalore (BLR)</p>
-              <p>Departure: Pune Airport</p>
-              <p>Arrival: Bangalore Airport</p>
-              <p>Departure Time: 09:45 PM</p>
-              <p>Duration: 1 hour 30 minutes</p>
-              <p class="price">Price: ₹4200</p>
+          <div class="metro-card">
+            <div class="metro-details">
+              <h3>Pune Metro - Green Line</h3>
+              <p>Route: Pimpri to Chinchwad</p>
+              <p>Departure: Pimpri Station</p>
+              <p>Arrival: Chinchwad Station</p>
+              <p>First Train: 05:45 AM</p>
+              <p>Last Train: 10:15 PM</p>
+              <p>Frequency: Every 15 minutes</p>
+              <p class="price">Single Journey: ₹30</p>
             </div>
             <div class="buttons">
               <button class="button">Book Ticket</button>
-              <button class="button">View Details</button>
+              <button class="button">View Route</button>
             </div>
           </div>
         </div>
@@ -132,7 +131,7 @@
     </main>
 
     <script src="../js/home.js"></script>
-    <script src="../js/flight-booking.js"></script>
+    <script src="../js/metro-booking.js"></script>
 
     <script src="../js/navigation.js"></script>
     <footer>

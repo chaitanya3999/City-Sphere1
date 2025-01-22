@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>City Sphere - Groceries</title>
+    <title>City Sphere - Fresh Vegetables</title>
     <link rel="manifest" href="../manifest.json">
     <meta name="theme-color" content="#0066CC">    <link rel="stylesheet" href="../css/form-validation.css" />
     <link
@@ -41,16 +41,15 @@
                     <li><a href="aboutus.html"><i class="fas fa-users"></i>About Us</a></li>
                     <li><a href="contact.html"><i class="fas fa-envelope"></i>Contact</a></li>
                 </ul>
-            <div class="nav-buttons">
-              <a href="wallet.html" class="btn btn-wallet">
-                <i class="fas fa-wallet"></i>Wallet
-              </a>
-              <div id="authSection">
-                <a href="auth.html" class="btn btn-login">
-                  <i class="fas fa-user"></i>Login
-                </a>
-              </div>
-            </div>            <div class="hamburger">
+                <div class="nav-buttons">
+                    <a href="wallet.html" class="btn btn-wallet">
+                        <i class="fas fa-wallet"></i>Wallet
+                    </a>
+                    <a href="auth.html" class="btn btn-login">
+                        <i class="fas fa-user"></i>Login
+                    </a>
+                </div>            </div>
+            <div class="hamburger">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -62,11 +61,11 @@
       <section class="groceries-section section-first">
         <div class="container">
           <div class="groceries-header">
-            <h2>Grocery Order</h2>
+            <h2>Fresh Vegetables Order</h2>
             <div class="order-details">
               <div class="order-id">
                 <span>Order ID:</span>
-                <strong id="orderIdDisplay">GRO-{{ randomOrderId }}</strong>
+                <strong id="orderIdDisplay">VEG-{{ randomOrderId }}</strong>
               </div>
               <div class="order-date">
                 <span>Date:</span>
@@ -78,7 +77,7 @@
           <div class="groceries-ticket">
             <div class="ticket-section customer-info">
               <h3>Customer Information</h3>
-              <form id="groceryOrderForm" action="" method="GET">
+              <form id="vegetablesOrderForm" action="" method="GET">
                 <div class="form-row">
                   <div class="form-group">
                     <label for="name">Full Name</label>
@@ -133,15 +132,12 @@
               <h3>Order Details</h3>
               <div class="form-row">
                 <div class="form-group">
-                  <label for="mode">Select Grocery Category</label>
+                  <label for="mode">Select Mode to give list:</label>
                   <select id="mode" name="mode" required>
-                    <option value="">Select Grocery Category</option>
-                    <option value="Dairy,Bread & eggs">Dairy, Bread & Eggs</option>
-                    <option value="Vegetables & Fruits">Vegetables & Fruits</option>
-                    <option value="Snacks & Drinks">Snacks & Drinks</option>
-                    <option value="Beauty & Personal care">Beauty & Personal Care</option>
-                    <option value="Household essential">Household Essentials</option>
-                    <option value="Atta,Rice & Dal">Atta, Rice & Dal</option>
+                    <option value="">Select a mode</option>
+                    <option value="upload-list">Upload list</option>
+                    <option value="give-in-text">Give in text</option>
+                    <option value="select-by-options">Select by options</option>
                   </select>
                 </div>
                 <div class="form-group">
@@ -155,8 +151,8 @@
                 </div>
               </div>
               <div class="form-group list-section">
-                <label for="list">Grocery List</label>
-                <textarea id="list" name="list" placeholder="Type your grocery list here (optional)"></textarea>
+                <label for="list">List:</label>
+                <textarea id="list" name="list" placeholder="Type your list here (optional)"></textarea>
               </div>
             </div>
 
@@ -180,7 +176,7 @@
 
             <div class="ticket-actions">
               <button type="button" class="btn-calculate-total">Calculate Total</button>
-              <button type="submit" class="btn-submit-order">Submit Grocery Order</button>
+              <button type="submit" class="btn-submit-order">Submit Vegetables Order</button>
             </div>
             </form>
           </div>
@@ -192,7 +188,7 @@
     <script src="../js/form-validation.js"></script>
     <script src="../js/performance-optimizer.js"></script>
     <script src="../js/home.js"></script>
-    <script src="../js/groceries.js"></script>
+    <script src="../js/vegetables.js"></script>
       
 
 
