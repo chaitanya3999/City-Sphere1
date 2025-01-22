@@ -1,3 +1,5 @@
+import AuthService from './custom-auth.js';
+
 document.addEventListener('DOMContentLoaded', () => {
     const signupForm = document.getElementById('signupForm');
     const phoneInput = document.getElementById('signupPhone');
@@ -82,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Form submission handling
-    signupForm.addEventListener('submit', (e) => {
+    signupForm.addEventListener('submit', async (e) => {
         e.preventDefault();
 
         // Collect form data
@@ -98,9 +100,11 @@ document.addEventListener('DOMContentLoaded', () => {
             profilePicture: selectedProfilePicture
         };
 
-        // Simulate form submission (replace with actual backend call)
-        console.log('Signup Data:', formData);
-        localStorage.setItem('userSignupData', JSON.stringify(formData));
-        window.location.href = 'user-dashboard.html';
+        try {
+            const result = await AuthService.signup(formData);
+            window.location.href = 'user-dashboard.html';
+        } catch (error) {
+            alert(error.message || 'Signup failed');
+        }
     });
 });

@@ -29,14 +29,12 @@ function updateGreeting() {
         const hour = new Date().getHours();
         
         let greetingText;
-        if (hour >= 5 && hour < 12) {
+        if (hour >= 0 && hour < 12) {
             greetingText = 'Good Morning!';
-        } else if (hour >= 12 && hour < 17) {
+        } else if (hour >= 12 && hour < 18) {
             greetingText = 'Good Afternoon!';
-        } else if (hour >= 17 && hour < 22) {
+        } else if (hour >= 18 && hour <= 23) {
             greetingText = 'Good Evening!';
-        } else {
-            greetingText = 'Good Night!';
         }
 
         if (elements.greeting) {
@@ -137,8 +135,79 @@ const smoothScroll = debounce((target) => {
     });
 }, 100);
 
-// Initialize everything when the DOM is loaded
+import AuthService from './custom-auth.js';
+
 document.addEventListener('DOMContentLoaded', () => {
+    const elements = {
+        hamburger: document.querySelector('.hamburger'),
+        navWrapper: document.querySelector('.nav-wrapper'),
+        serviceCards: document.querySelectorAll('.service-card'),
+        featureCards: document.querySelectorAll('.feature-card'),
+        authSection: document.getElementById('authSection'),
+        greeting: document.getElementById('greeting')
+    };
+
+    // Authentication State Management
+    function updateAuthState() {
+        const isAuthenticated = AuthService.isAuthenticated();
+        const userData = JSON.parse(localStorage.getItem('userSignupData') || '{}');
+
+        if (isAuthenticated) {
+            const profilePicUrl = userData.profilePicture || '../images/default-avatar.png';
+
+            // Update navigation with profile picture
+            elements.authSection.innerHTML = `
+                <a href="user-dashboard.html" class="profile-link">
+                    <img src="${profilePicUrl}" alt="Profile" class="profile-pic">
+                    <span>${userData.name || 'User'}</span>
+                </a>
+                <button onclick="window.logout()" class="btn-logout">Logout</button>
+            `;
+
+            // Update greeting
+            if (elements.greeting) {
+                const currentHour = new Date().getHours();
+                let greeting = 'Hello';
+
+                if (currentHour >= 0 && currentHour < 12) {
+                    greeting = 'Good Morning';
+                } else if (currentHour >= 12 && currentHour < 18) {
+                    greeting = 'Good Afternoon';
+                } else if (currentHour >= 18 && currentHour <= 23) {
+                    greeting = 'Good Evening';
+                }
+
+                elements.greeting.innerHTML = `
+                    <h1>${greeting}, ${userData.name || 'User'}!</h1>
+                    <p>Welcome back to City Sphere</p>
+                `;
+            }
+        } else {
+            // User is signed out
+            elements.authSection.innerHTML = `
+                <a href="auth.html" class="btn btn-login">
+                    <i class="fas fa-user"></i>Login
+                </a>
+            `;
+
+            // Reset greeting
+            if (elements.greeting) {
+                elements.greeting.innerHTML = `
+                    <h1>Welcome to City Sphere</h1>
+                    <p>Your Urban Services Platform</p>
+                `;
+            }
+        }
+    }
+
+    // Global logout function
+    window.logout = () => {
+        AuthService.logout();
+    };
+
+    // Initial auth state update
+    updateAuthState();
+
     try {
         updateGreeting();
         updateDateTime();
@@ -161,51 +230,63 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
-        // Login State Management
-        const signupData = localStorage.getItem('userSignupData');
-        const profileData = localStorage.getItem('userProfileData');
-
-        if (signupData) {
-            const userData = JSON.parse(signupData);
-            const profilePicUrl = profileData ? 
-                JSON.parse(profileData).profilePicture || '../images/default-avatar.png' 
-                : '../images/default-avatar.png';
-
-            // Replace login button with profile picture
-            elements.authSection.innerHTML = `
-                <a href="user-dashboard.html" class="profile-link">
-                    <img src="${profilePicUrl}" alt="Profile" class="profile-pic">
-                    <span>${userData.name || 'User'}</span>
-                </a>
-            `;
-
-            // Update greeting if user is logged in
-            if (elements.greeting) {
-                const currentHour = new Date().getHours();
-                let greeting = 'Hello';
-
-                if (currentHour < 12) {
-                    greeting = 'Good Morning';
-                } else if (currentHour < 18) {
-                    greeting = 'Good Afternoon';
-                } else {
-                    greeting = 'Good Evening';
-                }
-
-                elements.greeting.innerHTML = `
-                    <h1>${greeting}, ${userData.name || 'User'}!</h1>
-                    <p>Welcome back to City Sphere</p>
-                `;
-            }
+        // Hamburger menu toggle
+        if (elements.hamburger && elements.navWrapper) {
+            elements.hamburger.addEventListener('click', () => {
+                elements.navWrapper.classList.toggle('active');
+            });
         }
 
-        // Logout functionality
-        window.logout = () => {
-            localStorage.removeItem('userSignupData');
-            localStorage.removeItem('userProfileData');
-            window.location.href = 'index.html';
-        };
+        // Service cards hover effect
+        elements.serviceCards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.classList.add('hovered');
+            });
+            card.addEventListener('mouseleave', () => {
+                card.classList.remove('hovered');
+            });
+        });
 
+        // Feature cards hover effect
+        elements.featureCards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.classList.add('hovered');
+            });
+            card.addEventListener('mouseleave', () => {
+                card.classList.remove('hovered');
+            });
+        });
+
+        // Newsletter subscription
+        const newsletterForm = document.querySelector('.newsletter-form');
+        if (newsletterForm) {
+            newsletterForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const email = newsletterForm.querySelector('input[type="email"]').value;
+                
+                // Show success message
+                showNotification('Thank you for subscribing to our newsletter!');
+                newsletterForm.reset();
+            });
+        }
+
+        // Notification system
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            // Trigger animation
+            setTimeout(() => notification.classList.add('show'), 10);
+            
+            // Remove notification after 3 seconds
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => document.body.removeChild(notification), 300);
+            }, 3000);
+        }
     } catch (error) {
         console.error('Error initializing app:', error);
     }
@@ -222,44 +303,4 @@ if ('serviceWorker' in navigator) {
                 console.error('ServiceWorker registration failed:', error);
             });
     });
-}
-
-// Newsletter subscription
-const newsletterForm = document.querySelector('.newsletter-form');
-if (newsletterForm) {
-    newsletterForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const email = newsletterForm.querySelector('input[type="email"]').value;
-        
-        // Show success message
-        showNotification('Thank you for subscribing to our newsletter!');
-        newsletterForm.reset();
-    });
-}
-
-// Notification system
-function showNotification(message) {
-    const notification = document.createElement('div');
-    notification.className = 'notification';
-    notification.textContent = message;
-    
-    document.body.appendChild(notification);
-    
-    // Trigger animation
-    setTimeout(() => notification.classList.add('show'), 10);
-    
-    // Remove notification after 3 seconds
-    setTimeout(() => {
-        notification.classList.remove('show');
-        setTimeout(() => document.body.removeChild(notification), 300);
-    }, 3000);
-}
-
-// Login and Register redirects
-function redirectToLogin() {
-    window.location.href = 'Register-Login.html';
-}
-
-function redirectToSignUp() {
-    window.location.href = 'Register-Login.html';
 }
