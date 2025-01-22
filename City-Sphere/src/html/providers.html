@@ -4,10 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Providers</title>
-    <link rel="manifest" href="../manifest.json">
-    <meta name="theme-color" content="#0066CC">    <link rel="stylesheet" href="../css/providers.css" />
-      <link rel="stylesheet" href="../css/navigation.css" />
-</head>
+    <link rel="manifest" href="../manifest.json" />
+    <meta name="theme-color" content="#0066CC" />
+    <link rel="stylesheet" href="../css/providers.css" />
+    <link rel="stylesheet" href="../css/navigation.css" />
+  </head>
   <body>
     <div class="bake">
       <button id="home" onclick="redirectToHome()">Back</button>
@@ -58,59 +59,58 @@
       </form>
     </div>
     <script src="../js/providers.js"></script>
-      
-
-
 
     <script src="../js/navigation.js"></script>
-<footer>
-    <div class="container">
+    <footer>
+      <div class="container">
         <div class="footer-content">
-            <div class="footer-section">
-                <h3>About City Sphere</h3>
-                <p>Connecting citizens, simplifying urban life.</p>
+          <div class="footer-section">
+            <h3>About City Sphere</h3>
+            <p>Connecting citizens, simplifying urban life.</p>
+          </div>
+          <div class="footer-section">
+            <h3>Quick Links</h3>
+            <ul>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="services.html">Services</a></li>
+              <li><a href="contact.html">Contact</a></li>
+              <li><a href="aboutus.html">About Us</a></li>
+              <li><a href="emergency-services.html">Emergency Services</a></li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h3>Contact Us</h3>
+            <p>Email: info@citysphere.com</p>
+            <p>Phone: +1 234 567 890</p>
+            <div class="social-links">
+              <a href="#"><i class="fab fa-facebook"></i></a>
+              <a href="#"><i class="fab fa-twitter"></i></a>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="#"><i class="fab fa-linkedin"></i></a>
             </div>
-            <div class="footer-section">
-                <h3>Quick Links</h3>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="services.html">Services</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h3>Contact Us</h3>
-                <p>Email: info@citysphere.com</p>
-                <p>Phone: +1 234 567 890</p>
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-facebook"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-linkedin"></i></a>
-                </div>
-            </div>
+          </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2024 City Sphere. All Rights Reserved.</p>
+          <p>&copy; 2024 City Sphere. All Rights Reserved.</p>
         </div>
-    </div>
-</footer>
-<script>
-    if ("serviceWorker" in navigator) {
+      </div>
+    </footer>
+    <script>
+      if ("serviceWorker" in navigator) {
         window.addEventListener("load", () => {
-            navigator.serviceWorker
-                .register("../service-worker.js")
-                .then((registration) => {
-                    console.log(
-                        "Service Worker registered successfully:",
-                        registration.scope
-                    );
-                })
-                .catch((error) => {
-                    console.error("Service Worker registration failed:", error);
-                });
+          navigator.serviceWorker
+            .register("../service-worker.js")
+            .then((registration) => {
+              console.log(
+                "Service Worker registered successfully:",
+                registration.scope
+              );
+            })
+            .catch((error) => {
+              console.error("Service Worker registration failed:", error);
+            });
         });
-    }
-</script>
-</body>
+      }
+    </script>
+  </body>
 </html>

@@ -1,64 +1,94 @@
 /* Emergency Services Page Styles */
 .emergency-services-section {
-    padding: 50px 0;
-    background-color: #f9f9f9;
+  padding: 4rem 0;
+  background: #f9f9f9;
+}
+.emergency-services-section h2 {
+  text-align: center;
+  color: #ff6600;
+  margin-bottom: 1rem;
+  font-size: 2rem;
 }
 
+.section-description {
+  text-align: center;
+  color: #666;
+  max-width: 600px;
+  margin: 0 auto 3rem;
+  font-size: 1.1rem;
+}
 .emergency-card {
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
-    padding: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  background: white;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: 0.3s ease-in-out;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.emergency-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
 }
 
 .emergency-details h3 {
-    color: #333;
-    margin-bottom: 10px;
+  color: #ff6600;
+  margin-bottom: 0.5rem;
+  font-size: 1.5rem;
 }
 
 .emergency-details p {
-    color: #666;
-    margin: 5px 0;
+  color: #666;
+  margin-bottom: 0.3rem;
+  font-size: 1rem;
 }
 
 .emergency-details .urgency {
-    color: #dc3545;
-    font-weight: bold;
-    margin-top: 10px;
+  color: #dc3545;
+  font-weight: bold;
+  margin-top: 10px;
 }
 
 .buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+  margin-top: 1rem;
+  display: flex;
+  gap: 1rem;
 }
 
 .button {
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .emergency-call {
-    background-color: #dc3545;
-    color: white;
+  background-color: #dc3545;
+  color: white;
 }
 
 .emergency-call:hover {
-    background-color: #a71d2a;
+  background-color: #a71d2a;
 }
 
 .emergency-location {
-    background-color: #007bff;
-    color: white;
+  background-color: #007bff;
+  color: white;
 }
 
 .emergency-location:hover {
-    background-color: #0056b3;
+  background-color: #0056b3;
+}
+/* Responsive Buttons */
+@media (max-width: 768px) {
+  .buttons {
+    flex-direction: column;
+  }
+
+  .button {
+    width: 100%;
+    padding: 1rem;
+  }
 }
