@@ -32,18 +32,21 @@ const JWT_SECRET = 'your_super_secret_key_city_sphere_2025';
 // Initialize Database Schema
 function initializeDatabase() {
     // Users Table
-    db.run(`CREATE TABLE IF NOT EXISTS users (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT NOT NULL,
-        email TEXT UNIQUE NOT NULL,
-        password TEXT NOT NULL,
-        phone TEXT,
-        address TEXT,
-        workplace TEXT,
-        services TEXT,
-        profile_picture TEXT,
-        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-    )`);
+    const createUserTableQuery = `
+        CREATE TABLE IF NOT EXISTS users (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            email TEXT UNIQUE NOT NULL,
+            password TEXT NOT NULL,
+            profile_picture TEXT,
+            phone TEXT,
+            address TEXT,
+            workplace TEXT,
+            services TEXT,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+        )
+    `;
+    db.run(createUserTableQuery);
 
     // User Preferences Table
     db.run(`CREATE TABLE IF NOT EXISTS user_preferences (
@@ -228,6 +231,53 @@ app.put('/api/profile', authenticateToken, (req, res) => {
             res.json({ message: 'Profile updated successfully' });
         }
     );
+});
+
+// Add user details update route
+app.post('/api/user/details', authenticateToken, async (req, res) => {
+  try {
+    const userId = req.user.id; // From authentication middleware
+    const { phone, address, workplace, services } = req.body;
+
+    // Validate input (optional but recommended)
+    const updateData = {};
+    if (phone) updateData.phone = phone;
+    if (address) updateData.address = address;
+    if (workplace) updateData.workplace = workplace;
+    if (services && services.length > 0) updateData.services = services;
+
+    // Update user details in the database
+    const updateQuery = `
+        UPDATE users 
+        SET phone = ?, address = ?, workplace = ?, services = ?
+        WHERE id = ?
+    `;
+
+    db.run(
+        updateQuery, 
+        [
+            updateData.phone, 
+            updateData.address, 
+            updateData.workplace, 
+            JSON.stringify(updateData.services || []), 
+            userId
+        ], 
+        function(err) {
+            if (err) {
+                return res.status(500).json({ message: 'Internal server error' });
+            }
+
+            if (this.changes === 1) {
+                res.status(200).json({ message: 'User details updated successfully' });
+            } else {
+                res.status(404).json({ message: 'User not found or no changes made' });
+            }
+        }
+    );
+  } catch (error) {
+    console.error('Error updating user details:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
 });
 
 // Catch-all route to serve index.html for client-side routing

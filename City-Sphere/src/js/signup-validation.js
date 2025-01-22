@@ -2,8 +2,6 @@ import AuthService from './custom-auth.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     const signupForm = document.getElementById('signupForm');
-    const phoneInput = document.getElementById('signupPhone');
-    const addressInput = document.getElementById('signupAddress');
     const passwordInput = document.getElementById('signupPassword');
     const confirmPasswordInput = document.getElementById('confirmPassword');
     const profilePictureInput = document.getElementById('profilePictureUpload');
@@ -18,26 +16,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 selectedProfilePicture = e.target.result;
             };
             reader.readAsDataURL(file);
-        }
-    });
-
-    // Phone number validation
-    phoneInput.addEventListener('input', (e) => {
-        const phoneRegex = /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/;
-        if (!phoneRegex.test(e.target.value)) {
-            e.target.setCustomValidity('Please enter a valid phone number');
-        } else {
-            e.target.setCustomValidity('');
-        }
-    });
-
-    // Address validation
-    addressInput.addEventListener('input', (e) => {
-        const addressRegex = /^[a-zA-Z0-9\s,'-]*$/;
-        if (e.target.value.length < 10) {
-            e.target.setCustomValidity('Please enter a complete address');
-        } else {
-            e.target.setCustomValidity('');
         }
     });
 
@@ -91,11 +69,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const formData = {
             name: document.getElementById('signupName').value,
             email: document.getElementById('signupEmail').value,
-            phone: phoneInput.value,
-            address: addressInput.value,
-            workplace: document.getElementById('signupWorkplace').value,
-            services: Array.from(document.querySelectorAll('input[name="services"]:checked'))
-                .map(checkbox => checkbox.value),
             password: passwordInput.value,
             profilePicture: selectedProfilePicture
         };
