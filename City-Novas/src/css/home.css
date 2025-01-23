@@ -216,17 +216,25 @@ header {
   color: white;
 }
 
-.btn-login {
-  background: transparent;
-  color: var(--primary-color);
+.nav-buttons .btn-login {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 10px 20px;
+  background-color: transparent;
   border: 2px solid var(--primary-color);
+  color: var(--primary-color);
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
 }
 
-.btn-login:hover {
-  background: var(--primary-color);
+.nav-buttons .btn-login:hover {
+  background-color: var(--primary-color);
   color: white;
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(255, 107, 0, 0.2);
+  box-shadow: 0 5px 15px rgba(255, 107, 0, 0.2);
 }
 
 .btn-signup {
@@ -453,47 +461,89 @@ header {
 .mission-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 30px;
-  margin-bottom: 40px;
+  gap: 1.5rem;
 }
 
 .mission-card {
-  background-color: white;
-  border-radius: 12px;
-  padding: 30px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background: white;
+  border-radius: 15px;
+  padding: 2rem;
+  text-align: center;
+  transition: var(--transition);
+  box-shadow: var(--box-shadow);
 }
 
 .mission-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+  transform: translateY(-5px);
 }
 
-.mission-icon {
-  font-size: 3rem;
-  color: #ff6b00;
-  margin-bottom: 20px;
+.mission-card i {
+  font-size: 2.5rem;
+  color: var(--primary-color);
+  margin-bottom: 1rem;
 }
 
-.mission-text h3 {
-  color: #2c3e50;
-  margin-bottom: 15px;
-  font-size: 1.3rem;
+.mission-card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: var(--primary-color);
+  font-weight: 600;
+  transition: color 0.3s ease;
 }
 
-.mission-text p {
-  color: #7f8c8d;
-  line-height: 1.6;
+.mission-card:hover h3 {
+  color: var(--accent-color);
 }
 
+.mission-card p {
+  font-size: 0.9rem;
+  opacity: 0.8;
+  color: var(--text-color);
+  transition: color 0.3s ease;
+}
+
+.mission-card:hover p {
+  color: var(--text-color);
+  opacity: 1;
+}
+
+/* Mission CTA Button Styling */
 .mission-cta {
-  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  margin-top: 3rem;
 }
 
 .mission-cta .btn-primary {
-  padding: 15px 30px;
+  padding: 15px 40px;
   font-size: 1.1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+  background-color: var(--accent-color);
+  color: white;
+  text-decoration: none;
+  box-shadow: 0 10px 20px rgba(255, 107, 0, 0.2);
+}
+
+.mission-cta .btn-primary:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(255, 107, 0, 0.3);
+  background-color: #ff8533;
+}
+
+@media (max-width: 1024px) {
+  .mission-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .mission-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* Responsive Design */

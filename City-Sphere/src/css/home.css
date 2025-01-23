@@ -305,19 +305,22 @@ header {
   background: var(--bg-light);
 }
 
-.services h2 {
-  text-align: left;
-  margin-bottom: 1rem;
-  padding-left: 1rem;
+.services h2,
+.features h2 {
+  color: #2c3e50;
+  font-size: 2.5rem;
+  margin-bottom: 15px;
+  text-align: center;
 }
 
-.services .section-description {
-  text-align: left;
+.services .section-description,
+.features .section-description {
+  color: #7f8c8d;
+  text-align: center;
   max-width: 800px;
-  margin: 0 0 3rem 1rem;
-  color: var(--text-color);
-  font-size: 1.1rem;
+  margin: 0 auto 40px;
   line-height: 1.6;
+  font-size: 1.1rem;
 }
 
 .services-grid {
@@ -397,7 +400,8 @@ header {
 
 /* Responsive Design for Services */
 @media (max-width: 768px) {
-  .services-grid {
+  .services-grid,
+  .features-grid {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 1.5rem;
     padding: 0.5rem;

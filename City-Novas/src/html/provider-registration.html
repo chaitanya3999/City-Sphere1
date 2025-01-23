@@ -11,7 +11,12 @@
 <body>
     <div class="registration-container">
         <div class="registration-header">
-            <img src="../images/City Sphere Final copy.png" alt="City Novas Logo" class="logo">
+            <div class="registration-header-top">
+                <a href="index.html" class="home-btn">
+                    <i class="fas fa-home"></i>
+                </a>
+                <img src="../images/City Sphere Final copy.png" alt="City Novas Logo" class="logo">
+            </div>
             <h1>Become a City Novas Service Provider</h1>
             <p>Join our network and grow your local business</p>
         </div>
@@ -98,19 +103,25 @@
             </div>
 
             <div class="form-step" id="verification">
-                <h2>Final Verification</h2>
-                <div class="form-group">
-                    <label for="tax-id">
-                        <i class="fas fa-receipt"></i> Tax Identification Number
+                <h2>Phone Verification</h2>
+                <div class="form-group otp-section">
+                    <label for="phone-verification">
+                        <i class="fas fa-mobile-alt"></i> Verify Phone Number
                     </label>
-                    <input type="text" id="tax-id" name="tax-id" required placeholder="Enter your tax ID">
+                    <div class="otp-input-container">
+                        <input type="tel" id="phone-verification" name="phone" required placeholder="Enter your phone number">
+                        <button type="button" class="btn-send-otp">Send OTP</button>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="business-license">
-                        <i class="fas fa-file-contract"></i> Business License
+                <div class="form-group otp-verification" style="display: none;">
+                    <label for="otp">
+                        <i class="fas fa-key"></i> Enter OTP
                     </label>
-                    <input type="file" id="business-license" name="business-license" accept=".pdf,.jpg,.png" required>
-                    <small>Upload a clear copy of your business license</small>
+                    <div class="otp-input-container">
+                        <input type="text" id="otp" name="otp" required placeholder="Enter 6-digit OTP" maxlength="6" pattern="\d{6}">
+                        <button type="button" class="btn-verify-otp">Verify OTP</button>
+                    </div>
+                    <small class="otp-timer">Resend OTP in <span id="otp-countdown">60</span> seconds</small>
                 </div>
                 <div class="form-group terms">
                     <input type="checkbox" id="terms-agreement" name="terms-agreement" required>
@@ -122,7 +133,7 @@
                     <button type="button" class="prev-btn">
                         <i class="fas fa-arrow-left"></i> Previous
                     </button>
-                    <button type="submit" class="submit-btn">
+                    <button type="submit" class="submit-btn" disabled>
                         Complete Registration <i class="fas fa-check"></i>
                     </button>
                 </div>

@@ -5,6 +5,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const nextButtons = form.querySelectorAll('.next-btn');
     const prevButtons = form.querySelectorAll('.prev-btn');
 
+    // OTP Verification Elements
+    const sendOtpBtn = document.querySelector('.btn-send-otp');
+    const verifyOtpBtn = document.querySelector('.btn-verify-otp');
+    const otpSection = document.querySelector('.otp-section');
+    const otpVerificationSection = document.querySelector('.otp-verification');
+    const otpInput = document.getElementById('otp');
+    const phoneInput = document.getElementById('phone-verification');
+    const otpCountdown = document.getElementById('otp-countdown');
+    const submitBtn = document.querySelector('.submit-btn');
+
     let currentStep = 0;
 
     // Validation function
@@ -81,6 +91,56 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // OTP Verification Logic
+    let otpTimer;
+    let generatedOTP = '';
+
+    sendOtpBtn.addEventListener('click', () => {
+        const phoneNumber = phoneInput.value.trim();
+        
+        if (!phoneNumber || phoneNumber.length !== 10) {
+            alert('Please enter a valid 10-digit phone number');
+            return;
+        }
+
+        // Simulate OTP generation (replace with actual backend OTP generation)
+        generatedOTP = Math.floor(100000 + Math.random() * 900000).toString();
+        console.log('Generated OTP:', generatedOTP); // For demonstration
+
+        // Show OTP verification section
+        otpSection.style.display = 'none';
+        otpVerificationSection.style.display = 'block';
+
+        // Start countdown
+        let timeLeft = 60;
+        otpCountdown.textContent = timeLeft;
+
+        otpTimer = setInterval(() => {
+            timeLeft--;
+            otpCountdown.textContent = timeLeft;
+
+            if (timeLeft <= 0) {
+                clearInterval(otpTimer);
+                generatedOTP = ''; // Clear OTP after timeout
+                alert('OTP has expired. Please request a new one.');
+            }
+        }, 1000);
+    });
+
+    verifyOtpBtn.addEventListener('click', () => {
+        const enteredOTP = otpInput.value.trim();
+
+        if (enteredOTP === generatedOTP) {
+            // OTP Verified Successfully
+            clearInterval(otpTimer);
+            submitBtn.disabled = false;
+            alert('Phone number verified successfully!');
+            otpVerificationSection.classList.add('verified');
+        } else {
+            alert('Incorrect OTP. Please try again.');
+        }
+    });
+
     // Form submission
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -89,6 +149,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const isValid = Array.from(formSteps).every(validateStep);
         
         if (isValid) {
+            if (submitBtn.disabled) {
+                alert('Please verify your phone number first.');
+                return;
+            }
+
             const formData = new FormData(form);
             
             try {
