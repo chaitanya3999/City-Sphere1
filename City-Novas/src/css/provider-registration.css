@@ -233,7 +233,31 @@ body {
   transition: var(--transition);
   font-weight: 600;
 }
+.submit-btn {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
+.submit-btn:hover {
+  background-color: #ff5722;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(255, 107, 53, 0.3);
+}
+
+.submit-btn i {
+  margin-left: 0.5rem;
+}
 .prev-btn {
   background-color: #f0f0f0;
   color: var(--text-color);
@@ -440,7 +464,7 @@ body {
 }
 
 .divider::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 50%;
   left: 0;
@@ -488,7 +512,7 @@ body {
 }
 
 .radio-container input[type="radio"]:checked::after {
-  content: '✔';
+  content: "✔";
   color: white;
   display: flex;
   justify-content: center;
