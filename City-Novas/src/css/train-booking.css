@@ -1,0 +1,92 @@
+/* Train Booking Page Styles */
+.train-booking-section {
+  padding: 50px 0;
+  background-color: #f9f9f9;
+  text-align: center;
+}
+
+.train-booking-section h2 {
+  color: #ff6600;
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.train-card {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin: 20px auto;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 600px;
+  transition: all 0.3s ease-in-out;
+}
+
+.train-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.train-details {
+  text-align: left;
+}
+
+.train-details h3 {
+  color: #ff6600;
+  margin-bottom: 10px;
+}
+
+.train-details p {
+  color: #666;
+  margin: 5px 0;
+}
+
+.train-details .price {
+  color: #28a745;
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin-top: 10px;
+}
+
+/* Buttons */
+.buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.button {
+  padding: 10px 15px;
+  background-color: #ff6600;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-weight: bold;
+}
+
+.button:hover {
+  background-color: #cc5500;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .train-card {
+    flex-direction: column;
+    text-align: center;
+    padding: 15px;
+  }
+
+  .buttons {
+    width: 100%;
+    align-items: center;
+  }
+
+  .button {
+    width: 100%;
+    padding: 12px;
+  }
+}

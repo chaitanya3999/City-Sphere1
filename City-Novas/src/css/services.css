@@ -1,0 +1,146 @@
+/* Services Section */
+.services-section {
+  padding: 4rem 0;
+  background: var(--bg-light);
+}
+
+.services-section h2 {
+  text-align: left;
+  margin-bottom: 1rem;
+  padding-left: 1rem;
+}
+
+.services-section .section-description {
+  text-align: left;
+  max-width: 800px;
+  margin: 0 0 3rem 1rem;
+  color: var(--text-color);
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  padding: 1rem;
+}
+
+.service-card {
+  background: white;
+  border-radius: 15px;
+  overflow: hidden;
+  transition: var(--transition);
+  box-shadow: 0 4px 15px rgba(255, 107, 0, 0.1);
+}
+
+.service-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(255, 107, 0, 0.2);
+}
+
+.service-card a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  text-decoration: none;
+  color: var(--text-color);
+  height: 100%;
+}
+
+.service-card i {
+  font-size: 3.5rem;
+  color: var(--primary-color);
+  margin-bottom: 1.5rem;
+  transition: var(--transition);
+}
+
+.service-card:hover i {
+  transform: scale(1.1);
+  color: var(--accent-color);
+}
+
+.service-card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: var(--primary-color);
+}
+
+.service-card:hover h3 {
+  color: var(--text-color);
+}
+
+.service-card p {
+  font-size: 0.9rem;
+  opacity: 0.8;
+  text-align: center;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .services-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .service-card {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .services {
+    padding: 3rem 0;
+  }
+
+  .service-card i {
+    font-size: 2rem;
+  }
+}
+/* Features Section */
+.features-section {
+  padding: 4rem 0;
+  background: var(--bg-light);
+}
+.features-section h2 {
+  text-align: left;
+  color: var(--text-color);
+  margin-bottom: 3rem;
+}
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  padding: 1rem;
+}
+
+.feature-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 15px;
+  text-align: center;
+  transition: var(--transition);
+  box-shadow: var(--box-shadow);
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+}
+
+.feature-card i {
+  font-size: 2.5rem;
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+}
+
+.feature-card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: var(--primary-color);
+}
+
+.feature-card p {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
