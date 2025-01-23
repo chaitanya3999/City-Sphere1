@@ -40,23 +40,47 @@
                 <a href="index.html"><i class="fas fa-home"></i>Home</a>
               </li>
               <li>
-                <a href="register.html"><i class="fas fa-plus-circle"></i>Register Business</a>
+                <a href="register.html"
+                  ><i class="fas fa-plus-circle"></i>Register Business</a
+                >
               </li>
               <li>
-                <a href="#services"><i class="fas fa-briefcase"></i>Business Services</a>
+                <a href="provider-registration.html"
+                  ><i class="fas fa-user-plus"></i>Become a Provider</a
+                >
               </li>
               <li>
-                <a href="#about"><i class="fas fa-info-circle"></i>About Us</a>
+                <a href="#services"
+                  ><i class="fas fa-briefcase"></i>Business Services</a
+                >
+              </li>
+              <li>
+                <a href="#mission"
+                  ><i class="fas fa-info-circle"></i>About Us</a
+                >
               </li>
             </ul>
             <div class="nav-buttons">
-              <a href="#" class="btn btn-wallet">
-                <i class="fas fa-chart-line"></i>Business Insights
-              </a>
               <div id="authSection">
-                <a href="#" class="btn btn-login">
-                  <i class="fas fa-user"></i>Login/Register
+                <a
+                  href="provider-registration.html"
+                  class="btn btn-login"
+                  id="joinProviderBtn"
+                >
+                  <i class="fas fa-user-plus"></i>Join as Provider
                 </a>
+                <div
+                  id="profilePicContainer"
+                  class="profile-pic-container"
+                  style="display: none"
+                >
+                  <img
+                    id="providerProfilePic"
+                    src=""
+                    alt="Provider Profile"
+                    class="profile-pic"
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -79,8 +103,12 @@
               City Novas: Your Gateway to Local Business Success
             </p>
             <div class="cta-buttons">
-              <a href="register.html" class="btn btn-primary">Register Your Business</a>
-              <a href="#services" class="btn btn-secondary">Explore Services</a>
+              <a href="provider-registration.html" class="btn btn-primary"
+                >Become a Service Provider</a
+              >
+              <a href="provider-dashboard.html" class="btn btn-secondary"
+                >Provider Dashboard</a
+              >
             </div>
             <div class="welcome-time">
               <div class="time-wrapper">
@@ -96,22 +124,28 @@
         </div>
       </section>
 
-      <section id="services" class="services">
+      <section id="services" class="services mission-section">
         <div class="container">
-          <h2>Business Growth Services</h2>
-          <p class="section-description">
-            Comprehensive solutions to elevate your local business
-          </p>
+          <div class="mission-header">
+            <h2>Business Growth Services</h2>
+            <p class="section-description">
+              Comprehensive solutions to elevate your local business
+            </p>
+          </div>
           <div class="services-grid">
             <div class="service-card">
               <i class="fas fa-bullhorn"></i>
               <h3>Marketing Support</h3>
-              <p>Boost your visibility with targeted local marketing strategies</p>
+              <p>
+                Boost your visibility with targeted local marketing strategies
+              </p>
             </div>
             <div class="service-card">
               <i class="fas fa-chart-line"></i>
               <h3>Business Analytics</h3>
-              <p>Gain insights into customer behavior and business performance</p>
+              <p>
+                Gain insights into customer behavior and business performance
+              </p>
             </div>
             <div class="service-card">
               <i class="fas fa-handshake"></i>
@@ -127,12 +161,14 @@
         </div>
       </section>
 
-      <section id="features" class="features">
+      <section id="features" class="features mission-section">
         <div class="container">
-          <h2>Why City Novas?</h2>
-          <p class="section-description">
-            Transform your local business with our innovative platform
-          </p>
+          <div class="mission-header">
+            <h2>Why City Novas?</h2>
+            <p class="section-description">
+              Transform your local business with our innovative platform
+            </p>
+          </div>
           <div class="features-grid">
             <div class="feature-card">
               <i class="fas fa-globe"></i>
@@ -153,17 +189,70 @@
         </div>
       </section>
 
-      <section id="about" class="about-section">
+      <section id="mission" class="mission-section">
         <div class="container">
-          <h2>Our Mission</h2>
-          <div class="about-content">
-            <p>
-              City Novas is dedicated to empowering local businesses by providing 
-              innovative digital tools, marketing support, and a platform to 
-              connect with the community. We believe in the power of local 
-              entrepreneurship and strive to help businesses thrive in the 
-              digital age.
-            </p>
+          <div class="mission-content">
+            <div class="mission-header">
+              <h2>Our Mission</h2>
+              <p class="section-description">
+                Empowering Local Businesses, Transforming Communities
+              </p>
+            </div>
+            <div class="mission-grid">
+              <div class="mission-card">
+                <div class="mission-icon">
+                  <i class="fas fa-rocket"></i>
+                </div>
+                <div class="mission-text">
+                  <h3>Accelerate Growth</h3>
+                  <p>
+                    Provide cutting-edge tools and strategies to help local
+                    businesses thrive in a competitive market.
+                  </p>
+                </div>
+              </div>
+              <div class="mission-card">
+                <div class="mission-icon">
+                  <i class="fas fa-globe-americas"></i>
+                </div>
+                <div class="mission-text">
+                  <h3>Community Connection</h3>
+                  <p>
+                    Bridge local businesses with their community, creating
+                    stronger, more vibrant local economies.
+                  </p>
+                </div>
+              </div>
+              <div class="mission-card">
+                <div class="mission-icon">
+                  <i class="fas fa-hands-helping"></i>
+                </div>
+                <div class="mission-text">
+                  <h3>Collaborative Support</h3>
+                  <p>
+                    Foster a supportive ecosystem where businesses can learn,
+                    grow, and succeed together.
+                  </p>
+                </div>
+              </div>
+              <div class="mission-card">
+                <div class="mission-icon">
+                  <i class="fas fa-leaf"></i>
+                </div>
+                <div class="mission-text">
+                  <h3>Sustainable Progress</h3>
+                  <p>
+                    Empower entrepreneurs with innovative technologies and
+                    actionable insights.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="mission-cta">
+              <a href="provider-registration.html" class="btn btn-primary"
+                >Join Our Mission</a
+              >
+            </div>
           </div>
         </div>
       </section>
@@ -198,6 +287,7 @@
                 <a href="#"><i class="fab fa-instagram"></i></a>
               </div>
             </div>
+          </div>
           </div>
           <div class="footer-bottom">
             <p>&copy; 2024 City Novas. All rights reserved.</p>

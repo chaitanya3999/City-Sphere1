@@ -17,4 +17,14 @@ document.addEventListener('DOMContentLoaded', () => {
       hamburger.classList.remove('active');
     }
   });
+
+  // Profile Picture Navigation
+  const profilePicContainer = document.getElementById('profilePicContainer');
+  const joinProviderBtn = document.getElementById('joinProviderBtn');
+
+  if (profilePicContainer) {
+    profilePicContainer.addEventListener('click', () => {
+      window.location.href = 'provider-dashboard.html';
+    });
+  }
 });
