@@ -4,14 +4,37 @@ class AuthService {
         this.apiBaseUrl = 'http://localhost:3000/api';
     }
 
-    async signup(userData) {
+    // Validate phone or email
+    validatePhoneOrEmail(input) {
+        const phoneRegex = /^\d{10}$/;
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return phoneRegex.test(input) || emailRegex.test(input);
+    }
+
+    // Validate password strength
+    validatePassword(password) {
+        return password.length >= 8;
+    }
+
+    async signup(phoneEmail, password) {
+        if (!this.validatePhoneOrEmail(phoneEmail)) {
+            throw new Error('Invalid phone number or email');
+        }
+
+        if (!this.validatePassword(password)) {
+            throw new Error('Password must be at least 8 characters long');
+        }
+
         try {
             const response = await fetch(`${this.apiBaseUrl}/signup`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(userData)
+                body: JSON.stringify({
+                    phoneEmail,
+                    password
+                })
             });
 
             const data = await response.json();
@@ -20,9 +43,9 @@ class AuthService {
                 throw new Error(data.error || 'Signup failed');
             }
 
-            // Store token and user data
+            // Store authentication data
             localStorage.setItem('token', data.token);
-            localStorage.setItem('userSignupData', JSON.stringify(data.user));
+            localStorage.setItem('userProfile', JSON.stringify(data.user));
 
             return data;
         } catch (error) {
@@ -31,14 +54,21 @@ class AuthService {
         }
     }
 
-    async login(email, password) {
+    async login(phoneEmail, password) {
+        if (!this.validatePhoneOrEmail(phoneEmail)) {
+            throw new Error('Invalid phone number or email');
+        }
+
         try {
             const response = await fetch(`${this.apiBaseUrl}/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ email, password })
+                body: JSON.stringify({ 
+                    phoneEmail, 
+                    password 
+                })
             });
 
             const data = await response.json();
@@ -47,9 +77,9 @@ class AuthService {
                 throw new Error(data.error || 'Login failed');
             }
 
-            // Store token and user data
+            // Store authentication data
             localStorage.setItem('token', data.token);
-            localStorage.setItem('userSignupData', JSON.stringify(data.user));
+            localStorage.setItem('userProfile', JSON.stringify(data.user));
 
             return data;
         } catch (error) {
@@ -58,73 +88,46 @@ class AuthService {
         }
     }
 
-    async getUserProfile() {
-        const token = localStorage.getItem('token');
-
-        if (!token) {
-            throw new Error('No authentication token found');
-        }
-
+    async googleSignIn(googleToken) {
         try {
-            const response = await fetch(`${this.apiBaseUrl}/profile`, {
-                method: 'GET',
+            const response = await fetch(`${this.apiBaseUrl}/google-signin`, {
+                method: 'POST',
                 headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json',
-                }
-            });
-
-            const data = await response.json();
-
-            if (!response.ok) {
-                throw new Error(data.error || 'Failed to fetch profile');
-            }
-
-            return data;
-        } catch (error) {
-            console.error('Profile Fetch Error:', error);
-            throw error;
-        }
-    }
-
-    async updateUserProfile(profileData) {
-        const token = localStorage.getItem('token');
-
-        if (!token) {
-            throw new Error('No authentication token found');
-        }
-
-        try {
-            const response = await fetch(`${this.apiBaseUrl}/profile`, {
-                method: 'PUT',
-                headers: {
-                    'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(profileData)
+                body: JSON.stringify({ token: googleToken })
             });
 
             const data = await response.json();
 
             if (!response.ok) {
-                throw new Error(data.error || 'Profile update failed');
+                throw new Error(data.error || 'Google Sign-In failed');
             }
+
+            // Store authentication data
+            localStorage.setItem('token', data.token);
+            localStorage.setItem('userProfile', JSON.stringify(data.user));
 
             return data;
         } catch (error) {
-            console.error('Profile Update Error:', error);
+            console.error('Google Sign-In Error:', error);
             throw error;
         }
     }
 
     logout() {
         localStorage.removeItem('token');
-        localStorage.removeItem('userSignupData');
-        window.location.href = 'index.html';
+        localStorage.removeItem('userProfile');
+        // Optional: Call backend logout endpoint
     }
 
     isAuthenticated() {
         return !!localStorage.getItem('token');
+    }
+
+    getCurrentUser() {
+        const userProfile = localStorage.getItem('userProfile');
+        return userProfile ? JSON.parse(userProfile) : null;
     }
 }
 
