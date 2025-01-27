@@ -1,0 +1,46 @@
+/* Form Validation Styles */
+.form-error {
+    border: 2px solid #ff4136 !important;
+    background-color: #fff5f5 !important;
+}
+
+.form-error + .validation-error {
+    color: #ff4136;
+    font-size: 0.8rem;
+    margin-top: 5px;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.form-success {
+    border: 2px solid #2ecc40 !important;
+    background-color: #f0fff4 !important;
+}
+
+/* Lazy Load Image Styles */
+img[data-src] {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+img[data-src].loaded {
+    opacity: 1;
+}
+
+/* Validation Error Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Form Styles */
+@media (max-width: 768px) {
+    .form-error + .validation-error {
+        font-size: 0.7rem;
+    }
+}

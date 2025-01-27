@@ -1,0 +1,354 @@
+/* Medicine Section */
+.medicine-section {
+    padding: 4rem 0;
+    background: var(--bg-light);
+}
+
+.section-first {
+    padding-top: 6rem;
+}
+
+.medicine-section h2 {
+    text-align: center;
+    color: var(--text-color);
+    margin-bottom: 1rem;
+}
+
+.section-description {
+    text-align: center;
+    color: var(--text-muted);
+    max-width: 600px;
+    margin: 0 auto 3rem;
+}
+
+/* Search and Filters */
+.search-filter-container {
+    margin-bottom: 3rem;
+}
+
+.search-bar {
+    max-width: 600px;
+    margin: 0 auto 2rem;
+    display: flex;
+    gap: 1rem;
+}
+
+.search-bar input {
+    flex: 1;
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+.search-bar button {
+    padding: 0 1.5rem;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.search-bar button:hover {
+    background: var(--accent-color);
+}
+
+.filters {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    padding: 0.5rem 1.5rem;
+    border: 1px solid #ddd;
+    border-radius: 25px;
+    background: white;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+/* Upload Prescription */
+.upload-prescription {
+    max-width: 600px;
+    margin: 0 auto 3rem;
+}
+
+.upload-box {
+    background: white;
+    border: 2px dashed var(--primary-color);
+    border-radius: 15px;
+    padding: 2rem;
+    text-align: center;
+    transition: var(--transition);
+}
+
+.upload-box:hover {
+    border-color: var(--accent-color);
+    background: var(--bg-light);
+}
+
+.upload-box i {
+    font-size: 3rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.upload-box h3 {
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+}
+
+.upload-box p {
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+}
+
+.btn-upload {
+    display: inline-block;
+    padding: 0.8rem 2rem;
+    background: var(--primary-color);
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-upload:hover {
+    background: var(--accent-color);
+}
+
+.btn-upload i {
+    font-size: 1rem;
+    color: white;
+    margin: 0 0 0 0.5rem;
+}
+
+/* Medicine Grid */
+.medicine-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.medicine-card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: var(--transition);
+}
+
+.medicine-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.medicine-image {
+    position: relative;
+    height: 200px;
+}
+
+.medicine-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.category {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 0.3rem 0.8rem;
+    border-radius: 15px;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+.medicine-info {
+    padding: 1.5rem;
+}
+
+.medicine-info h3 {
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+}
+
+.manufacturer {
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.description {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.medicine-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.price-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.price {
+    color: var(--text-color);
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.quantity {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+}
+
+.btn-add {
+    padding: 0.5rem 1rem;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-add:hover {
+    background: var(--accent-color);
+}
+
+/* Load More Button */
+.load-more {
+    text-align: center;
+}
+
+.btn-load-more {
+    padding: 1rem 2rem;
+    background: transparent;
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: var(--transition);
+    font-weight: bold;
+}
+
+.btn-load-more:hover {
+    background: var(--primary-color);
+    color: white;
+}
+
+.btn-load-more i {
+    margin-left: 0.5rem;
+}
+
+/* Features Section */
+.features-section {
+    padding: 4rem 0;
+    background: white;
+}
+
+.features-section h2 {
+    text-align: center;
+    color: var(--text-color);
+    margin-bottom: 3rem;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+.feature-card {
+    text-align: center;
+    padding: 2rem;
+    border-radius: 15px;
+    background: var(--bg-light);
+    transition: var(--transition);
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.feature-card i {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+}
+
+.feature-card h3 {
+    margin-bottom: 1rem;
+    color: var(--text-color);
+}
+
+.feature-card p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .search-bar {
+        flex-direction: column;
+    }
+
+    .search-bar button {
+        width: 100%;
+        padding: 1rem;
+    }
+
+    .medicine-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+    }
+
+    .features-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .medicine-section,
+    .features-section {
+        padding: 3rem 0;
+    }
+
+    .section-first {
+        padding-top: 5rem;
+    }
+
+    .medicine-image {
+        height: 150px;
+    }
+
+    .medicine-info {
+        padding: 1rem;
+    }
+
+    .upload-box {
+        padding: 1.5rem;
+    }
+}

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>City Novas - City Novas Dashboard</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../css/provider-dashboard.css" />
+    <link rel="stylesheet" href="../css/navigation.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="logo">
+                <img src="../assets/city-novas-logo.png" alt="City Novas Logo">
+            </div>
+            <nav>
+                <ul>
+                    <li class="active">
+                        <a href="#dashboard">
+                            <i class="fas fa-chart-pie"></i> Dashboard
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#bookings">
+                            <i class="fas fa-calendar-check"></i> Bookings
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#services">
+                            <i class="fas fa-briefcase"></i> My Services
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#profile">
+                            <i class="fas fa-user-circle"></i> Profile
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#analytics">
+                            <i class="fas fa-chart-line"></i> Analytics
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <button class="btn-logout">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="dashboard-header">
+                <div class="header-left">
+                    <h1>City Novas Dashboard</h1>
+                    <p>Welcome back, <span id="provider-name">John Doe</span>!</p>
+                </div>
+                <div class="header-right">
+                    <div class="notification-icon">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge">3</span>
+                    </div>
+                </div>
+            </header>
+
+            <section class="dashboard-stats">
+                <div class="stat-card total-bookings">
+                    <div class="stat-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3>Total Bookings</h3>
+                        <p class="stat-number">42</p>
+                        <small>+12% from last month</small>
+                    </div>
+                </div>
+
+                <div class="stat-card total-revenue">
+                    <div class="stat-icon">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3>Total Revenue</h3>
+                        <p class="stat-number">₹54,320</p>
+                        <small>+8% from last month</small>
+                    </div>
+                </div>
+
+                <div class="stat-card active-services">
+                    <div class="stat-icon">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3>Active Services</h3>
+                        <p class="stat-number">5</p>
+                        <small>Total registered services</small>
+                    </div>
+                </div>
+            </section>
+
+            <section class="recent-bookings">
+                <div class="section-header">
+                    <h2>Recent Bookings</h2>
+                    <a href="#all-bookings" class="view-all">View All</a>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Booking ID</th>
+                            <th>Customer</th>
+                            <th>Service</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>#BK4321</td>
+                            <td>Sarah Johnson</td>
+                            <td>Home Cleaning</td>
+                            <td>Jan 20, 2025</td>
+                            <td><span class="status completed">Completed</span></td>
+                        </tr>
+                        <tr>
+                            <td>#BK4320</td>
+                            <td>Mike Roberts</td>
+                            <td>Plumbing</td>
+                            <td>Jan 18, 2025</td>
+                            <td><span class="status pending">Pending</span></td>
+                        </tr>
+                        <tr>
+                            <td>#BK4319</td>
+                            <td>Emily Chen</td>
+                            <td>Electrical Repair</td>
+                            <td>Jan 15, 2025</td>
+                            <td><span class="status completed">Completed</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+
+    <script src="../js/provider-dashboard.js"></script>
+</body>
+</html>

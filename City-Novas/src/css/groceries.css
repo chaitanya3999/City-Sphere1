@@ -1,0 +1,369 @@
+/* Groceries Ticket Design */
+.groceries-section {
+  background-color: #f4f4f4;
+  padding: 2rem 0;
+}
+
+.groceries-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  background-color: #fff;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.groceries-header h2 {
+  color: var(--primary-color);
+  margin: 0;
+  font-size: 2rem;
+}
+
+.order-details {
+  display: flex;
+  gap: 2rem;
+}
+
+.order-id, .order-date {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.order-id span, .order-date span {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.groceries-ticket {
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+}
+
+.ticket-section {
+  margin-bottom: 2rem;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 2rem;
+}
+
+.ticket-section:last-of-type {
+  border-bottom: none;
+}
+
+.ticket-section h3 {
+  color: var(--primary-color);
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+}
+
+.form-row {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.form-group {
+  flex: 1;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--text-color);
+  font-weight: 600;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.list-section textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.file-upload {
+  position: relative;
+  border: 2px dashed #ddd;
+  border-radius: 10px;
+  padding: 2rem;
+  text-align: center;
+}
+
+.file-upload input[type="file"] {
+  display: none;
+}
+
+.file-upload-label {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--text-muted);
+}
+
+.file-upload-label i {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: var(--primary-color);
+}
+
+.total-section {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.estimated-total {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1.2rem;
+}
+
+.estimated-total span {
+  color: var(--text-muted);
+}
+
+.ticket-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.btn-calculate-total,
+.btn-submit-order {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-calculate-total {
+  background-color: var(--bg-light);
+  color: var(--text-color);
+  border: 1px solid var(--primary-color);
+}
+
+.btn-submit-order {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.btn-calculate-total:hover {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.btn-submit-order:hover {
+  background-color: var(--accent-color);
+}
+
+/* Search and Filters */
+.search-filter-container {
+  margin-bottom: 3rem;
+}
+
+.search-bar {
+  max-width: 600px;
+  margin: 0 auto 2rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.search-bar input {
+  flex: 1;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.search-bar button {
+  padding: 0 1.5rem;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.search-bar button:hover {
+  background: var(--accent-color);
+}
+
+.filters {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  padding: 0.5rem 1.5rem;
+  border: 1px solid #ddd;
+  border-radius: 25px;
+  background: white;
+  color: var(--text-color);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+}
+
+/* Load More Button */
+.load-more {
+  text-align: center;
+}
+
+.btn-load-more {
+  padding: 1rem 2rem;
+  background: transparent;
+  border: 2px solid var(--primary-color);
+  color: var(--primary-color);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: var(--transition);
+  font-weight: bold;
+}
+
+.btn-load-more:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+.btn-load-more i {
+  margin-left: 0.5rem;
+}
+
+/* Cart Summary */
+.cart-summary {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.cart-total {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.cart-total span {
+  font-weight: bold;
+  color: var(--text-color);
+}
+
+.btn-checkout {
+  width: 100%;
+  padding: 0.8rem;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-checkout:hover {
+  background: var(--accent-color);
+}
+
+/* Message Styles */
+.message {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  color: white;
+  animation: slideIn 0.3s ease-out;
+  z-index: 1000;
+}
+
+.message.success {
+  background: #4caf50;
+}
+
+.message.error {
+  background: #f44336;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .search-bar {
+    flex-direction: column;
+  }
+
+  .search-bar button {
+    width: 100%;
+    padding: 1rem;
+  }
+
+  .cart-summary {
+    bottom: 0;
+    right: 0;
+    left: 0;
+    border-radius: 8px 8px 0 0;
+  }
+}
+
+@media (max-width: 576px) {
+  .groceries-section {
+    padding: 3rem 0;
+  }
+
+  .grocery-image {
+    height: 180px;
+  }
+
+  .grocery-info {
+    padding: 1rem;
+  }
+
+  .quantity-selector {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+}
