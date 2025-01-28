@@ -7,6 +7,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/auth-new.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- Google Sign-In API -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+    <!-- JWT Decode Library (for decoding Google's response) -->
+    <script src="https://unpkg.com/jwt-decode/build/jwt-decode.js"></script>
+
+    <!-- Facebook SDK -->
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+
 </head>
 <body>
     <div class="registration-container">
@@ -40,6 +50,29 @@
                     Login <i class="fas fa-sign-in-alt"></i>
                 </button>
             </div>
+
+            <!-- Google Sign-In Button -->
+            <div id="g_id_onload"
+            data-client_id="855437139826-iuond0b1id6a7tuh2vlh9bv69kh88r6a.apps.googleusercontent.com"
+            data-callback="handleGoogleSignIn"
+            data-auto_select="false"
+            data-itp_support="true">
+            </div>
+            <div class="g_id_signin"
+            data-type="standard"
+            data-size="large"
+            data-theme="outline"
+            data-text="sign_in_with"
+            data-shape="rectangular"
+            data-width="280">
+            </div>
+
+            <!-- Facebook Login Button -->
+            <button type="button" class="btn-social facebook" onclick="handleFacebookLogin()">
+                <i class="fab fa-facebook-f"></i>
+                <span>Sign in with Facebook</span>
+            </button>
+
         </form>
         <div class="login-footer">
             <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
@@ -47,5 +80,65 @@
     </div>
 
     <script src="../js/auth.js"></script>
+    <script>
+        // Handle Google Sign-In
+        function handleGoogleSignIn(response) {
+            if (response.credential) {
+                // Decode the credential
+                const decoded = jwt_decode(response.credential);
+                console.log('Google Sign-In successful:', decoded);
+        
+                // Handle the sign-in
+                handleSocialLogin('google', {
+                    id: decoded.sub,
+                    name: decoded.name,
+                    email: decoded.email,
+                    picture: decoded.picture
+                });
+            } else {
+                console.error('Google Sign-In failed:', response);
+            }
+        }
+
+        // Handle Facebook Login
+        function handleFacebookLogin() {
+            FB.login(function(response) {
+                if (response.authResponse) {
+                    console.log('Facebook login successful');
+                    FB.api('/me', { fields: 'id,name,email,picture' }, function(userData) {
+                        console.log('Facebook user data:', userData);
+                        handleSocialLogin('facebook', userData);
+                    });
+                } else {
+                    console.error('Facebook login failed:', response);
+                }
+            }, { scope: 'email,public_profile' });
+        }
+
+        // Initialize Facebook SDK
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId: '631781262866181',  // Replace with your Facebook App ID
+                cookie: true,
+                xfbml: true,
+                version: 'v18.0'
+            });
+        };
+
+        // Common function to handle social login
+        function handleSocialLogin(provider, userData) {
+            console.log(`${provider} login:`, userData);
+    
+            // Here you can either:
+            // 1. Store the user data in localStorage/sessionStorage
+            sessionStorage.setItem('user', JSON.stringify({
+                provider: provider,
+                ...userData
+            }));
+    
+            // 2. Redirect to dashboard
+            window.location.href = 'user-dashboard.html';
+    }
+    </script>
 </body>
 </html>
