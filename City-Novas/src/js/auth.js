@@ -1,75 +1,55 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const loginForm = document.getElementById('login-form');
-    const emailInput = document.getElementById('email');
-    const passwordInput = document.getElementById('password');
+import authService from './custom-auth.js';
 
-    // Basic client-side validation
+document.addEventListener('DOMContentLoaded', () => {
+    const loginForm = document.getElementById('loginForm');
+    const responsiveElements = document.querySelectorAll('.responsive-input');
+    const loginErrorMessage = document.getElementById('login-error');
+
+    // Responsive input handling
+    responsiveElements.forEach(element => {
+        element.addEventListener('focus', (e) => {
+            e.target.classList.add('focused');
+        });
+        element.addEventListener('blur', (e) => {
+            e.target.classList.remove('focused');
+        });
+    });
+
+    // Login form submission
     loginForm.addEventListener('submit', async (e) => {
         e.preventDefault();
-        
-        const email = emailInput.value.trim();
-        const password = passwordInput.value;
-
-        // Basic email validation
-        if (!email || !email.includes('@')) {
-            alert('Please enter a valid email address');
-            return;
-        }
-
-        // Basic password validation
-        if (password.length < 6) {
-            alert('Password must be at least 6 characters long');
-            return;
-        }
+        const phoneEmail = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
 
         try {
-            // Simulated login (replace with actual authentication logic)
-            const response = await simulateLogin(email, password);
+            const result = await authService.login(phoneEmail, password);
             
-            if (response.success) {
-                // Redirect to dashboard or home page
-                window.location.href = 'provider-dashboard.html';
-            } else {
-                alert(response.message || 'Login failed. Please check your credentials.');
-            }
+            // Handle successful login
+            loginErrorMessage.textContent = '';
+            alert('Login successful!');
+            
+            // Redirect based on user role or type
+            window.location.href = result.userDetails.role === 'admin' 
+                ? '/admin-dashboard.html' 
+                : '/user-dashboard.html';
         } catch (error) {
-            console.error('Login error:', error);
-            alert('An error occurred. Please try again.');
+            loginErrorMessage.textContent = error.message;
+            console.error('Login Error:', error);
         }
     });
 
-    // Simulated login function (replace with actual backend authentication)
-    async function simulateLogin(email, password) {
-        // This is a mock implementation
-        return new Promise((resolve) => {
-            // Simulate network delay
-            setTimeout(() => {
-                // Basic mock credentials (replace with real authentication)
-                if (email === 'user@citynovas.com' && password === 'password123') {
-                    resolve({ 
-                        success: true, 
-                        token: 'mock-jwt-token',
-                        user: { 
-                            name: 'City Novas User', 
-                            email: email 
-                        }
-                    });
-                } else {
-                    resolve({ 
-                        success: false, 
-                        message: 'Invalid email or password' 
-                    });
-                }
-            }, 1000);
-        });
+    // Responsive design adjustments
+    function adjustLayoutForScreenSize() {
+        const screenWidth = window.innerWidth;
+        const container = document.querySelector('.auth-container');
+
+        if (screenWidth < 768) {
+            container.classList.add('mobile-view');
+        } else {
+            container.classList.remove('mobile-view');
+        }
     }
 
-    // Forgot password link
-    const forgotPasswordLink = document.querySelector('.forgot-password');
-    if (forgotPasswordLink) {
-        forgotPasswordLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            alert('Password reset functionality coming soon!');
-        });
-    }
+    window.addEventListener('resize', adjustLayoutForScreenSize);
+    adjustLayoutForScreenSize(); // Initial call
 });

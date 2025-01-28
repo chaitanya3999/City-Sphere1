@@ -1,83 +1,66 @@
+import authService from './custom-auth.js';
+
 document.addEventListener('DOMContentLoaded', () => {
-    const signupForm = document.getElementById('signup-form');
-    const googleSignupBtn = document.querySelector('.btn-google');
+    const signupForm = document.getElementById('signupForm');
+    const signupErrorMessage = document.getElementById('signup-error');
+    const responsiveElements = document.querySelectorAll('.responsive-input');
 
-    // Google Signup
-    googleSignupBtn.addEventListener('click', () => {
-        // Placeholder for Google Sign-In
-        alert('Google Sign-In coming soon!');
+    // Responsive input handling
+    responsiveElements.forEach(element => {
+        element.addEventListener('focus', () => {
+            element.classList.add('focused');
+        });
+
+        element.addEventListener('blur', () => {
+            element.classList.remove('focused');
+        });
     });
 
-    // Form Submission
-    signupForm.addEventListener('submit', (e) => {
+    // Signup form submission
+    signupForm.addEventListener('submit', async (e) => {
         e.preventDefault();
+        
+        const name = document.getElementById('name').value;
+        const phoneEmail = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirm-password').value;
 
-        // Get form elements
-        const phoneEmailInput = document.getElementById('phone-email');
-        const passwordInput = document.getElementById('password');
-        const confirmPasswordInput = document.getElementById('confirm-password');
-
-        // Validate inputs
-        const phoneEmail = phoneEmailInput.value.trim();
-        const password = passwordInput.value;
-        const confirmPassword = confirmPasswordInput.value;
-
-        // Validation
-        if (!validatePhoneOrEmail(phoneEmail)) {
-            alert('Please enter a valid phone number or email');
-            phoneEmailInput.focus();
-            return;
-        }
-
-        if (password.length < 8) {
-            alert('Password must be at least 8 characters long');
-            passwordInput.focus();
-            return;
-        }
-
+        // Validate password match
         if (password !== confirmPassword) {
-            alert('Passwords do not match');
-            confirmPasswordInput.focus();
+            signupErrorMessage.textContent = 'Passwords do not match';
             return;
         }
 
-        // Collect form data
-        const signupData = {
-            phoneEmail: phoneEmail,
-            password: password
-        };
-
-        // Simulate registration (replace with actual backend call)
-        registerUser(signupData);
+        try {
+            const result = await authService.signup(phoneEmail, password, name);
+            
+            // Handle successful signup
+            signupErrorMessage.textContent = '';
+            alert('Signup successful!');
+            
+            // Redirect to dashboard or login page
+            window.location.href = '/user-dashboard.html';
+        } catch (error) {
+            signupErrorMessage.textContent = error.message;
+            console.error('Signup Error:', error);
+        }
     });
 
-    // Validation Helpers
-    function validatePhoneOrEmail(input) {
-        // Regex for phone number (10 digits) or email
-        const phoneRegex = /^\d{10}$/;
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        
-        return phoneRegex.test(input) || emailRegex.test(input);
-    }
-
-    // Registration Function
-    function registerUser(userData) {
-        // Simulate user registration
-        console.log('User Registration Data:', userData);
-
-        // In a real scenario, this would be an API call
-        try {
-            // Simulated successful registration
-            alert('Account created successfully!');
-            
-            // Store user data (replace with proper authentication mechanism)
-            localStorage.setItem('userData', JSON.stringify(userData));
-
-            // Redirect to dashboard or next step
-            window.location.href = 'provider-registration.html';
-        } catch (error) {
-            console.error('Registration Error:', error);
-            alert('Registration failed. Please try again.');
-        }
+    // Optional: Google Sign-In
+    const googleSignInButton = document.getElementById('google-signin-btn');
+    if (googleSignInButton) {
+        googleSignInButton.addEventListener('click', async () => {
+            try {
+                // This would typically use Google's Sign-In API
+                const googleToken = await googleSignIn(); // Implement this function
+                const result = await authService.googleSignIn(googleToken);
+                
+                alert('Google Sign-In successful!');
+                window.location.href = '/user-dashboard.html';
+            } catch (error) {
+                console.error('Google Sign-In Error:', error);
+                alert('Google Sign-In failed');
+            }
+        });
     }
 });
