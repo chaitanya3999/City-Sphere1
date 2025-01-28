@@ -246,3 +246,156 @@ body {
     padding: 1.5rem;
   }
 }
+
+/* Social login container styles */
+.social-login {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.social-login p {
+  color: #666;
+  margin-bottom: 15px;
+}
+
+.social-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin: 30px auto;
+  width: 100%;
+  max-width: 280px;
+}
+
+/* Common styles for both buttons */
+.btn-social, .g_id_signin {
+  margin: 0 auto !important;
+  width: 280px !important;
+  height: 40px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-family: 'Roboto', sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.25px !important;
+  cursor: pointer !important;
+}
+
+/* Facebook button specific styles */
+.btn-social.facebook {
+  background-color: #1877f2 !important;
+  color: white !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  text-decoration: none !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) !important;
+}
+
+.btn-social.facebook:hover {
+  background-color: #166fe5 !important;
+}
+
+.btn-social.facebook i {
+  margin-right: 10px !important;
+  font-size: 18px !important;
+}
+
+/* Google button override styles */
+.g_id_signin > div {
+  height: 40px !important;
+  width: 280px !important;
+  padding: 0 !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) !important;
+}
+
+.g_id_signin > div > div {
+  height: 40px !important;
+  padding: 0 !important;
+}
+
+/* Responsive styles for mobile */
+@media (max-width: 480px) {
+  .social-buttons {
+      flex-direction: column;
+  }
+}
+/* Social login container styles */
+.social-login {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.social-login p {
+  color: #666;
+  margin-bottom: 15px;
+}
+
+.social-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin: 30px auto;
+  width: 100%;
+  max-width: 280px;
+}
+
+/* Common styles for both buttons */
+.btn-social, .g_id_signin {
+  margin: 0 auto !important;
+  width: 280px !important;
+  height: 40px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-family: 'Roboto', sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.25px !important;
+  cursor: pointer !important;
+}
+
+/* Facebook button specific styles */
+.btn-social.facebook {
+  background-color: #1877f2 !important;
+  color: white !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  text-decoration: none !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) !important;
+}
+
+.btn-social.facebook:hover {
+  background-color: #166fe5 !important;
+}
+
+.btn-social.facebook i {
+  margin-right: 10px !important;
+  font-size: 18px !important;
+}
+
+/* Google button override styles */
+.g_id_signin > div {
+  height: 40px !important;
+  width: 280px !important;
+  padding: 0 !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) !important;
+}
+
+.g_id_signin > div > div {
+  height: 40px !important;
+  padding: 0 !important;
+}
+
+/* Responsive styles for mobile */
+@media (max-width: 480px) {
+  .social-buttons {
+      flex-direction: column;
+  }
+}

@@ -51,28 +51,29 @@
                 </button>
             </div>
 
-            <!-- Google Sign-In Button -->
-            <div id="g_id_onload"
-            data-client_id="855437139826-iuond0b1id6a7tuh2vlh9bv69kh88r6a.apps.googleusercontent.com"
-            data-callback="handleGoogleSignIn"
-            data-auto_select="false"
-            data-itp_support="true">
-            </div>
-            <div class="g_id_signin"
-            data-type="standard"
-            data-size="large"
-            data-theme="outline"
-            data-text="sign_in_with"
-            data-shape="rectangular"
-            data-width="280">
-            </div>
+            <div class="social-buttons">
+                <!-- Google Sign-In Button -->
+                <div id="g_id_onload"
+                     data-client_id="855437139826-iuond0b1id6a7tuh2vlh9bv69kh88r6a.apps.googleusercontent.com"
+                     data-callback="handleGoogleSignIn"
+                     data-auto_select="false"
+                     data-itp_support="true">
+                </div>
+                <div class="g_id_signin"
+                     data-type="standard"
+                     data-size="large"
+                     data-theme="outline"
+                     data-text="sign_in_with"
+                     data-shape="rectangular"
+                     data-width="280">
+                </div>
 
-            <!-- Facebook Login Button -->
-            <button type="button" class="btn-social facebook" onclick="handleFacebookLogin()">
-                <i class="fab fa-facebook-f"></i>
-                <span>Sign in with Facebook</span>
-            </button>
-
+                <!-- Facebook Login Button -->
+                <button type="button" class="btn-social facebook" onclick="handleFacebookLogin()">
+                    <i class="fab fa-facebook-f"></i>
+                    <span>Sign in with Facebook</span>
+                </button>
+            </div>
         </form>
         <div class="login-footer">
             <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
