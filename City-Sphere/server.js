@@ -4,13 +4,32 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const cors = require('cors');
 const path = require('path');
+const passport = require('passport');
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const FacebookStrategy = require('passport-facebook').Strategy;
+const session = require('express-session');
+const https = require('https');
+const fs = require('fs');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// SSL Certificate options
+const options = {
+    key: fs.readFileSync(path.join(__dirname, 'certificates', 'key.pem')),
+    cert: fs.readFileSync(path.join(__dirname, 'certificates', 'cert.pem'))
+};
+
 // Middleware
 app.use(cors());
 app.use(express.json());
+app.use(session({
+    secret: 'city_sphere_session_secret',
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Serve static files from the 'src' directory
 app.use(express.static(path.join(__dirname, 'src')));
@@ -280,13 +299,131 @@ app.post('/api/user/details', authenticateToken, async (req, res) => {
   }
 });
 
+// Passport configuration
+passport.serializeUser((user, done) => {
+    done(null, user.id);
+});
+
+passport.deserializeUser((id, done) => {
+    db.get('SELECT * FROM users WHERE id = ?', [id], (err, user) => {
+        done(err, user);
+    });
+});
+
+// Google OAuth Strategy
+passport.use(new GoogleStrategy({
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL: '/auth/google/callback'
+}, async (accessToken, refreshToken, profile, done) => {
+    try {
+        // Check if user exists
+        db.get('SELECT * FROM users WHERE email = ?', [profile.emails[0].value], async (err, user) => {
+            if (err) {
+                return done(err);
+            }
+            
+            if (user) {
+                return done(null, user);
+            }
+            
+            // Create new user
+            const newUser = {
+                name: profile.displayName,
+                email: profile.emails[0].value,
+                password: await bcrypt.hash(Math.random().toString(36), 10),
+                profile_picture: profile.photos[0].value
+            };
+            
+            db.run('INSERT INTO users (name, email, password, profile_picture) VALUES (?, ?, ?, ?)',
+                [newUser.name, newUser.email, newUser.password, newUser.profile_picture],
+                function(err) {
+                    if (err) {
+                        return done(err);
+                    }
+                    newUser.id = this.lastID;
+                    return done(null, newUser);
+                }
+            );
+        });
+    } catch (error) {
+        return done(error);
+    }
+}));
+
+// Facebook OAuth Strategy
+passport.use(new FacebookStrategy({
+    clientID: process.env.FACEBOOK_APP_ID,
+    clientSecret: process.env.FACEBOOK_APP_SECRET,
+    callbackURL: '/auth/facebook/callback',
+    profileFields: ['id', 'displayName', 'photos', 'email']
+}, async (accessToken, refreshToken, profile, done) => {
+    try {
+        // Check if user exists
+        db.get('SELECT * FROM users WHERE email = ?', [profile.emails[0].value], async (err, user) => {
+            if (err) {
+                return done(err);
+            }
+            
+            if (user) {
+                return done(null, user);
+            }
+            
+            // Create new user
+            const newUser = {
+                name: profile.displayName,
+                email: profile.emails[0].value,
+                password: await bcrypt.hash(Math.random().toString(36), 10),
+                profile_picture: profile.photos[0].value
+            };
+            
+            db.run('INSERT INTO users (name, email, password, profile_picture) VALUES (?, ?, ?, ?)',
+                [newUser.name, newUser.email, newUser.password, newUser.profile_picture],
+                function(err) {
+                    if (err) {
+                        return done(err);
+                    }
+                    newUser.id = this.lastID;
+                    return done(null, newUser);
+                }
+            );
+        });
+    } catch (error) {
+        return done(error);
+    }
+}));
+
+// OAuth Routes
+app.get('/auth/google',
+    passport.authenticate('google', { scope: ['profile', 'email'] })
+);
+
+app.get('/auth/google/callback',
+    passport.authenticate('google', { failureRedirect: '/login' }),
+    (req, res) => {
+        const token = jwt.sign({ id: req.user.id }, JWT_SECRET);
+        res.redirect(`/user-dashboard.html?token=${token}`);
+    }
+);
+
+app.get('/auth/facebook',
+    passport.authenticate('facebook', { scope: ['email'] })
+);
+
+app.get('/auth/facebook/callback',
+    passport.authenticate('facebook', { failureRedirect: '/login' }),
+    (req, res) => {
+        const token = jwt.sign({ id: req.user.id }, JWT_SECRET);
+        res.redirect(`/user-dashboard.html?token=${token}`);
+    }
+);
+
 // Catch-all route to serve index.html for client-side routing
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'src', 'html', 'index.html'));
 });
 
 // Start Server
-app.listen(PORT, '0.0.0.0', () => {
-    console.log(`City Sphere Backend running on port ${PORT}`);
-    console.log(`Access the app at: http://localhost:${PORT}`);
+https.createServer(options, app).listen(PORT, () => {
+    console.log(`Server is running on https://localhost:${PORT}`);
 });

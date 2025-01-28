@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="card-title">Welcome, {{ name }}!</h1>
+                    <p class="card-text">This is your personal dashboard.</p>
+                    
+                    <div class="mt-4">
+                        <h4>Account Information</h4>
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <strong>Username:</strong> {{ current_user.username }}
+                            </li>
+                            <li class="list-group-item">
+                                <strong>Email:</strong> {{ current_user.email }}
+                            </li>
+                            <li class="list-group-item">
+                                <strong>Account Type:</strong> 
+                                {% if current_user.social_provider %}
+                                    {{ current_user.social_provider|title }} Account
+                                {% else %}
+                                    Email Account
+                                {% endif %}
+                            </li>
+                            <li class="list-group-item">
+                                <strong>Joined:</strong> {{ current_user.created_at.strftime('%B %d, %Y') }}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

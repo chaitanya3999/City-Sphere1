@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="text-center">
+    <h1 class="display-4">Welcome to City-Sphere</h1>
+    <p class="lead">Your urban exploration platform</p>
+    
+    {% if not current_user.is_authenticated %}
+        <div class="mt-4">
+            <a href="{{ url_for('auth.login') }}" class="btn btn-primary btn-lg me-2">Login</a>
+            <a href="{{ url_for('auth.signup') }}" class="btn btn-success btn-lg">Sign Up</a>
+        </div>
+        
+        <div class="mt-4">
+            <p>Or sign in with:</p>
+            <a href="{{ url_for('auth.google_login') }}" class="btn btn-danger me-2">
+                <i class="fab fa-google"></i> Google
+            </a>
+            <a href="{{ url_for('auth.facebook_login') }}" class="btn btn-primary">
+                <i class="fab fa-facebook"></i> Facebook
+            </a>
+        </div>
+    {% else %}
+        <div class="mt-4">
+            <a href="{{ url_for('main.dashboard') }}" class="btn btn-primary btn-lg">Go to Dashboard</a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
