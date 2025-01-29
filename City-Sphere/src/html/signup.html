@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>City Sphere - Sign Up</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/auth-new.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- Google Sign-In API -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+    <!-- JWT Decode Library -->
+    <script src="https://unpkg.com/jwt-decode/build/jwt-decode.js"></script>
+    
+    <!-- Facebook SDK -->
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+</head>
+<body>
+    <div class="registration-container">
+        <form id="signup-form" class="login-form">
+            <div class="registration-header">
+                <div class="registration-header-top">
+                    <a href="index.html" class="home-btn">
+                        <i class="fas fa-home"></i>
+                    </a>
+                    <img src="../images/City Sphere Final copy.png" alt="City Sphere Logo" class="logo">
+                </div>
+                <h1>Create Your Account</h1>
+                <p>Join City Sphere and grow your business</p>
+            </div>
+
+            <div class="form-group">
+                <label for="phone-email">
+                    <i class="fas fa-envelope"></i> Phone Number or Email
+                </label>
+                <input 
+                    type="text" 
+                    id="phone-email" 
+                    name="phone-email" 
+                    required 
+                    placeholder="Enter phone or email"
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="password">
+                    <i class="fas fa-lock"></i> Password
+                </label>
+                <input 
+                    type="password" 
+                    id="password" 
+                    name="password" 
+                    required 
+                    placeholder="Create a strong password"
+                    minlength="8"
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="confirm-password">
+                    <i class="fas fa-lock"></i> Confirm Password
+                </label>
+                <input 
+                    type="password" 
+                    id="confirm-password" 
+                    name="confirm-password" 
+                    required 
+                    placeholder="Repeat your password"
+                    minlength="8"
+                >
+            </div>
+
+            <button type="submit" class="submit-btn">
+                Create Account <i class="fas fa-arrow-right"></i>
+            </button>
+
+            <div class="divider">
+                <span>OR</span>
+            </div>
+
+            <div class="social-buttons">
+                <!-- Google Sign-In Button -->
+                <div id="g_id_onload"
+                     data-client_id="855437139826-iuond0b1id6a7tuh2vlh9bv69kh88r6a.apps.googleusercontent.com"
+                     data-callback="handleGoogleSignIn"
+                     data-auto_select="false"
+                     data-itp_support="true">
+                </div>
+                <div class="g_id_signin"
+                     data-type="standard"
+                     data-size="large"
+                     data-theme="outline"
+                     data-text="continue_with"
+                     data-shape="rectangular"
+                     data-width="280">
+                </div>
+
+                <!-- Facebook Login Button -->
+                <button type="button" class="btn-social facebook" onclick="handleFacebookLogin()">
+                    <i class="fab fa-facebook-f"></i>
+                    <span>Continue with Facebook</span>
+                </button>
+            </div>
+
+            <div class="login-footer">
+                <p>Already have an account? <a href="auth.html">Log In</a></p>
+            </div>
+        </form>
+    </div>
+
+    <script src="../js/signup.js"></script>
+    <script>
+        // Handle Google Sign-In
+        function handleGoogleSignIn(response) {
+            if (response.credential) {
+                // Decode the credential
+                const decoded = jwt_decode(response.credential);
+                console.log('Google Sign-In successful:', decoded);
+        
+                // Handle the sign-in
+                handleSocialLogin('google', {
+                    id: decoded.sub,
+                    name: decoded.name,
+                    email: decoded.email,
+                    picture: decoded.picture
+                });
+            } else {
+                console.error('Google Sign-In failed:', response);
+            }
+        }
+
+        // Handle Facebook Login
+        function handleFacebookLogin() {
+            FB.login(function(response) {
+                if (response.authResponse) {
+                    console.log('Facebook login successful');
+                    FB.api('/me', { fields: 'id,name,email,picture' }, function(userData) {
+                        console.log('Facebook user data:', userData);
+                        handleSocialLogin('facebook', userData);
+                    });
+                } else {
+                    console.error('Facebook login failed:', response);
+                }
+            }, { scope: 'email,public_profile' });
+        }
+
+        // Initialize Facebook SDK
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId: '631781262866181',
+                cookie: true,
+                xfbml: true,
+                version: 'v18.0'
+            });
+        };
+
+        // Common function to handle social login
+        function handleSocialLogin(provider, userData) {
+            console.log(`${provider} login:`, userData);
+            
+            // Here you can either:
+            // 1. Store the user data in localStorage/sessionStorage
+            sessionStorage.setItem('user', JSON.stringify({
+                provider: provider,
+                ...userData
+            }));
+            
+            // 2. Redirect to dashboard
+            window.location.href = 'user-dashboard.html';
+        }
+    </script>
+</body>
+</html>

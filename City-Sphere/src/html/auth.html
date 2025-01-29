@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
     <!-- Google Sign-In API -->
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script src="https://accounts.google.com/gsi/client" async></script>
 
     <!-- JWT Decode Library (for decoding Google's response) -->
     <script src="https://unpkg.com/jwt-decode/build/jwt-decode.js"></script>
@@ -51,22 +51,13 @@
                 </button>
             </div>
 
+            <div class="divider">
+                <span>OR</span>
+            </div>
+
             <div class="social-buttons">
                 <!-- Google Sign-In Button -->
-                <div id="g_id_onload"
-                     data-client_id="855437139826-iuond0b1id6a7tuh2vlh9bv69kh88r6a.apps.googleusercontent.com"
-                     data-callback="handleGoogleSignIn"
-                     data-auto_select="false"
-                     data-itp_support="true">
-                </div>
-                <div class="g_id_signin"
-                     data-type="standard"
-                     data-size="large"
-                     data-theme="outline"
-                     data-text="sign_in_with"
-                     data-shape="rectangular"
-                     data-width="280">
-                </div>
+                <div id="googleSignInDiv"></div>
 
                 <!-- Facebook Login Button -->
                 <button type="button" class="btn-social facebook" onclick="handleFacebookLogin()">
@@ -82,22 +73,40 @@
 
     <script src="../js/auth.js"></script>
     <script>
+        // Initialize Google Sign In
+        google.accounts.id.initialize({
+            client_id: '855437139826-iuond0b1id6a7tuh2vlh9bv69kh88r6a.apps.googleusercontent.com',
+            callback: handleGoogleSignIn
+        });
+
+        // Render the Google Sign In button
+        google.accounts.id.renderButton(
+            document.getElementById('googleSignInDiv'),
+            { 
+                theme: 'outline',
+                size: 'large',
+                width: 280,
+                text: 'signin_with'
+            }
+        );
+
         // Handle Google Sign-In
         function handleGoogleSignIn(response) {
             if (response.credential) {
-                // Decode the credential
                 const decoded = jwt_decode(response.credential);
-                console.log('Google Sign-In successful:', decoded);
-        
-                // Handle the sign-in
-                handleSocialLogin('google', {
+                console.log('Decoded credentials:', decoded);
+                
+                // Store user data
+                sessionStorage.setItem('user', JSON.stringify({
+                    provider: 'google',
                     id: decoded.sub,
                     name: decoded.name,
                     email: decoded.email,
                     picture: decoded.picture
-                });
-            } else {
-                console.error('Google Sign-In failed:', response);
+                }));
+
+                // Redirect to dashboard
+                window.location.replace('user-dashboard.html');
             }
         }
 
@@ -130,16 +139,15 @@
         function handleSocialLogin(provider, userData) {
             console.log(`${provider} login:`, userData);
     
-            // Here you can either:
-            // 1. Store the user data in localStorage/sessionStorage
+            // Store the user data in sessionStorage
             sessionStorage.setItem('user', JSON.stringify({
                 provider: provider,
                 ...userData
             }));
     
-            // 2. Redirect to dashboard
-            window.location.href = 'user-dashboard.html';
-    }
+            // Open dashboard in a new window/tab instead of redirecting
+            window.open('user-dashboard.html', '_blank');
+        }
     </script>
 </body>
 </html>
