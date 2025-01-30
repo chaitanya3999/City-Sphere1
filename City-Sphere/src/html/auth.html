@@ -5,44 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>City Sphere - Login</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../css/auth-new.css">
+    <link rel="stylesheet" href="/src/css/auth-new.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    
-    <!-- Google Sign-In API -->
-    <script src="https://accounts.google.com/gsi/client" async></script>
-
-    <!-- JWT Decode Library (for decoding Google's response) -->
-    <script src="https://unpkg.com/jwt-decode/build/jwt-decode.js"></script>
-
-    <!-- Facebook SDK -->
-<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
-
 </head>
 <body>
     <div class="registration-container">
         <div class="registration-header">
             <div class="registration-header-top">
-                <a href="index.html" class="home-btn">
+                <a href="/src/html/index.html" class="home-btn">
                     <i class="fas fa-home"></i>
                 </a>
-                <img src="../images/City Sphere Final copy.png" alt="City Sphere Logo" class="logo">
+                <img src="/src/images/City Sphere Final copy.png" alt="City Sphere Logo" class="logo">
             </div>
             <h1>Welcome Back</h1>
             <p>Login to access your City Sphere account</p>
         </div>
 
-        <form id="login-form" class="login-form">
+        <form id="loginForm" class="login-form">
             <div class="form-group">
-                <label for="email">
+                <label for="loginEmail">
                     <i class="fas fa-envelope"></i> Email
                 </label>
-                <input type="email" id="email" name="email" required placeholder="Enter your email">
+                <input type="email" id="loginEmail" name="loginEmail" required placeholder="Enter your email">
             </div>
             <div class="form-group">
-                <label for="password">
+                <label for="loginPassword">
                     <i class="fas fa-lock"></i> Password
                 </label>
-                <input type="password" id="password" name="password" required placeholder="Enter your password">
+                <input type="password" id="loginPassword" name="loginPassword" required placeholder="Enter your password">
                 <small><a href="#" class="forgot-password">Forgot Password?</a></small>
             </div>
             <div class="form-group">
@@ -57,97 +47,191 @@
 
             <div class="social-buttons">
                 <!-- Google Sign-In Button -->
-                <div id="googleSignInDiv"></div>
+                <div id="g_id_onload"
+                     data-client_id="855437139826-iuond0b1id6a7tuh2vlh9bv69kh88r6a.apps.googleusercontent.com"
+                     data-context="signin"
+                     data-ux_mode="popup"
+                     data-callback="handleGoogleSignIn"
+                     data-auto_prompt="false">
+                </div>
+                <div class="g_id_signin"
+                     data-type="standard"
+                     data-shape="rectangular"
+                     data-theme="outline"
+                     data-text="signin_with"
+                     data-size="large"
+                     data-logo_alignment="left">
+                </div>
 
                 <!-- Facebook Login Button -->
                 <button type="button" class="btn-social facebook" onclick="handleFacebookLogin()">
                     <i class="fab fa-facebook-f"></i>
-                    <span>Sign in with Facebook</span>
+                    <span>Continue with Facebook</span>
                 </button>
             </div>
         </form>
+
         <div class="login-footer">
-            <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
+            <p>Don't have an account? <a href="/src/html/signup.html">Sign Up</a></p>
         </div>
     </div>
 
-    <script src="../js/auth.js"></script>
+    <div id="loadingOverlay" class="loading-overlay hide">
+        <div class="spinner"></div>
+        <p>Please wait...</p>
+    </div>
+
+    <!-- Load scripts at the end -->
+    <script src="https://accounts.google.com/gsi/client" async></script>
+    <script src="https://connect.facebook.net/en_US/sdk.js"></script>
+
     <script>
-        // Initialize Google Sign In
-        google.accounts.id.initialize({
-            client_id: '855437139826-iuond0b1id6a7tuh2vlh9bv69kh88r6a.apps.googleusercontent.com',
-            callback: handleGoogleSignIn
-        });
-
-        // Render the Google Sign In button
-        google.accounts.id.renderButton(
-            document.getElementById('googleSignInDiv'),
-            { 
-                theme: 'outline',
-                size: 'large',
-                width: 280,
-                text: 'signin_with'
+        // Function to parse JWT without external library
+        function parseJwt(token) {
+            try {
+                const base64Url = token.split('.')[1];
+                const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+                const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+                    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+                }).join(''));
+                return JSON.parse(jsonPayload);
+            } catch (error) {
+                console.error('Error parsing JWT:', error);
+                return null;
             }
-        );
-
-        // Handle Google Sign-In
-        function handleGoogleSignIn(response) {
-            if (response.credential) {
-                const decoded = jwt_decode(response.credential);
-                console.log('Decoded credentials:', decoded);
-                
-                // Store user data
-                sessionStorage.setItem('user', JSON.stringify({
-                    provider: 'google',
-                    id: decoded.sub,
-                    name: decoded.name,
-                    email: decoded.email,
-                    picture: decoded.picture
-                }));
-
-                // Redirect to dashboard
-                window.location.replace('user-dashboard.html');
-            }
-        }
-
-        // Handle Facebook Login
-        function handleFacebookLogin() {
-            FB.login(function(response) {
-                if (response.authResponse) {
-                    console.log('Facebook login successful');
-                    FB.api('/me', { fields: 'id,name,email,picture' }, function(userData) {
-                        console.log('Facebook user data:', userData);
-                        handleSocialLogin('facebook', userData);
-                    });
-                } else {
-                    console.error('Facebook login failed:', response);
-                }
-            }, { scope: 'email,public_profile' });
         }
 
         // Initialize Facebook SDK
         window.fbAsyncInit = function() {
             FB.init({
-                appId: '631781262866181',  // Replace with your Facebook App ID
+                appId: '631781262866181',
                 cookie: true,
                 xfbml: true,
-                version: 'v18.0'
+                version: 'v17.0'
             });
         };
 
-        // Common function to handle social login
-        function handleSocialLogin(provider, userData) {
-            console.log(`${provider} login:`, userData);
-    
-            // Store the user data in sessionStorage
-            sessionStorage.setItem('user', JSON.stringify({
-                provider: provider,
-                ...userData
-            }));
-    
-            // Open dashboard in a new window/tab instead of redirecting
-            window.open('user-dashboard.html', '_blank');
+        // Handle Google Sign-In
+        async function handleGoogleSignIn(response) {
+            console.log('Google sign-in response:', response);
+            
+            if (response.credential) {
+                try {
+                    // Show loading overlay
+                    document.getElementById('loadingOverlay').classList.remove('hide');
+
+                    // Get user info from credential
+                    const userInfo = parseJwt(response.credential);
+                    console.log('Decoded Google credentials:', userInfo);
+
+                    // Send the token to your backend
+                    const apiResponse = await fetch('/api/auth/google', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        credentials: 'include',
+                        body: JSON.stringify({
+                            token: response.credential,
+                            userData: {
+                                name: userInfo.name,
+                                email: userInfo.email,
+                                picture: userInfo.picture
+                            }
+                        })
+                    });
+
+                    console.log('Backend response status:', apiResponse.status);
+                    const data = await apiResponse.json();
+                    console.log('Backend response data:', data);
+
+                    if (data.success) {
+                        // Store user data and token
+                        localStorage.setItem('token', data.token);
+                        localStorage.setItem('user', JSON.stringify(data.user));
+                        
+                        // Redirect to dashboard
+                        window.location.replace('/src/html/user-dashboard.html');
+                    } else {
+                        throw new Error(data.message || 'Google sign-in failed');
+                    }
+                } catch (error) {
+                    console.error('Google sign-in error:', error);
+                    alert('Failed to sign in with Google. Please try again. Error: ' + error.message);
+                } finally {
+                    // Hide loading overlay
+                    document.getElementById('loadingOverlay').classList.add('hide');
+                }
+            }
         }
+        window.handleGoogleSignIn = handleGoogleSignIn;
+
+        // Handle Facebook Login
+        async function handleFacebookLogin() {
+            console.log('Initiating Facebook login...');
+            
+            FB.login(async function(response) {
+                console.log('Facebook login response:', response);
+                
+                if (response.authResponse) {
+                    try {
+                        // Show loading overlay
+                        document.getElementById('loadingOverlay').classList.remove('hide');
+
+                        // Get user data from Facebook
+                        const userData = await new Promise((resolve, reject) => {
+                            FB.api('/me', { fields: 'name,email,picture' }, (result) => {
+                                console.log('Facebook user data:', result);
+                                if (result.error) reject(result.error);
+                                else resolve(result);
+                            });
+                        });
+
+                        // Send to backend
+                        const apiResponse = await fetch('/api/auth/facebook', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            credentials: 'include',
+                            body: JSON.stringify({
+                                accessToken: response.authResponse.accessToken,
+                                userData: {
+                                    name: userData.name,
+                                    email: userData.email,
+                                    picture: userData.picture?.data?.url
+                                }
+                            })
+                        });
+
+                        console.log('Backend response status:', apiResponse.status);
+                        const data = await apiResponse.json();
+                        console.log('Backend response data:', data);
+
+                        if (data.success) {
+                            // Store user data and token
+                            localStorage.setItem('token', data.token);
+                            localStorage.setItem('user', JSON.stringify(data.user));
+                            
+                            // Redirect to dashboard
+                            window.location.replace('/src/html/user-dashboard.html');
+                        } else {
+                            throw new Error(data.message || 'Facebook login failed');
+                        }
+                    } catch (error) {
+                        console.error('Facebook login error:', error);
+                        alert('Failed to login with Facebook. Please try again. Error: ' + error.message);
+                    } finally {
+                        // Hide loading overlay
+                        document.getElementById('loadingOverlay').classList.add('hide');
+                    }
+                } else {
+                    console.log('User cancelled login or did not fully authorize.');
+                    alert('Facebook login was cancelled or not authorized.');
+                }
+            }, { scope: 'public_profile,email' });
+        }
+        window.handleFacebookLogin = handleFacebookLogin;
     </script>
 </body>
 </html>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>City Sphere - Settings</title>
+    <link rel="manifest" href="../manifest.json">
+    <meta name="theme-color" content="#0066CC">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/navigation.css">
+    <link rel="stylesheet" href="../css/settings.css">
+    <link rel="stylesheet" href="../css/footer.css">
+</head>
+<body>
+    <header>
+        <div class="top-header">
+            <div class="container">
+                <div class="logo-container">
+                    <div class="logo-circle">
+                        <img src="../images/City Sphere Final copy.png" alt="City Sphere Logo" class="logo-image">
+                    </div>
+                    <div class="logo-text">
+                        <h1>City Sphere</h1>
+                        <p class="tagline">My City in My Phone</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-wrapper">
+                    <ul class="nav-links">
+                        <li><a href="index.html"><i class="fas fa-home"></i>Home</a></li>
+                        <li><a href="services.html"><i class="fas fa-cogs"></i>Services</a></li>
+                        <li><a href="aboutus.html"><i class="fas fa-users"></i>About Us</a></li>
+                        <li><a href="contact.html"><i class="fas fa-envelope"></i>Contact</a></li>
+                    </ul>
+                    <div class="nav-buttons">
+                        <a href="wallet.html" class="btn btn-wallet">
+                            <i class="fas fa-wallet"></i>Wallet
+                        </a>
+                        <div id="authSection">
+                            <!-- Navigation will be updated by navigation.js -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="settings-container">
+            <div class="container">
+                <div class="settings-header">
+                    <h1>Settings</h1>
+                    <p>Manage your account preferences and settings</p>
+                </div>
+
+                <div class="settings-grid">
+                    <!-- Account Settings -->
+                    <div class="settings-card">
+                        <h2><i class="fas fa-user-cog"></i> Account Settings</h2>
+                        <form id="accountSettingsForm">
+                            <div class="form-group">
+                                <label>
+                                    <i class="fas fa-bell"></i> Email Notifications
+                                </label>
+                                <div class="toggle-switch">
+                                    <input type="checkbox" id="emailNotifications" checked>
+                                    <label for="emailNotifications"></label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>
+                                    <i class="fas fa-mobile-alt"></i> SMS Notifications
+                                </label>
+                                <div class="toggle-switch">
+                                    <input type="checkbox" id="smsNotifications" checked>
+                                    <label for="smsNotifications"></label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>
+                                    <i class="fas fa-clock"></i> Appointment Reminders
+                                </label>
+                                <select id="reminderTime">
+                                    <option value="1">1 hour before</option>
+                                    <option value="2">2 hours before</option>
+                                    <option value="24">24 hours before</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn-save">Save Changes</button>
+                        </form>
+                    </div>
+
+                    <!-- Security Settings -->
+                    <div class="settings-card">
+                        <h2><i class="fas fa-shield-alt"></i> Security</h2>
+                        <form id="securitySettingsForm">
+                            <div class="form-group">
+                                <label for="currentPassword">Current Password</label>
+                                <input type="password" id="currentPassword" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="newPassword">New Password</label>
+                                <input type="password" id="newPassword" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="confirmNewPassword">Confirm New Password</label>
+                                <input type="password" id="confirmNewPassword" required>
+                            </div>
+                            <button type="submit" class="btn-save">Update Password</button>
+                        </form>
+                    </div>
+
+                    <!-- Privacy Settings -->
+                    <div class="settings-card">
+                        <h2><i class="fas fa-user-shield"></i> Privacy</h2>
+                        <form id="privacySettingsForm">
+                            <div class="form-group">
+                                <label>
+                                    <i class="fas fa-user-friends"></i> Profile Visibility
+                                </label>
+                                <select id="profileVisibility">
+                                    <option value="public">Public</option>
+                                    <option value="private">Private</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>
+                                    <i class="fas fa-history"></i> Activity History
+                                </label>
+                                <div class="toggle-switch">
+                                    <input type="checkbox" id="activityHistory" checked>
+                                    <label for="activityHistory"></label>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn-save">Save Changes</button>
+                        </form>
+                    </div>
+
+                    <!-- Data Management -->
+                    <div class="settings-card">
+                        <h2><i class="fas fa-database"></i> Data Management</h2>
+                        <div class="data-management">
+                            <button id="exportData" class="btn-secondary">
+                                <i class="fas fa-download"></i> Export My Data
+                            </button>
+                            <button id="deleteAccount" class="btn-danger">
+                                <i class="fas fa-user-times"></i> Delete Account
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About City Sphere</h3>
+                    <p>Your one-stop solution for all city services. Making urban life simpler, one tap at a time.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="aboutus.html">About Us</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Connect With Us</h3>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 City Sphere. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script type="module" src="../js/navigation.js"></script>
+    <script type="module" src="../js/settings.js"></script>
+</body>
+</html>

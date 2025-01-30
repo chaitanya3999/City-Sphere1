@@ -273,3 +273,136 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 });
+
+import walletService from './walletService.js';
+
+// Booking form functionality
+const bookingModal = document.getElementById('bookingModal');
+const paymentModal = document.getElementById('paymentModal');
+const appointmentForm = document.getElementById('appointmentForm');
+const closeButtons = document.querySelectorAll('.close');
+
+// Close modals when clicking the close button
+closeButtons.forEach(button => {
+    button.onclick = function() {
+        bookingModal.style.display = "none";
+        paymentModal.style.display = "none";
+    }
+});
+
+// Close modals when clicking outside
+window.onclick = function(event) {
+    if (event.target == bookingModal || event.target == paymentModal) {
+        bookingModal.style.display = "none";
+        paymentModal.style.display = "none";
+    }
+}
+
+// Handle book appointment button click
+async function handleBookAppointment(doctorCard) {
+    const doctorName = doctorCard.querySelector('h3').textContent;
+    const feeText = doctorCard.querySelector('.price').textContent;
+    const fee = parseInt(feeText.match(/₹(\d+)/)[1]);
+
+    // Set form hidden fields
+    document.getElementById('doctorName').value = doctorName;
+    document.getElementById('consultationFee').value = fee;
+    document.getElementById('modalFee').textContent = fee;
+
+    // Get and display current wallet balance
+    const walletBalance = walletService.getBalance();
+    document.getElementById('walletBalance').textContent = walletBalance.toFixed(2);
+
+    // Show booking modal
+    bookingModal.style.display = "block";
+}
+
+// Handle appointment form submission
+appointmentForm.onsubmit = async function(e) {
+    e.preventDefault();
+
+    // Get form data
+    const formData = new FormData(appointmentForm);
+    const appointmentData = Object.fromEntries(formData.entries());
+
+    // Validate wallet balance
+    const walletBalance = walletService.getBalance();
+    const consultationFee = parseInt(appointmentData.consultationFee);
+
+    if (walletBalance < consultationFee) {
+        alert('Insufficient wallet balance. Please add money to your wallet.');
+        return;
+    }
+
+    // Show payment confirmation modal
+    document.getElementById('paymentDoctorName').textContent = appointmentData.doctorName;
+    document.getElementById('paymentAmount').textContent = appointmentData.consultationFee;
+    document.getElementById('paymentDate').textContent = appointmentData.appointmentDate;
+    document.getElementById('paymentTime').textContent = appointmentData.appointmentTime;
+
+    bookingModal.style.display = "none";
+    paymentModal.style.display = "block";
+}
+
+// Handle payment confirmation
+document.getElementById('confirmPayment').onclick = async function() {
+    const formData = new FormData(appointmentForm);
+    const appointmentData = Object.fromEntries(formData.entries());
+
+    try {
+        // 1. Process payment from wallet
+        const consultationFee = parseInt(appointmentData.consultationFee);
+        await walletService.deductMoney(
+            consultationFee,
+            `Appointment booking with ${appointmentData.doctorName}`
+        );
+
+        // 2. Save appointment to localStorage
+        const appointment = {
+            id: Date.now(),
+            doctorName: appointmentData.doctorName,
+            patientName: appointmentData.patientName,
+            appointmentDate: appointmentData.appointmentDate,
+            appointmentTime: appointmentData.appointmentTime,
+            symptoms: appointmentData.symptoms,
+            medicalHistory: appointmentData.medicalHistory,
+            consultationFee: appointmentData.consultationFee,
+            status: 'confirmed',
+            paymentStatus: 'paid',
+            bookingDate: new Date().toISOString()
+        };
+
+        // Get existing appointments or initialize empty array
+        const appointments = JSON.parse(localStorage.getItem('appointments') || '[]');
+        appointments.push(appointment);
+        localStorage.setItem('appointments', JSON.stringify(appointments));
+
+        // Show success message with link to appointments
+        alert('Appointment booked successfully!');
+        if (confirm('Would you like to view your appointments?')) {
+            window.location.href = 'my-appointments.html';
+        }
+        
+        // Close modal and reset form
+        paymentModal.style.display = "none";
+        appointmentForm.reset();
+
+    } catch (error) {
+        console.error('Error booking appointment:', error);
+        if (error.message === 'Insufficient balance') {
+            alert('Insufficient wallet balance. Please add money to your wallet and try again.');
+        } else {
+            alert('Failed to book appointment. Please try again.');
+        }
+    }
+}
+
+// Attach event listeners to book appointment buttons
+document.querySelectorAll('.doctor-card .button').forEach((button, index) => {
+    if (button.textContent === 'Book Appointment') {
+        button.onclick = function() {
+            const doctorCard = button.closest('.doctor-card');
+            handleBookAppointment(doctorCard);
+        };
+    }
+});

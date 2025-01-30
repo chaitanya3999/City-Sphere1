@@ -25,7 +25,7 @@
           <div class="logo-container">
             <div class="logo-circle">
               <img
-                src="../images/City Sphere Final copy.png"
+                src="/src/images/City Sphere Final copy.png"
                 alt="City Sphere Logo"
                 class="logo-image"
               />
@@ -34,6 +34,15 @@
               <h1>City Sphere</h1>
               <p class="tagline">My City in My Phone</p>
             </div>
+          </div>
+          <div class="user-menu">
+            <div class="user-info">
+              <span id="userName" class="user-name">User</span>
+            </div>
+            <button type="button" class="btn-logout" onclick="window.apiService.logout()">
+              <i class="fas fa-sign-out-alt"></i>
+              <span>Logout</span>
+            </button>
           </div>
         </div>
       </div>
@@ -57,13 +66,14 @@
               </li>
             </ul>
             <div class="nav-buttons">
-              <a href="wallet.html" class="btn btn-wallet">
+              <a href="/src/html/wallet.html" class="btn btn-wallet">
                 <i class="fas fa-wallet"></i>Wallet
               </a>
-              <div id="authSection">
-                <a href="auth.html" class="btn btn-login">
-                  <i class="fas fa-user"></i>Login
-                </a>
+              <div class="auth-buttons">
+                <button type="button" class="btn-logout" onclick="window.apiService.logout()">
+                  <i class="fas fa-sign-out-alt"></i>
+                  <span>Logout</span>
+                </button>
               </div>
             </div>
           </div>
@@ -75,12 +85,12 @@
       <div class="sidebar">
         <div class="profile-summary">
           <img
-            src="../images/default-avatar.png"
+            src="/src/images/default-avatar.png"
             alt="Profile Picture"
             class="profile-pic"
             id="profilePicture"
           />
-          <h2 id="userName">User Name</h2>
+          <h2 id="sidebarUserName">User Name</h2>
           <p id="userEmail">user@example.com</p>
         </div>
         <nav class="dashboard-nav">
@@ -748,10 +758,10 @@
       </div>
     </footer>
 
-    <script src="../js/user-dashboard.js"></script>
-    <script type="module" src="../js/auth-new.js"></script>
-    <script type="module" src="../js/custom-auth.js"></script>
-    <script type="module" src="../js/home.js"></script>
-    <script src="../js/user-details.js"></script>
+    <script type="module">
+        import apiService from '/src/js/services/api.service.js';
+        window.apiService = apiService; // Make apiService available globally
+    </script>
+    <script type="module" src="/src/js/dashboard.js"></script>
   </body>
 </html>
