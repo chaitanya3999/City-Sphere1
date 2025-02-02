@@ -2,7 +2,7 @@ const API_URL = '/api';
 
 class ApiService {
     constructor() {
-        this.baseUrl = '/api';  // Using relative URL
+        this.baseUrl = 'http://127.0.0.1:5501/api';  // Updated to use port 5501
         this.token = localStorage.getItem('token');
     }
 
@@ -112,7 +112,7 @@ class ApiService {
             if (loadingOverlay) loadingOverlay.classList.add('hide');
             
             // Always redirect to login page, even if request fails
-            window.location.replace('/src/html/auth.html');
+            window.location.replace('http://127.0.0.1:5501/src/html/auth.html');
         }
     }
 

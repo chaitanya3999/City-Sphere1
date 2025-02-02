@@ -1,7 +1,7 @@
 // Custom Authentication Module
 class AuthService {
     constructor() {
-        this.apiBaseUrl = 'http://localhost:3000/api';
+        this.apiBaseUrl = 'http://127.0.0.1:5501/api';
     }
 
     // Validate phone or email

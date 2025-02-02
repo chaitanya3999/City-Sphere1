@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             <a href="profile.html">
                                 <i class="fas fa-user"></i> Profile
                             </a>
-                            <a href="dashboard.html">
+                            <a href="user-dashboard.html">
                                 <i class="fas fa-tachometer-alt"></i> Dashboard
                             </a>
                             <a href="settings.html">
