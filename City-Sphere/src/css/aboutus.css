@@ -141,7 +141,6 @@ main {
   border-radius: 50%;
   object-fit: cover;
   margin-bottom: 1rem;
-  border: 5px solid #ff6b00;
 }
 
 .team-member h3 {
