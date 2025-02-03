@@ -50,16 +50,15 @@
                 <div id="g_id_onload"
                      data-client_id="855437139826-iuond0b1id6a7tuh2vlh9bv69kh88r6a.apps.googleusercontent.com"
                      data-context="signin"
-                     data-ux_mode="popup"
                      data-callback="handleGoogleSignIn"
                      data-auto_prompt="false">
                 </div>
                 <div class="g_id_signin"
                      data-type="standard"
-                     data-shape="rectangular"
-                     data-theme="outline"
-                     data-text="signin_with"
                      data-size="large"
+                     data-theme="outline"
+                     data-text="sign_in_with"
+                     data-shape="rectangular"
                      data-logo_alignment="left">
                 </div>
 
@@ -86,6 +85,9 @@
     <script src="https://connect.facebook.net/en_US/sdk.js"></script>
 
     <script>
+        const BASE_URL = 'http://localhost:5000';
+        const API_URL = `${BASE_URL}/api`;
+
         // Function to parse JWT without external library
         function parseJwt(token) {
             try {
@@ -111,127 +113,6 @@
             });
         };
 
-        // Handle Google Sign-In
-        async function handleGoogleSignIn(response) {
-            console.log('Google sign-in response:', response);
-            
-            if (response.credential) {
-                try {
-                    // Show loading overlay
-                    document.getElementById('loadingOverlay').classList.remove('hide');
-
-                    // Get user info from credential
-                    const userInfo = parseJwt(response.credential);
-                    console.log('Decoded Google credentials:', userInfo);
-
-                    // Send the token to your backend
-                    const apiResponse = await fetch('http://localhost:5000/api/auth/google', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        credentials: 'include',
-                        body: JSON.stringify({
-                            token: response.credential,
-                            userData: {
-                                name: userInfo.name,
-                                email: userInfo.email,
-                                picture: userInfo.picture
-                            }
-                        })
-                    });
-
-                    console.log('Backend response status:', apiResponse.status);
-                    const data = await apiResponse.json();
-                    console.log('Backend response data:', data);
-
-                    if (data.success) {
-                        // Store user data and token
-                        localStorage.setItem('token', data.token);
-                        localStorage.setItem('user', JSON.stringify(data.user));
-                        
-                        // Redirect to dashboard
-                        window.location.replace('user-dashboard.html');
-                    } else {
-                        throw new Error(data.message || 'Google sign-in failed');
-                    }
-                } catch (error) {
-                    console.error('Google sign-in error:', error);
-                    alert('Failed to sign in with Google. Please try again. Error: ' + error.message);
-                } finally {
-                    // Hide loading overlay
-                    document.getElementById('loadingOverlay').classList.add('hide');
-                }
-            }
-        }
-        window.handleGoogleSignIn = handleGoogleSignIn;
-
-        // Handle Facebook Login
-        async function handleFacebookLogin() {
-            console.log('Initiating Facebook login...');
-            
-            FB.login(async function(response) {
-                console.log('Facebook login response:', response);
-                
-                if (response.authResponse) {
-                    try {
-                        // Show loading overlay
-                        document.getElementById('loadingOverlay').classList.remove('hide');
-
-                        // Get user data from Facebook
-                        const userData = await new Promise((resolve, reject) => {
-                            FB.api('/me', { fields: 'name,email,picture' }, (result) => {
-                                console.log('Facebook user data:', result);
-                                if (result.error) reject(result.error);
-                                else resolve(result);
-                            });
-                        });
-
-                        // Send to backend
-                        const apiResponse = await fetch('http://localhost:5000/api/auth/facebook', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            credentials: 'include',
-                            body: JSON.stringify({
-                                accessToken: response.authResponse.accessToken,
-                                userData: {
-                                    name: userData.name,
-                                    email: userData.email,
-                                    picture: userData.picture?.data?.url
-                                }
-                            })
-                        });
-
-                        console.log('Backend response status:', apiResponse.status);
-                        const data = await apiResponse.json();
-                        console.log('Backend response data:', data);
-
-                        if (data.success) {
-                            // Store user data and token
-                            localStorage.setItem('token', data.token);
-                            localStorage.setItem('user', JSON.stringify(data.user));
-                            
-                            // Redirect to dashboard
-                            window.location.replace('user-dashboard.html');
-                        } else {
-                            throw new Error(data.message || 'Facebook login failed');
-                        }
-                    } catch (error) {
-                        console.error('Facebook login error:', error);
-                        alert('Failed to login with Facebook. Please try again. Error: ' + error.message);
-                    } finally {
-                        // Hide loading overlay
-                        document.getElementById('loadingOverlay').classList.add('hide');
-                    }
-                } else {
-                    console.log('User cancelled login or did not fully authorize.');
-                    alert('Facebook login was cancelled or not authorized.');
-                }
-            }, { scope: 'public_profile,email' });
-        }
-
         // Handle form submission
         document.getElementById('loginForm').addEventListener('submit', async function(event) {
             event.preventDefault();
@@ -243,7 +124,7 @@
                 const email = document.getElementById('loginEmail').value;
                 const password = document.getElementById('loginPassword').value;
                 
-                const response = await fetch('http://localhost:5000/api/auth/login', {
+                const response = await fetch(`${API_URL}/auth/login`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -256,6 +137,7 @@
                 });
 
                 const data = await response.json();
+                console.log('Login response:', data);
 
                 if (!response.ok) {
                     throw new Error(data.message || 'Login failed');
@@ -266,7 +148,7 @@
                 localStorage.setItem('user', JSON.stringify(data.user));
 
                 // Redirect to dashboard
-                window.location.replace('user-dashboard.html');
+                window.location.href = '/City-Sphere1/City-Sphere/src/html/user-dashboard.html';
             } catch (error) {
                 console.error('Login Error:', error);
                 alert(error.message || 'Login failed');
@@ -274,6 +156,53 @@
                 document.getElementById('loadingOverlay').classList.add('hide');
             }
         });
+
+        // Handle Google Sign-In
+        async function handleGoogleSignIn(response) {
+            console.log('Google sign-in response:', response);
+            
+            if (response.credential) {
+                try {
+                    // Show loading overlay
+                    document.getElementById('loadingOverlay').classList.remove('hide');
+
+                    // Send the token to your backend
+                    const apiResponse = await fetch(`${API_URL}/auth/google`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        credentials: 'include',
+                        body: JSON.stringify({
+                            token: response.credential
+                        })
+                    });
+
+                    console.log('Backend response status:', apiResponse.status);
+                    const data = await apiResponse.json();
+                    console.log('Backend response data:', data);
+
+                    if (apiResponse.ok) {
+                        // Store user data and token
+                        localStorage.setItem('token', data.token);
+                        localStorage.setItem('user', JSON.stringify(data.user));
+                        
+                        // Redirect to dashboard
+                        window.location.href = '/City-Sphere1/City-Sphere/src/html/user-dashboard.html';
+                    } else {
+                        throw new Error(data.message || 'Google sign-in failed');
+                    }
+                } catch (error) {
+                    console.error('Google sign-in error:', error);
+                    alert('Failed to sign in with Google. Please try again. Error: ' + error.message);
+                } finally {
+                    // Hide loading overlay
+                    document.getElementById('loadingOverlay').classList.add('hide');
+                }
+            }
+        }
+
+        window.handleGoogleSignIn = handleGoogleSignIn;
     </script>
 </body>
 </html>

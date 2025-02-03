@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     // Form Submission
     if (signupForm) {
         signupForm.addEventListener('submit', async (e) => {
-            e.preventDefault(); // Prevent form from submitting normally
+            e.preventDefault();
             showLoading();
 
             // Get form elements
@@ -20,14 +20,22 @@ document.addEventListener('DOMContentLoaded', async function() {
             const confirmPasswordInput = document.getElementById('confirm-password');
 
             // Validate inputs
-            const phoneEmail = phoneEmailInput.value.trim();
-            const password = passwordInput.value;
-            const confirmPassword = confirmPasswordInput.value;
+            const phoneEmail = phoneEmailInput?.value?.trim();
+            const password = passwordInput?.value;
+            const confirmPassword = confirmPasswordInput?.value;
 
             try {
-                // Validation
+                // Input validation
+                if (!phoneEmail) {
+                    throw new Error('Email address is required');
+                }
+
                 if (!validatePhoneOrEmail(phoneEmail)) {
                     throw new Error('Please enter a valid email address');
+                }
+
+                if (!password) {
+                    throw new Error('Password is required');
                 }
 
                 if (password.length < 8) {
@@ -38,10 +46,24 @@ document.addEventListener('DOMContentLoaded', async function() {
                     throw new Error('Passwords do not match');
                 }
 
-                console.log('Attempting to register user...');
+                // Generate a user-friendly name from email
+                const name = phoneEmail.split('@')[0]
+                    .replace(/[^a-zA-Z0-9]/g, ' ') // Replace special chars with space
+                    .replace(/\s+/g, ' ')          // Replace multiple spaces with single space
+                    .trim()                        // Remove leading/trailing spaces
+                    .toLowerCase()                 // Convert to lowercase
+                    .split(' ')                    // Split into words
+                    .map(word => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize first letter
+                    .join(' ');                    // Join words back together
+
+                console.log('Attempting to register user with data:', {
+                    name,
+                    email: phoneEmail
+                });
+
                 // Register user
                 const response = await apiService.register({
-                    name: phoneEmail.split('@')[0], // Use part before @ as name
+                    name,
                     email: phoneEmail,
                     password: password
                 });
@@ -52,22 +74,28 @@ document.addEventListener('DOMContentLoaded', async function() {
                     // Clear form
                     signupForm.reset();
                     alert('Registration successful! Please login.');
+                    
                     // Redirect to login page
-                    window.location.href = 'auth.html';
+                    window.location.href = '/City-Sphere1/City-Sphere/src/html/auth.html';
                 } else {
                     throw new Error(response.message || 'Registration failed');
                 }
             } catch (error) {
                 console.error('Registration error:', error);
-                hideLoading();
-                const errorMessage = error.response?.data?.message || error.message || 'Registration failed. Please try again.';
+                
+                // Clear password fields for security
+                if (passwordInput) passwordInput.value = '';
+                if (confirmPasswordInput) confirmPasswordInput.value = '';
+                
+                // Show error message
+                const errorMessage = error.message || 'Registration failed. Please try again.';
                 alert(errorMessage);
                 
                 // Focus the relevant input field based on the error
-                if (errorMessage.includes('email')) {
-                    phoneEmailInput.focus();
-                } else if (errorMessage.includes('password')) {
-                    passwordInput.focus();
+                if (errorMessage.toLowerCase().includes('email')) {
+                    phoneEmailInput?.focus();
+                } else if (errorMessage.toLowerCase().includes('password')) {
+                    passwordInput?.focus();
                 }
             } finally {
                 hideLoading();
@@ -96,7 +124,9 @@ document.addEventListener('DOMContentLoaded', async function() {
 
 // Validation Helper
 function validatePhoneOrEmail(input) {
-    // Regex for email only
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!input) return false;
+    
+    // Email validation regex
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return emailRegex.test(input);
 }

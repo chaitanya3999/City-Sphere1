@@ -1,8 +1,12 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
+const { OAuth2Client } = require('google-auth-library');
 const User = require('../models/user.model');
 const authMiddleware = require('../middleware/auth.middleware');
 const router = express.Router();
+
+// Initialize Google OAuth client
+const googleClient = new OAuth2Client('855437139826-iuond0b1id6a7tuh2vlh9bv69kh88r6a.apps.googleusercontent.com');
 
 // Cookie options
 const COOKIE_OPTIONS = {
@@ -36,7 +40,7 @@ router.post('/register', async (req, res) => {
         // Generate token
         const token = jwt.sign(
             { userId: user._id },
-            process.env.JWT_SECRET || 'your-secret-key',
+            process.env.JWT_SECRET || '311069610d1f6595da4c3d51d9e59c780c2e297bb2f53a213a9d6825a7d3cb0cb27f025f749e923ff0608ac941d1e5f9685e4311beb47fac299375c6f0ab974b',
             { expiresIn: '24h' }
         );
 
@@ -118,8 +122,20 @@ router.post('/login', async (req, res) => {
 // Google Sign-In
 router.post('/google', async (req, res) => {
     try {
-        const { userData } = req.body;
-        const { name, email } = userData;
+        console.log('Google sign-in request received:', req.body);
+        const { token } = req.body;
+
+        // Verify Google token
+        const ticket = await googleClient.verifyIdToken({
+            idToken: token,
+            audience: '855437139826-iuond0b1id6a7tuh2vlh9bv69kh88r6a.apps.googleusercontent.com'
+        });
+
+        const payload = ticket.getPayload();
+        console.log('Google token payload:', payload);
+
+        // Extract user data
+        const { name, email, picture } = payload;
 
         // Check if user exists
         let user = await User.findOne({ email });
@@ -129,21 +145,23 @@ router.post('/google', async (req, res) => {
             user = new User({
                 name,
                 email,
+                picture,
                 password: Math.random().toString(36).slice(-8), // Generate random password
                 authProvider: 'google'
             });
             await user.save();
+            console.log('New Google user created:', email);
         }
 
-        // Generate token
-        const token = jwt.sign(
+        // Generate JWT token
+        const jwtToken = jwt.sign(
             { userId: user._id },
             process.env.JWT_SECRET || 'your-secret-key',
             { expiresIn: '24h' }
         );
 
         // Set cookie
-        res.cookie('token', token, COOKIE_OPTIONS);
+        res.cookie('token', jwtToken, COOKIE_OPTIONS);
 
         res.json({
             success: true,
@@ -151,15 +169,16 @@ router.post('/google', async (req, res) => {
             user: {
                 id: user._id,
                 name: user.name,
-                email: user.email
+                email: user.email,
+                picture: user.picture
             },
-            token
+            token: jwtToken
         });
     } catch (error) {
         console.error('Google sign-in error:', error);
         res.status(500).json({
             success: false,
-            message: 'Google sign-in failed'
+            message: error.message || 'Google sign-in failed'
         });
     }
 });

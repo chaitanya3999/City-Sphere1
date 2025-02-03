@@ -1,8 +1,8 @@
-const API_URL = '/api';
+const API_URL = 'http://localhost:5000/api';
 
 class ApiService {
     constructor() {
-        this.baseUrl = 'http://127.0.0.1:5501/api';  // Updated to use port 5501
+        this.baseUrl = 'http://localhost:5000';  // Updated to use correct backend URL
         this.token = localStorage.getItem('token');
     }
 
@@ -21,6 +21,7 @@ class ApiService {
         };
 
         try {
+            console.log('Making API request to:', url);
             const response = await fetch(url, {
                 ...options,
                 headers: {
@@ -35,7 +36,19 @@ class ApiService {
                 return { success: true };
             }
 
-            const data = await response.json();
+            // Try to parse the response as JSON
+            let data;
+            const contentType = response.headers.get('content-type');
+            if (contentType && contentType.includes('application/json')) {
+                try {
+                    data = await response.json();
+                } catch (e) {
+                    console.error('Failed to parse JSON response:', e);
+                    throw new Error('Invalid server response');
+                }
+            } else {
+                throw new Error('Invalid response type from server');
+            }
 
             if (!response.ok) {
                 throw new Error(data.message || 'Request failed');
@@ -70,11 +83,13 @@ class ApiService {
 
     async register(userData) {
         try {
+            console.log('Sending registration data:', userData);
             const response = await this.request('/auth/register', {
                 method: 'POST',
                 body: JSON.stringify(userData)
             });
 
+            console.log('Registration response:', response);
             return {
                 success: true,
                 message: 'Registration successful',
@@ -99,20 +114,20 @@ class ApiService {
             this.token = null;
             localStorage.clear();
 
-            // Then make the logout request
+            // Make logout request
             await this.request('/auth/logout', {
-                method: 'POST',
-                credentials: 'include'
+                method: 'POST'
             });
+
+            // Redirect to login page
+            window.location.href = '/City-Sphere1/City-Sphere/src/html/auth.html';
         } catch (error) {
             console.error('Logout failed:', error);
+            throw error;
         } finally {
-            // Hide loading overlay if it exists
+            // Hide loading overlay
             const loadingOverlay = document.getElementById('loadingOverlay');
             if (loadingOverlay) loadingOverlay.classList.add('hide');
-            
-            // Always redirect to login page, even if request fails
-            window.location.replace('http://127.0.0.1:5501/src/html/auth.html');
         }
     }
 

@@ -18,7 +18,7 @@ const app = express();
 
 // CORS configuration
 app.use(cors({
-    origin: 'http://localhost:5000',
+    origin: ['http://127.0.0.1:5501', 'http://localhost:5501'],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'Cookie'],
@@ -28,6 +28,7 @@ app.use(cors({
 // Middleware
 app.use(express.json());
 app.use(cookieParser());
+app.use(express.urlencoded({ extended: true }));
 
 // Serve static files from the src directory
 app.use('/src', express.static(path.join(__dirname, '../src'), {
@@ -91,13 +92,18 @@ app.get('/src/html/:file', (req, res, next) => {
     });
 });
 
+// Health check endpoint
+app.get('/health', (req, res) => {
+    res.status(200).json({ status: 'OK' });
+});
+
 // Error handling middleware
 app.use((err, req, res, next) => {
     console.error('Error:', err);
-    res.status(500).json({
+    res.status(500).json({ 
         success: false,
-        message: 'Something went wrong!',
-        error: process.env.NODE_ENV === 'development' ? err.message : undefined
+        message: 'Internal server error',
+        error: err.message 
     });
 });
 
@@ -114,7 +120,7 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/cityspher
 });
 
 // Start server
-const PORT = process.env.PORT || 5000;
+const PORT = 5000;
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+    console.log(`Server is running on http://localhost:${PORT}`);
 });
