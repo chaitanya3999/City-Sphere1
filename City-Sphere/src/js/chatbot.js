@@ -7,7 +7,8 @@ class Chatty {
             "hi": "Hello! What can I do for you?",
             "how are you": "I'm doing great, thanks for asking! How can I assist you?",
             "bye": "Goodbye! Have a great day!",
-            "default": "I'm not sure about that. Could you please rephrase your question?"
+            "default": "I'm not sure about that. Could you please rephrase your question?",
+            "services": "We offer a wide range of services. Here are some examples:\n\n- Home services\n- Transportation booking\n- Grocery and fresh produce ordering\n- Medicine delivery\n- Contact and support"
         };
     }
 
