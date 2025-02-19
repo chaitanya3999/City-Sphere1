@@ -48,6 +48,30 @@ function initializeDatabase() {
     `;
     db.run(createUserTableQuery);
 
+    // Doctors Table
+    db.run(`CREATE TABLE IF NOT EXISTS doctors (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
+        specialization TEXT NOT NULL,
+        qualifications TEXT NOT NULL,
+        experience INTEGER NOT NULL,
+        address TEXT NOT NULL,
+        waiting_time TEXT NOT NULL,
+        fee INTEGER NOT NULL
+    )`);
+
+    // Appointments Table
+    db.run(`CREATE TABLE IF NOT EXISTS appointments (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        doctor_id INTEGER NOT NULL,
+        patient_id INTEGER NOT NULL,
+        appointment_date DATE NOT NULL,
+        appointment_time TIME NOT NULL,
+        status TEXT NOT NULL,
+        FOREIGN KEY(doctor_id) REFERENCES doctors(id),
+        FOREIGN KEY(patient_id) REFERENCES users(id)
+    )`);
+
     // User Preferences Table
     db.run(`CREATE TABLE IF NOT EXISTS user_preferences (
         user_id INTEGER PRIMARY KEY,
@@ -278,6 +302,52 @@ app.post('/api/user/details', authenticateToken, async (req, res) => {
     console.error('Error updating user details:', error);
     res.status(500).json({ message: 'Internal server error' });
   }
+});
+
+// Doctors Routes
+app.get('/api/doctors', (req, res) => {
+    const { search, specialty } = req.query;
+    let sql = 'SELECT * FROM doctors WHERE 1=1';
+    const params = [];
+
+    if (search) {
+        sql += ` AND (name LIKE ? OR specialization LIKE ? OR address LIKE ?)`;
+        const searchTerm = `%${search}%`;
+        params.push(searchTerm, searchTerm, searchTerm);
+    }
+
+    if (specialty && specialty !== 'all doctors') {
+        sql += ` AND LOWER(specialization) = LOWER(?)`;
+        params.push(specialty.replace('s', '')); // Remove plural 's' from specialty
+    }
+
+    db.all(sql, params, (err, rows) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+            return;
+        }
+        res.json(rows);
+    });
+});
+
+// Book Appointment
+app.post('/api/appointments', authenticateToken, (req, res) => {
+    const { doctorId, date, time } = req.body;
+    const patientId = req.user.id;
+    
+    const sql = `INSERT INTO appointments (doctor_id, patient_id, appointment_date, appointment_time, status)
+                 VALUES (?, ?, ?, ?, 'pending')`;
+    
+    db.run(sql, [doctorId, patientId, date, time], function(err) {
+        if (err) {
+            res.status(500).json({ error: err.message });
+            return;
+        }
+        res.json({
+            message: 'Appointment booked successfully',
+            appointmentId: this.lastID
+        });
+    });
 });
 
 // Catch-all route to serve index.html for client-side routing
