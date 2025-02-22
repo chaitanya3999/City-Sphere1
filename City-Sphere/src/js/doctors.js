@@ -1,408 +1,337 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // Mobile Menu Toggle
-    const hamburger = document.querySelector('.hamburger');
-    const navLinks = document.querySelector('.nav-links');
-    const navButtons = document.querySelector('.nav-buttons');
+// Sample doctor data
+const doctors = [
+  {
+    id: 1,
+    name: "Dr. Sarah Johnson",
+    specialization: "Cardiologist",
+    qualifications: "MD, DM Cardiology",
+    experience: 12,
+    address: "123 Healthcare Ave, Mumbai",
+    waiting_time: "15-20 mins",
+    fee: 1500,
+    availability: {
+      Monday: ["10:00 AM", "2:00 PM", "4:00 PM"],
+      Tuesday: ["11:00 AM", "3:00 PM", "5:00 PM"],
+      Wednesday: ["9:00 AM", "1:00 PM", "4:00 PM"],
+      Thursday: ["10:00 AM", "2:00 PM", "5:00 PM"],
+      Friday: ["11:00 AM", "3:00 PM", "4:00 PM"],
+    },
+  },
+  {
+    id: 2,
+    name: "Dr. Rajesh Kumar",
+    specialization: "General Physician",
+    qualifications: "MBBS, MD",
+    experience: 15,
+    address: "456 Medical Center, Delhi",
+    waiting_time: "10-15 mins",
+    fee: 800,
+    availability: {
+      Monday: ["9:00 AM", "1:00 PM", "5:00 PM"],
+      Tuesday: ["10:00 AM", "2:00 PM", "4:00 PM"],
+      Wednesday: ["11:00 AM", "3:00 PM", "5:00 PM"],
+      Thursday: ["9:00 AM", "1:00 PM", "4:00 PM"],
+      Friday: ["10:00 AM", "2:00 PM", "5:00 PM"],
+    },
+  },
+  {
+    id: 3,
+    name: "Dr. Priya Sharma",
+    specialization: "Dermatologist",
+    qualifications: "MBBS, MD Dermatology",
+    experience: 8,
+    address: "789 Skin Care Clinic, Bangalore",
+    waiting_time: "20-25 mins",
+    fee: 1200,
+    availability: {
+      Monday: ["11:00 AM", "3:00 PM", "5:00 PM"],
+      Tuesday: ["9:00 AM", "1:00 PM", "4:00 PM"],
+      Wednesday: ["10:00 AM", "2:00 PM", "5:00 PM"],
+      Thursday: ["11:00 AM", "3:00 PM", "4:00 PM"],
+      Friday: ["9:00 AM", "1:00 PM", "5:00 PM"],
+    },
+  },
+  {
+    id: 4,
+    name: "Dr. Arun Patel",
+    specialization: "Pediatrician",
+    qualifications: "MBBS, MD Pediatrics",
+    experience: 10,
+    address: "321 Children's Hospital, Chennai",
+    waiting_time: "15-20 mins",
+    fee: 1000,
+    availability: {
+      Monday: ["10:00 AM", "2:00 PM", "5:00 PM"],
+      Tuesday: ["11:00 AM", "3:00 PM", "4:00 PM"],
+      Wednesday: ["9:00 AM", "1:00 PM", "5:00 PM"],
+      Thursday: ["10:00 AM", "2:00 PM", "4:00 PM"],
+      Friday: ["11:00 AM", "3:00 PM", "5:00 PM"],
+    },
+  },
+];
 
-    if (hamburger) {
-        hamburger.addEventListener('click', () => {
-            hamburger.classList.toggle('active');
-            navLinks.classList.toggle('active');
-            navButtons.classList.toggle('active');
-        });
-    }
+// Initialize the page
+document.addEventListener("DOMContentLoaded", function () {
+  // Add event listeners for search and filter
+  const searchInput = document.getElementById("searchInput");
+  if (searchInput) {
+    searchInput.addEventListener("input", searchDoctors);
+  }
 
-    // Filter Buttons
-    const filterBtns = document.querySelectorAll('.filter-btn');
-    
-    filterBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            // Remove active class from all buttons
-            filterBtns.forEach(b => b.classList.remove('active'));
-            // Add active class to clicked button
-            btn.classList.add('active');
-            
-            // Add filter logic here
-            const specialty = btn.textContent.toLowerCase();
-            filterDoctors(specialty);
-        });
+  // Initialize filter buttons
+  document.querySelectorAll(".filter-btn").forEach((btn) => {
+    btn.addEventListener("click", function () {
+      const specialty = this.getAttribute("data-specialty") || "all";
+      filterDoctors(specialty);
     });
+  });
 
-    // Search Functionality
-    const searchInput = document.querySelector('.search-bar input');
-    const searchBtn = document.querySelector('.search-bar button');
-
-    function performSearch() {
-        const searchTerm = searchInput.value.toLowerCase();
-        // Add search logic here
-        searchDoctors(searchTerm);
-    }
-
-    if (searchBtn) {
-        searchBtn.addEventListener('click', performSearch);
-    }
-
-    if (searchInput) {
-        searchInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                performSearch();
-            }
-        });
-    }
-
-    // Load More Button
-    const loadMoreBtn = document.querySelector('.btn-load-more');
-    
-    if (loadMoreBtn) {
-        loadMoreBtn.addEventListener('click', () => {
-            // Add load more logic here
-            loadMoreDoctors();
-        });
-    }
-
-    // Book Appointment Button
-    const consultBtns = document.querySelectorAll('.btn-consult');
-    
-    consultBtns.forEach(btn => {
-        btn.addEventListener('click', function() {
-            const card = this.closest('.doctor-card');
-            const name = card.querySelector('h3').textContent;
-            const fee = card.querySelector('.consultation-fee').textContent;
-            bookAppointment(name, fee);
-        });
+  // Add event listeners for booking
+  document.querySelectorAll(".doctor-card .button").forEach((button) => {
+    button.addEventListener("click", function () {
+      const doctorId = this.getAttribute("data-doctor-id");
+      if (doctorId) {
+        openBookingModal(parseInt(doctorId));
+      }
     });
-
-    // Animation Observer
-    const observerOptions = {
-        threshold: 0.2,
-        rootMargin: '0px'
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('animate');
-                observer.unobserve(entry.target);
-            }
-        });
-    }, observerOptions);
-
-    // Observe doctor cards
-    const doctorCards = document.querySelectorAll('.doctor-card');
-    doctorCards.forEach(card => {
-        observer.observe(card);
-    });
-
-    // Observe feature cards
-    const featureCards = document.querySelectorAll('.feature-card');
-    featureCards.forEach(card => {
-        observer.observe(card);
-    });
-
-    // Helper Functions
-    function filterDoctors(specialty) {
-        const doctors = document.querySelectorAll('.doctor-card');
-        
-        doctors.forEach(doctor => {
-            const doctorSpecialty = doctor.querySelector('.specialty').textContent.toLowerCase();
-            
-            if (specialty === 'all' || doctorSpecialty === specialty) {
-                doctor.style.display = 'block';
-            } else {
-                doctor.style.display = 'none';
-            }
-        });
-    }
-
-    function searchDoctors(term) {
-        const doctors = document.querySelectorAll('.doctor-card');
-        
-        doctors.forEach(doctor => {
-            const name = doctor.querySelector('h3').textContent.toLowerCase();
-            const description = doctor.querySelector('.description').textContent.toLowerCase();
-            const specialty = doctor.querySelector('.specialty').textContent.toLowerCase();
-            
-            if (name.includes(term) || description.includes(term) || specialty.includes(term)) {
-                doctor.style.display = 'block';
-            } else {
-                doctor.style.display = 'none';
-            }
-        });
-    }
-
-    function loadMoreDoctors() {
-        // Example: Add 3 more doctor cards
-        const doctorsGrid = document.querySelector('.doctors-grid');
-        
-        // Add loading state
-        const loadMoreBtn = document.querySelector('.btn-load-more');
-        loadMoreBtn.innerHTML = 'Loading... <i class="fas fa-spinner fa-spin"></i>';
-        
-        // Simulate loading delay
-        setTimeout(() => {
-            // Add new doctor cards here
-            // This is just an example - in a real app, you'd fetch data from a server
-            
-            // Reset button state
-            loadMoreBtn.innerHTML = 'Load More <i class="fas fa-chevron-down"></i>';
-        }, 1000);
-    }
-
-    function bookAppointment(name, fee) {
-        // Add booking logic here
-        showMessage(`Appointment request sent for Dr. ${name}!`, 'success');
-    }
-
-    function showMessage(message, type) {
-        // Create message element
-        const messageDiv = document.createElement('div');
-        messageDiv.className = `message ${type}`;
-        messageDiv.textContent = message;
-        
-        // Add to document
-        document.body.appendChild(messageDiv);
-        
-        // Remove after 3 seconds
-        setTimeout(() => {
-            messageDiv.remove();
-        }, 3000);
-    }
+  });
 });
 
-function redirectToHome() {
-    window.location.href = "index.html";
-}
+// Search doctors
+function searchDoctors() {
+  const searchTerm = document.getElementById("searchInput").value.toLowerCase();
+  const doctorCards = document.querySelectorAll(".doctor-card");
 
-function redirectToLogin() {
-    window.location.href = "Register-login.html";
-    document.getElementById("login-tab");
-}
-function redirectToSignUp() {
-    const signup = document.getElementById("register-tab");
-}
+  doctorCards.forEach((card) => {
+    const doctorName = card.querySelector("h3").textContent.toLowerCase();
+    const doctorSpecialty = card
+      .querySelector(".doctor-details p")
+      .textContent.toLowerCase();
+    const doctorLocation = card
+      .querySelector(".doctor-details p:nth-child(5)")
+      .textContent.toLowerCase();
 
-// JavaScript for handling dynamic forms for booking appointment and getting prescription
-
-document.addEventListener("DOMContentLoaded", () => {
-    const container = document.querySelector(".container");
-
-    // Function to create and display the form dynamically
-    function displayForm(action, doctorName) {
-        const existingForm = document.getElementById("dynamic-form");
-
-        // Remove any existing form before creating a new one
-        if (existingForm) {
-            existingForm.remove();
-        }
-
-        // Create the form container
-        const form = document.createElement("form");
-        form.id = "dynamic-form";
-        form.style.border = "1px solid #ccc";
-        form.style.padding = "15px";
-        form.style.marginTop = "20px";
-        form.style.background = "#f9f9f9";
-
-        // Add heading
-        const heading = document.createElement("h3");
-        heading.textContent = `${action} for ${doctorName}`;
-        form.appendChild(heading);
-
-        // Add input fields
-        const nameField = document.createElement("input");
-        nameField.type = "text";
-        nameField.name = "patientName";
-        nameField.placeholder = "Enter your name";
-        nameField.required = true;
-        nameField.style.margin = "10px 0";
-        nameField.style.display = "block";
-        form.appendChild(nameField);
-
-        const contactField = document.createElement("input");
-        contactField.type = "text";
-        contactField.name = "contact";
-        contactField.placeholder = "Enter your contact details";
-        contactField.required = true;
-        contactField.style.margin = "10px 0";
-        contactField.style.display = "block";
-        form.appendChild(contactField);
-
-        if (action === "Book Appointment") {
-            const dateField = document.createElement("input");
-            dateField.type = "date";
-            dateField.name = "appointmentDate";
-            dateField.required = true;
-            dateField.style.margin = "10px 0";
-            dateField.style.display = "block";
-            form.appendChild(dateField);
-        }
-
-        // Add submit button
-        const submitButton = document.createElement("button");
-        submitButton.type = "submit";
-        submitButton.textContent = `Submit ${action}`;
-        submitButton.style.display = "block";
-        submitButton.style.marginTop = "10px";
-        form.appendChild(submitButton);
-
-        // Append the form to the container
-        container.appendChild(form);
-
-        // Scroll to the form 
-        form.scrollIntoView({ behavior: "smooth" });
-
-        // Add event listener for form submission
-        form.addEventListener("submit", (e) => {
-            e.preventDefault();
-            alert(`${action} submitted successfully!`);
-            form.remove();
-        });
+    if (
+      doctorName.includes(searchTerm) ||
+      doctorSpecialty.includes(searchTerm) ||
+      doctorLocation.includes(searchTerm)
+    ) {
+      card.style.display = "block";
+    } else {
+      card.style.display = "none";
     }
-
-    // Attach event listeners to the buttons
-    document.querySelectorAll(".doctor-card .button").forEach((button) => {
-        button.addEventListener("click", (event) => {
-            const doctorCard = button.closest(".doctor-card");
-            const doctorName = doctorCard.querySelector("h2").textContent;
-
-            if (button.textContent.trim() === "Book Appointment") {
-                displayForm("Book Appointment", doctorName);
-            } else if (button.textContent.trim() === "Get Prescription") {
-                displayForm("Get Prescription", doctorName);
-            }
-        });
-    });
-});
-
-import walletService from './walletService.js';
-
-// Booking form functionality
-const bookingModal = document.getElementById('bookingModal');
-const paymentModal = document.getElementById('paymentModal');
-const appointmentForm = document.getElementById('appointmentForm');
-const closeButtons = document.querySelectorAll('.close');
-
-// Close modals when clicking the close button
-closeButtons.forEach(button => {
-    button.onclick = function() {
-        bookingModal.style.display = "none";
-        paymentModal.style.display = "none";
-    }
-});
-
-// Close modals when clicking outside
-window.onclick = function(event) {
-    if (event.target == bookingModal || event.target == paymentModal) {
-        bookingModal.style.display = "none";
-        paymentModal.style.display = "none";
-    }
+  });
 }
 
-// Handle book appointment button click
-async function handleBookAppointment(doctorCard) {
-    const doctorName = doctorCard.querySelector('h3').textContent;
-    const feeText = doctorCard.querySelector('.price').textContent;
-    const fee = parseInt(feeText.match(/₹(\d+)/)[1]);
+// Filter doctors
+function filterDoctors(specialty) {
+  const doctorCards = document.querySelectorAll(".doctor-card");
 
-    // Set form hidden fields
-    document.getElementById('doctorName').value = doctorName;
-    document.getElementById('consultationFee').value = fee;
-    document.getElementById('modalFee').textContent = fee;
+  // Update active button
+  document.querySelectorAll(".filter-btn").forEach((btn) => {
+    if (btn.textContent.toLowerCase().includes(specialty.toLowerCase())) {
+      btn.classList.add("active");
+    } else {
+      btn.classList.remove("active");
+    }
+  });
 
-    // Get and display current wallet balance
-    const walletBalance = walletService.getBalance();
-    document.getElementById('walletBalance').textContent = walletBalance.toFixed(2);
-
-    // Show booking modal
-    bookingModal.style.display = "block";
+  doctorCards.forEach((card) => {
+    const doctorSpecialty = card
+      .querySelector(".doctor-details p")
+      .textContent.toLowerCase();
+    if (
+      specialty === "all" ||
+      doctorSpecialty.includes(specialty.toLowerCase())
+    ) {
+      card.style.display = "block";
+    } else {
+      card.style.display = "none";
+    }
+  });
 }
 
-// Handle appointment form submission
-appointmentForm.onsubmit = async function(e) {
+// Open booking modal
+function openBookingModal(doctorId) {
+  const doctor = doctors.find((d) => d.id === doctorId);
+  if (!doctor) return;
+
+  const modal = document.createElement("div");
+  modal.className = "modal";
+  modal.innerHTML = `
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Book Appointment with ${doctor.name}</h2>
+            <form id="appointmentForm">
+                <div class="form-group">
+                    <label for="appointmentDate">Select Date:</label>
+                    <input type="date" id="appointmentDate" required min="${
+                      new Date().toISOString().split("T")[0]
+                    }">
+                </div>
+                <div class="form-group">
+                    <label for="appointmentTime">Select Time:</label>
+                    <select id="appointmentTime" required>
+                        <option value="">Select a date first</option>
+                    </select>
+                </div>
+                <button type="submit" class="button">
+                    <i class="fas fa-calendar-check"></i> Confirm Booking
+                </button>
+            </form>
+        </div>
+    `;
+
+  document.body.appendChild(modal);
+
+  // Set up close functionality
+  const closeBtn = modal.querySelector(".close");
+  closeBtn.onclick = () => modal.remove();
+  window.onclick = (event) => {
+    if (event.target === modal) {
+      modal.remove();
+    }
+  };
+
+  // Handle date selection
+  const dateInput = modal.querySelector("#appointmentDate");
+  const timeSelect = modal.querySelector("#appointmentTime");
+
+  dateInput.addEventListener("change", () => {
+    const selectedDate = new Date(dateInput.value);
+    const dayOfWeek = selectedDate.toLocaleString("en-US", { weekday: "long" });
+
+    timeSelect.innerHTML = '<option value="">Select a time slot</option>';
+
+    if (doctor.availability[dayOfWeek]) {
+      doctor.availability[dayOfWeek].forEach((time) => {
+        const option = document.createElement("option");
+        option.value = time;
+        option.textContent = time;
+        timeSelect.appendChild(option);
+      });
+    }
+  });
+
+  // Handle form submission
+  const form = modal.querySelector("#appointmentForm");
+  form.addEventListener("submit", (e) => {
     e.preventDefault();
-
-    // Get form data
-    const formData = new FormData(appointmentForm);
-    const appointmentData = Object.fromEntries(formData.entries());
-
-    // Validate wallet balance
-    const walletBalance = walletService.getBalance();
-    const consultationFee = parseInt(appointmentData.consultationFee);
-
-    if (walletBalance < consultationFee) {
-        alert('Insufficient wallet balance. Please add money to your wallet.');
-        return;
-    }
-
-    // Show payment confirmation modal
-    document.getElementById('paymentDoctorName').textContent = appointmentData.doctorName;
-    document.getElementById('paymentAmount').textContent = appointmentData.consultationFee;
-    document.getElementById('paymentDate').textContent = appointmentData.appointmentDate;
-    document.getElementById('paymentTime').textContent = appointmentData.appointmentTime;
-
-    bookingModal.style.display = "none";
-    paymentModal.style.display = "block";
+    const date = dateInput.value;
+    const time = timeSelect.value;
+    showBookingConfirmation(doctor, date, time);
+    modal.remove();
+  });
 }
 
-// Handle payment confirmation
-document.getElementById('confirmPayment').onclick = async function() {
-    const formData = new FormData(appointmentForm);
-    const appointmentData = Object.fromEntries(formData.entries());
+// Show booking confirmation
+function showBookingConfirmation(doctor, date, time) {
+  const formattedDate = new Date(date).toLocaleDateString("en-US", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
 
-    try {
-        // 1. Process payment from wallet
-        const consultationFee = parseInt(appointmentData.consultationFee);
-        await walletService.deductMoney(
-            consultationFee,
-            `Appointment booking with ${appointmentData.doctorName}`
-        );
+  const modal = document.createElement("div");
+  modal.className = "modal";
+  modal.innerHTML = `
+        <div class="modal-content confirmation-modal">
+            <span class="close">&times;</span>
+            <div class="confirmation-header">
+                <i class="fas fa-check-circle"></i>
+                <h2>Appointment Confirmed!</h2>
+            </div>
+            <div class="confirmation-details">
+                <h3>Appointment Details</h3>
+                <div class="detail-item">
+                    <i class="fas fa-user-md"></i>
+                    <div>
+                        <strong>Doctor</strong>
+                        <p>${doctor.name}</p>
+                    </div>
+                </div>
+                <div class="detail-item">
+                    <i class="fas fa-stethoscope"></i>
+                    <div>
+                        <strong>Specialization</strong>
+                        <p>${doctor.specialization}</p>
+                    </div>
+                </div>
+                <div class="detail-item">
+                    <i class="fas fa-calendar-alt"></i>
+                    <div>
+                        <strong>Date</strong>
+                        <p>${formattedDate}</p>
+                    </div>
+                </div>
+                <div class="detail-item">
+                    <i class="fas fa-clock"></i>
+                    <div>
+                        <strong>Time</strong>
+                        <p>${time}</p>
+                    </div>
+                </div>
+                <div class="detail-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <div>
+                        <strong>Location</strong>
+                        <p>${doctor.address}</p>
+                    </div>
+                </div>
+                <div class="detail-item">
+                    <i class="fas fa-rupee-sign"></i>
+                    <div>
+                        <strong>Consultation Fee</strong>
+                        <p>₹${doctor.fee}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="confirmation-footer">
+                <p class="reminder">
+                    <i class="fas fa-bell"></i>
+                    A confirmation email will be sent to your registered email address.
+                </p>
+                <div class="action-buttons">
+                    <button class="button" onclick="addToCalendar('${doctor.name}', '${date}', '${time}')">
+                        <i class="fas fa-calendar-plus"></i> Add to Calendar
+                    </button>
+                    <button class="button" onclick="closeConfirmation(this)">
+                        <i class="fas fa-check"></i> Done
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
 
-        // 2. Save appointment to localStorage
-        const appointment = {
-            id: Date.now(),
-            doctorName: appointmentData.doctorName,
-            patientName: appointmentData.patientName,
-            appointmentDate: appointmentData.appointmentDate,
-            appointmentTime: appointmentData.appointmentTime,
-            symptoms: appointmentData.symptoms,
-            medicalHistory: appointmentData.medicalHistory,
-            consultationFee: appointmentData.consultationFee,
-            status: 'confirmed',
-            paymentStatus: 'paid',
-            bookingDate: new Date().toISOString()
-        };
+  document.body.appendChild(modal);
 
-        // Get existing appointments or initialize empty array
-        const appointments = JSON.parse(localStorage.getItem('appointments') || '[]');
-        appointments.push(appointment);
-        localStorage.setItem('appointments', JSON.stringify(appointments));
-
-        // Show success message with link to appointments
-        alert('Appointment booked successfully!');
-        if (confirm('Would you like to view your appointments?')) {
-            window.location.href = 'my-appointments.html';
-        }
-        
-        // Close modal and reset form
-        paymentModal.style.display = "none";
-        appointmentForm.reset();
-
-    } catch (error) {
-        console.error('Error booking appointment:', error);
-        if (error.message === 'Insufficient balance') {
-            alert('Insufficient wallet balance. Please add money to your wallet and try again.');
-        } else {
-            alert('Failed to book appointment. Please try again.');
-        }
+  // Set up close functionality
+  const closeBtn = modal.querySelector(".close");
+  closeBtn.onclick = () => modal.remove();
+  window.onclick = (event) => {
+    if (event.target === modal) {
+      modal.remove();
     }
+  };
 }
 
-// Attach event listeners to book appointment buttons
-document.querySelectorAll('.doctor-card .button').forEach((button, index) => {
-    if (button.textContent === 'Book Appointment') {
-        button.onclick = function() {
-            const doctorCard = button.closest('.doctor-card');
-            handleBookAppointment(doctorCard);
-        };
-    }
-});
+// Add to calendar functionality
+function addToCalendar(doctorName, date, time) {
+  const startDate = new Date(`${date} ${time}`);
+  const endDate = new Date(startDate.getTime() + 30 * 60000); // 30 minutes appointment
+
+  const calendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(
+    `Appointment with ${doctorName}`
+  )}&dates=${startDate.toISOString().replace(/[-:.]/g, "")}/${endDate
+    .toISOString()
+    .replace(/[-:.]/g, "")}`;
+
+  window.open(calendarUrl, "_blank");
+}
+
+// Close confirmation modal
+function closeConfirmation(button) {
+  const modal = button.closest(".modal");
+  modal.remove();
+}
