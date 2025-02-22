@@ -1,4 +1,5 @@
 import apiService from './services/api.service.js';
+import appointmentService from './services/appointment.service.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     checkAuthentication();
@@ -42,6 +43,10 @@ async function initializeDashboard() {
             if (phoneNumberInput) phoneNumberInput.value = userData.phone || '';
             if (addressInput) addressInput.value = userData.address || '';
         }
+
+        // Load and display appointments
+        loadDashboardAppointments();
+        updateActivitySummary();
     } catch (error) {
         console.error('Failed to load user data:', error);
     }
@@ -93,11 +98,74 @@ function setupEventListeners() {
     }
 }
 
+// Load and display upcoming appointments
+async function loadDashboardAppointments() {
+    try {
+        // Fetch latest appointments from server
+        const appointments = await appointmentService.getAppointments();
+        const upcomingAppointmentsElement = document.getElementById('upcomingAppointments');
+    
+    // Filter upcoming appointments
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const upcomingAppointments = appointments
+        .filter(app => new Date(app.appointmentDate) >= today)
+        .sort((a, b) => new Date(a.appointmentDate) - new Date(b.appointmentDate))
+        .slice(0, 3); // Show only next 3 appointments
+
+    if (upcomingAppointments.length === 0) {
+        upcomingAppointmentsElement.innerHTML = `
+            <div class="no-appointments">
+                <p>No upcoming appointments</p>
+                <a href="doctors.html" class="action-btn">Book an Appointment</a>
+            </div>
+        `;
+        return;
+    }
+
+    upcomingAppointmentsElement.innerHTML = upcomingAppointments
+        .map(appointment => `
+            <div class="appointment-item">
+                <div class="appointment-info">
+                    <h4>${appointment.doctorName}</h4>
+                    <p><i class="fas fa-calendar"></i> ${formatDate(appointment.appointmentDate)}</p>
+                    <p><i class="fas fa-clock"></i> ${appointment.appointmentTime}</p>
+                </div>
+                <span class="appointment-status status-${appointment.status.toLowerCase()}">
+                    ${appointment.status}
+                </span>
+            </div>
+        `)
+        .join('');
+}
+
+// Update activity summary
+function updateActivitySummary() {
+    const appointments = JSON.parse(localStorage.getItem('appointments') || '[]');
+    const transactions = JSON.parse(localStorage.getItem('transactions') || '[]');
+    
+    // Update total appointments
+    document.getElementById('totalAppointments').textContent = appointments.length;
+    
+    // Update total transactions if the element exists
+    const totalTransactionsElement = document.getElementById('totalTransactions');
+    if (totalTransactionsElement) {
+        totalTransactionsElement.textContent = transactions.length;
+    }
+}
+
+// Format date for display
+function formatDate(dateString) {
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString('en-US', options);
+}
+
 function showSection(sectionId) {
     // Hide all sections
     document.querySelectorAll('.dashboard-content section').forEach(section => {
         section.classList.remove('active-section');
     });
+
     
     // Show selected section
     const targetSection = document.getElementById(sectionId);
