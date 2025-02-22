@@ -1,60 +1,74 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const loginForm = document.getElementById('login-form');
+import apiService from './services/api.service.js';
 
-    // Form Submission
-    loginForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-
-        // Get form elements
-        const emailInput = document.getElementById('email');
-        const passwordInput = document.getElementById('password');
-
-        // Validate inputs
-        const email = emailInput.value.trim();
-        const password = passwordInput.value;
-
-        // Validation
-        if (!validateEmail(email)) {
-            alert('Please enter a valid email address');
-            emailInput.focus();
+// Wait for DOM content to be loaded
+document.addEventListener('DOMContentLoaded', async function() {
+    // Check if user is already logged in
+    try {
+        const isAuthenticated = await apiService.checkAuth();
+        if (isAuthenticated) {
+            window.location.replace('/src/html/user-dashboard.html');
             return;
         }
-
-        // Simulate login (replace with actual backend call)
-        loginUser(email, password);
-    });
-
-    // Validation Helpers
-    function validateEmail(email) {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(email);
+    } catch (error) {
+        console.error('Auth check failed:', error);
     }
 
-    // Login Function
-    function loginUser(email, password) {
-        // Simulate user login
-        console.log('User Login Data:', { email, password });
+    const loginForm = document.getElementById('loginForm');
+    const loadingOverlay = document.getElementById('loadingOverlay');
 
-        // In a real scenario, this would be an API call
-        try {
-            // Simulated successful login
-            alert('Login successful!');
+    // Show/hide loading overlay
+    const showLoading = () => loadingOverlay?.classList.remove('hide');
+    const hideLoading = () => loadingOverlay?.classList.add('hide');
+
+    // Handle login form submission
+    if (loginForm) {
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            showLoading();
             
-            // Store user data (replace with proper authentication mechanism)
-            localStorage.setItem('userEmail', email);
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
 
-            // Redirect to dashboard or next step
-            window.location.href = 'user-dashboard.html';
-        } catch (error) {
-            console.error('Login Error:', error);
-            alert('Login failed. Please try again.');
-        }
+            try {
+                console.log('Attempting login...');
+                const response = await apiService.login(email, password);
+                console.log('Login response:', response);
+
+                if (response.success) {
+                    console.log('Login successful, attempting to redirect...');
+                    // Clear form
+                    loginForm.reset();
+                    
+                    // Store user data in localStorage
+                    localStorage.setItem('user', JSON.stringify(response.user));
+                    localStorage.setItem('token', response.token);
+                    
+                    // Redirect to dashboard using replace
+                    console.log('Redirecting to dashboard...');
+                    window.location.replace('/src/html/user-dashboard.html');
+                } else {
+                    throw new Error(response.message || 'Login failed');
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                hideLoading();
+                const errorMessage = error.message || 'Login failed. Please try again.';
+                alert(errorMessage);
+            } finally {
+                hideLoading();
+            }
+        });
+    } else {
+        console.error('Login form not found!');
     }
 
-    // Forgot Password
+    // Handle forgot password link
     const forgotPasswordLink = document.querySelector('.forgot-password');
-    forgotPasswordLink.addEventListener('click', (e) => {
-        e.preventDefault();
-        alert('Forgot Password functionality coming soon!');
-    });
+    if (forgotPasswordLink) {
+        forgotPasswordLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            // TODO: Implement forgot password functionality
+            alert('Forgot password functionality coming soon!');
+        });
+    }
 });

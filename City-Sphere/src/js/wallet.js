@@ -1,3 +1,5 @@
+import walletService from './walletService.js';
+
 // DOM Elements
 const addMoneyModal = document.getElementById('addMoneyModal');
 const addMoneyForm = document.getElementById('addMoneyForm');
@@ -5,33 +7,27 @@ const closeModal = document.querySelector('.close');
 const balanceElement = document.getElementById('balance');
 const transactionsList = document.getElementById('transactionsList');
 
-// Sample transaction data (replace with actual data from backend)
-let transactions = [
-    {
-        id: 1,
-        type: 'credit',
-        amount: 500,
-        description: 'Added money via UPI',
-        date: '2024-01-17 15:30'
-    },
-    {
-        id: 2,
-        type: 'debit',
-        amount: 200,
-        description: 'Paid for groceries',
-        date: '2024-01-17 14:45'
-    }
-];
-
 // Initialize wallet
 function initializeWallet() {
+    updateWalletBalance();
     updateTransactionsList();
     setupEventListeners();
 }
 
+// Update wallet balance display
+function updateWalletBalance() {
+    const balance = walletService.getBalance();
+    if (balanceElement) {
+        balanceElement.textContent = balance.toFixed(2);
+    }
+}
+
 // Update transactions list
 function updateTransactionsList() {
+    if (!transactionsList) return;
+    
     transactionsList.innerHTML = '';
+    const transactions = walletService.getTransactions();
     transactions.forEach(transaction => {
         const transactionElement = createTransactionElement(transaction);
         transactionsList.appendChild(transactionElement);
@@ -101,40 +97,26 @@ function setupEventListeners() {
 }
 
 // Handle add money form submission
-function handleAddMoney(e) {
+async function handleAddMoney(e) {
     e.preventDefault();
-    
     const amount = parseFloat(document.getElementById('amount').value);
-    const paymentMethod = document.getElementById('paymentMethod').value;
     
-    // Add new transaction
-    const newTransaction = {
-        id: transactions.length + 1,
-        type: 'credit',
-        amount: amount,
-        description: `Added money via ${paymentMethod.toUpperCase()}`,
-        date: new Date().toISOString()
-    };
+    if (amount <= 0) {
+        alert('Please enter a valid amount');
+        return;
+    }
     
-    // Update transactions list
-    transactions.unshift(newTransaction);
-    
-    // Update balance
-    const currentBalance = parseFloat(balanceElement.textContent.replace(',', ''));
-    balanceElement.textContent = (currentBalance + amount).toLocaleString('en-US', {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-    });
-    
-    // Update UI
-    updateTransactionsList();
-    
-    // Close modal and reset form
-    addMoneyModal.style.display = 'none';
-    addMoneyForm.reset();
-    
-    // Show success notification
-    showNotification('Money added successfully!');
+    try {
+        await walletService.addMoney(amount);
+        updateWalletBalance();
+        updateTransactionsList();
+        addMoneyModal.style.display = 'none';
+        addMoneyForm.reset();
+        alert('Money added successfully!');
+    } catch (error) {
+        console.error('Error adding money:', error);
+        alert('Failed to add money. Please try again.');
+    }
 }
 
 // Quick action functions

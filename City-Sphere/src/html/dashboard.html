@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>City Sphere - Dashboard</title>
+    <link rel="manifest" href="../manifest.json">
+    <meta name="theme-color" content="#0066CC">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/navigation.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/footer.css">
+    <link rel="stylesheet" href="../css/chatbot.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="top-header">
+            <div class="container">
+                <div class="logo-container">
+                    <div class="logo-circle">
+                        <img src="../images/City Sphere Final copy.png" alt="City Sphere Logo" class="logo-image">
+                    </div>
+                    <div class="logo-text">
+                        <h1>City Sphere</h1>
+                        <p class="tagline">My City in My Phone</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-wrapper">
+                    <ul class="nav-links">
+                        <li><a href="index.html"><i class="fas fa-home"></i>Home</a></li>
+                        <li><a href="services.html"><i class="fas fa-cogs"></i>Services</a></li>
+                        <li><a href="aboutus.html"><i class="fas fa-users"></i>About Us</a></li>
+                        <li><a href="contact.html"><i class="fas fa-envelope"></i>Contact</a></li>
+                    </ul>
+                    <div class="nav-buttons">
+                        <a href="wallet.html" class="btn btn-wallet">
+                            <i class="fas fa-wallet"></i>Wallet
+                        </a>
+                        <div id="authSection">
+                            <!-- Navigation will be updated by navigation.js -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="dashboard-container">
+            <div class="container">
+                <div class="dashboard-header">
+                    <h1>Dashboard</h1>
+                    <p>Welcome back, <span id="userName">User</span>!</p>
+                </div>
+
+                <div class="dashboard-grid">
+                    <!-- Quick Actions -->
+                    <div class="dashboard-card">
+                        <h2><i class="fas fa-bolt"></i> Quick Actions</h2>
+                        <div class="quick-actions">
+                            <a href="doctors.html" class="action-btn">
+                                <i class="fas fa-user-md"></i>
+                                <span>Book Appointment</span>
+                            </a>
+                            <a href="wallet.html" class="action-btn">
+                                <i class="fas fa-wallet"></i>
+                                <span>Add Money</span>
+                            </a>
+                            <a href="my-appointments.html" class="action-btn">
+                                <i class="fas fa-calendar-check"></i>
+                                <span>View Appointments</span>
+                            </a>
+                            <a href="profile.html" class="action-btn">
+                                <i class="fas fa-user-edit"></i>
+                                <span>Edit Profile</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Wallet Overview -->
+                    <div class="dashboard-card">
+                        <h2><i class="fas fa-wallet"></i> Wallet Overview</h2>
+                        <div class="wallet-overview">
+                            <div class="balance-info">
+                                <p>Current Balance</p>
+                                <h3 id="walletBalance">₹0.00</h3>
+                            </div>
+                            <div class="recent-transactions">
+                                <h4>Recent Transactions</h4>
+                                <div id="transactionsList">
+                                    <!-- Transactions will be loaded here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Upcoming Appointments -->
+                    <div class="dashboard-card">
+                        <h2><i class="fas fa-calendar"></i> Upcoming Appointments</h2>
+                        <div id="upcomingAppointments">
+                            <!-- Appointments will be loaded here -->
+                        </div>
+                    </div>
+
+                    <!-- Activity Summary -->
+                    <div class="dashboard-card">
+                        <h2><i class="fas fa-chart-line"></i> Activity Summary</h2>
+                        <div class="activity-summary">
+                            <div class="stat-item">
+                                <i class="fas fa-calendar-check"></i>
+                                <div class="stat-info">
+                                    <h4>Total Appointments</h4>
+                                    <p id="totalAppointments">0</p>
+                                </div>
+                            </div>
+                            <div class="stat-item">
+                                <i class="fas fa-wallet"></i>
+                                <div class="stat-info">
+                                    <h4>Total Transactions</h4>
+                                    <p id="totalTransactions">0</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About City Sphere</h3>
+                    <p>Your one-stop solution for all city services. Making urban life simpler, one tap at a time.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="aboutus.html">About Us</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Connect With Us</h3>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 City Sphere. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script type="module" src="../js/navigation.js"></script>
+    <script type="module" src="../js/dashboard.js"></script>
+    <script src="../js/chatbot.js"></script>
+</body>
+</html>

@@ -1,83 +1,132 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const signupForm = document.getElementById('signup-form');
-    const googleSignupBtn = document.querySelector('.btn-google');
+import apiService from './services/api.service.js';
 
-    // Google Signup
-    googleSignupBtn.addEventListener('click', () => {
-        // Placeholder for Google Sign-In
-        alert('Google Sign-In coming soon!');
-    });
+document.addEventListener('DOMContentLoaded', async function() {
+    const signupForm = document.getElementById('signup-form');
+    const loadingOverlay = document.getElementById('loadingOverlay');
+
+    // Show/hide loading overlay
+    const showLoading = () => loadingOverlay?.classList.remove('hide');
+    const hideLoading = () => loadingOverlay?.classList.add('hide');
 
     // Form Submission
-    signupForm.addEventListener('submit', (e) => {
-        e.preventDefault();
+    if (signupForm) {
+        signupForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            showLoading();
 
-        // Get form elements
-        const phoneEmailInput = document.getElementById('phone-email');
-        const passwordInput = document.getElementById('password');
-        const confirmPasswordInput = document.getElementById('confirm-password');
+            // Get form elements
+            const phoneEmailInput = document.getElementById('phone-email');
+            const passwordInput = document.getElementById('password');
+            const confirmPasswordInput = document.getElementById('confirm-password');
 
-        // Validate inputs
-        const phoneEmail = phoneEmailInput.value.trim();
-        const password = passwordInput.value;
-        const confirmPassword = confirmPasswordInput.value;
+            // Validate inputs
+            const phoneEmail = phoneEmailInput?.value?.trim();
+            const password = passwordInput?.value;
+            const confirmPassword = confirmPasswordInput?.value;
 
-        // Validation
-        if (!validatePhoneOrEmail(phoneEmail)) {
-            alert('Please enter a valid phone number or email');
-            phoneEmailInput.focus();
-            return;
-        }
+            try {
+                // Input validation
+                if (!phoneEmail) {
+                    throw new Error('Email address is required');
+                }
 
-        if (password.length < 8) {
-            alert('Password must be at least 8 characters long');
-            passwordInput.focus();
-            return;
-        }
+                if (!validatePhoneOrEmail(phoneEmail)) {
+                    throw new Error('Please enter a valid email address');
+                }
 
-        if (password !== confirmPassword) {
-            alert('Passwords do not match');
-            confirmPasswordInput.focus();
-            return;
-        }
+                if (!password) {
+                    throw new Error('Password is required');
+                }
 
-        // Collect form data
-        const signupData = {
-            phoneEmail: phoneEmail,
-            password: password
-        };
+                if (password.length < 8) {
+                    throw new Error('Password must be at least 8 characters long');
+                }
 
-        // Simulate registration (replace with actual backend call)
-        registerUser(signupData);
-    });
+                if (password !== confirmPassword) {
+                    throw new Error('Passwords do not match');
+                }
 
-    // Validation Helpers
-    function validatePhoneOrEmail(input) {
-        // Regex for phone number (10 digits) or email
-        const phoneRegex = /^\d{10}$/;
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        
-        return phoneRegex.test(input) || emailRegex.test(input);
+                // Generate a user-friendly name from email
+                const name = phoneEmail.split('@')[0]
+                    .replace(/[^a-zA-Z0-9]/g, ' ') // Replace special chars with space
+                    .replace(/\s+/g, ' ')          // Replace multiple spaces with single space
+                    .trim()                        // Remove leading/trailing spaces
+                    .toLowerCase()                 // Convert to lowercase
+                    .split(' ')                    // Split into words
+                    .map(word => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize first letter
+                    .join(' ');                    // Join words back together
+
+                console.log('Attempting to register user with data:', {
+                    name,
+                    email: phoneEmail
+                });
+
+                // Register user
+                const response = await apiService.register({
+                    name,
+                    email: phoneEmail,
+                    password: password
+                });
+
+                console.log('Registration response:', response);
+
+                if (response.success) {
+                    // Clear form
+                    signupForm.reset();
+                    alert('Registration successful! Please login.');
+                    
+                    // Redirect to login page
+                    window.location.href = '/City-Sphere1/City-Sphere/src/html/auth.html';
+                } else {
+                    throw new Error(response.message || 'Registration failed');
+                }
+            } catch (error) {
+                console.error('Registration error:', error);
+                
+                // Clear password fields for security
+                if (passwordInput) passwordInput.value = '';
+                if (confirmPasswordInput) confirmPasswordInput.value = '';
+                
+                // Show error message
+                const errorMessage = error.message || 'Registration failed. Please try again.';
+                alert(errorMessage);
+                
+                // Focus the relevant input field based on the error
+                if (errorMessage.toLowerCase().includes('email')) {
+                    phoneEmailInput?.focus();
+                } else if (errorMessage.toLowerCase().includes('password')) {
+                    passwordInput?.focus();
+                }
+            } finally {
+                hideLoading();
+            }
+        });
     }
 
-    // Registration Function
-    function registerUser(userData) {
-        // Simulate user registration
-        console.log('User Registration Data:', userData);
-
-        // In a real scenario, this would be an API call
-        try {
-            // Simulated successful registration
-            alert('Account created successfully!');
-            
-            // Store user data (replace with proper authentication mechanism)
-            localStorage.setItem('userData', JSON.stringify(userData));
-
-            // Redirect to dashboard or next step
-            window.location.href = 'user-dashboard.html';
-        } catch (error) {
-            console.error('Registration Error:', error);
-            alert('Registration failed. Please try again.');
-        }
+    // Social Sign Up Handlers
+    const googleSignupBtn = document.querySelector('.btn-google');
+    if (googleSignupBtn) {
+        googleSignupBtn.addEventListener('click', async (e) => {
+            e.preventDefault();
+            try {
+                showLoading();
+                // The actual Google sign-in is handled by the Google Sign-In API
+                // This is just a placeholder for any additional handling
+                console.log('Google Sign-In clicked');
+            } catch (error) {
+                hideLoading();
+                console.error('Google signup error:', error);
+                alert('Google sign-up failed. Please try again.');
+            }
+        });
     }
 });
+
+// Validation Helper
+function validatePhoneOrEmail(input) {
+    if (!input) return false;
+    
+    // Email validation regex
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailRegex.test(input);
+}

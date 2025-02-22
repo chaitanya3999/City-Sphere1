@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="../css/home.css" />
     <link rel="stylesheet" href="../css/navigation.css" />
     <link rel="stylesheet" href="../css/dashboard.css" />
+    <link rel="stylesheet" href="../css/chatbot.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   </head>
   <body>
     <header>
@@ -24,16 +26,21 @@
         <div class="container">
           <div class="logo-container">
             <div class="logo-circle">
-              <img
-                src="../images/City Sphere Final copy.png"
-                alt="City Sphere Logo"
-                class="logo-image"
-              />
+              <img src="../images/City Sphere Final copy.png" alt="City Sphere Logo" class="logo-image" />
             </div>
             <div class="logo-text">
               <h1>City Sphere</h1>
               <p class="tagline">My City in My Phone</p>
             </div>
+          </div>
+          <div class="user-menu">
+            <div class="user-info">
+              <span id="userNameHeader" class="user-name">User</span>
+            </div>
+            <button type="button" class="btn-logout" onclick="window.apiService.logout()">
+              <i class="fas fa-sign-out-alt"></i>
+              <span>Logout</span>
+            </button>
           </div>
         </div>
       </div>
@@ -57,13 +64,14 @@
               </li>
             </ul>
             <div class="nav-buttons">
-              <a href="wallet.html" class="btn btn-wallet">
+              <a href="/src/html/wallet.html" class="btn btn-wallet">
                 <i class="fas fa-wallet"></i>Wallet
               </a>
-              <div id="authSection">
-                <a href="auth.html" class="btn btn-login">
-                  <i class="fas fa-user"></i>Login
-                </a>
+              <div class="auth-buttons">
+                <button type="button" class="btn-logout" onclick="window.apiService.logout()">
+                  <i class="fas fa-sign-out-alt"></i>
+                  <span>Logout</span>
+                </button>
               </div>
             </div>
           </div>
@@ -74,34 +82,46 @@
     <main class="dashboard-container">
       <div class="sidebar">
         <div class="profile-summary">
-          <img
-            src="../images/default-avatar.png"
-            alt="Profile Picture"
-            class="profile-pic"
-            id="profilePicture"
-          />
-          <h2 id="userName">User Name</h2>
-          <p id="userEmail">user@example.com</p>
+          <div class="summary-item">
+            <i class="fas fa-user"></i>
+            <div class="summary-details">
+              <h4>Name</h4>
+              <p id="profileName">Loading...</p>
+            </div>
+          </div>
+          <div class="summary-item">
+            <i class="fas fa-envelope"></i>
+            <div class="summary-details">
+              <h4>Email</h4>
+              <p id="profileEmail">Loading...</p>
+            </div>
+          </div>
         </div>
         <nav class="dashboard-nav">
           <ul>
-            <li class="active" data-section="profile">
-              <i class="fas fa-user"></i> Profile
+            <li class="active" data-section="overview">
+              <a href=""><i class="fas fa-home"></i> Overview</a>
+            </li>
+            <li data-section="profile">
+              <a href="profile.html"><i class="fas fa-user"></i> Profile</a>
             </li>
             <li data-section="preferences">
-              <i class="fas fa-cog"></i> Preferences
+              <a href="#"><i class="fas fa-cog"></i> Preferences</a>
             </li>
-            <li data-section="services">
-              <i class="fas fa-tasks"></i> My Services
+            <li data-section="my-services">
+              <a href="services.html"><i class="fas fa-briefcase"></i> My Services</a>
             </li>
             <li data-section="security">
-              <i class="fas fa-lock"></i> Security
+              <a href="#"><i class="fas fa-shield-alt"></i> Security</a>
             </li>
             <li data-section="recommendations">
-              <i class="fas fa-lightbulb"></i> Recommendations
+              <a href="#"><i class="fas fa-star"></i> Recommendations</a>
             </li>
-            <li data-section="userDetails">
-              <i class="fas fa-info-circle"></i> User Details
+            <li data-section="user-details">
+              <a href="#"><i class="fas fa-address-card"></i> User Details</a>
+            </li>
+            <li id="logoutBtn">
+              <a href="#"><i class="fas fa-sign-out-alt"></i> Logout</a>
             </li>
           </ul>
         </nav>
@@ -748,10 +768,90 @@
       </div>
     </footer>
 
-    <script src="../js/user-dashboard.js"></script>
-    <script type="module" src="../js/auth-new.js"></script>
-    <script type="module" src="../js/custom-auth.js"></script>
-    <script type="module" src="../js/home.js"></script>
-    <script src="../js/user-details.js"></script>
+    <div id="loadingOverlay" class="loading-overlay hide">
+      <div class="spinner"></div>
+    </div>
+
+    <script type="module">
+      import apiService from '/src/js/services/api.service.js';
+      window.apiService = apiService; // Make apiService available globally
+    </script>
+    <script type="module" src="/src/js/dashboard.js"></script>
+    <script src="../js/chatbot.js"></script>
+    <script>
+      // Check if user is logged in
+      document.addEventListener('DOMContentLoaded', function() {
+        const token = localStorage.getItem('token');
+        const user = JSON.parse(localStorage.getItem('user'));
+
+        if (!token || !user) {
+          window.location.replace('auth.html');
+          return;
+        }
+
+        // Update user profile information
+        const userNameHeader = document.getElementById('userNameHeader');
+        const profileName = document.getElementById('profileName');
+        const profileEmail = document.getElementById('profileEmail');
+
+        userNameHeader.textContent = user.name;
+        profileName.textContent = user.name;
+        profileEmail.textContent = user.email;
+
+        // Function to handle logout
+        async function handleLogout() {
+          try {
+            const response = await fetch('http://localhost:5000/api/auth/logout', {
+              method: 'POST',
+              headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+              },
+              credentials: 'include'
+            });
+
+            // Clear local storage regardless of response
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+
+            // Redirect to login page
+            window.location.replace('auth.html');
+          } catch (error) {
+            console.error('Logout error:', error);
+            // Still clear storage and redirect on error
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            window.location.replace('auth.html');
+          }
+        }
+
+        // Add logout handler to all logout buttons
+        document.getElementById('logoutBtn').addEventListener('click', function(e) {
+          e.preventDefault();
+          handleLogout();
+        });
+
+        document.querySelector('.btn-logout').addEventListener('click', function(e) {
+          e.preventDefault();
+          handleLogout();
+        });
+
+        document.querySelector('.mobile-logout').addEventListener('click', function(e) {
+          e.preventDefault();
+          handleLogout();
+        });
+      });
+
+      // Handle section navigation
+      const navItems = document.querySelectorAll('.dashboard-nav li');
+      navItems.forEach(item => {
+        item.addEventListener('click', function() {
+          if (this.id !== 'logoutBtn') {
+            navItems.forEach(nav => nav.classList.remove('active'));
+            this.classList.add('active');
+          }
+        });
+      });
+    </script>
   </body>
 </html>
