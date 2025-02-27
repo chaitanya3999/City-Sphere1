@@ -133,10 +133,25 @@ class ApiService {
 
     async checkAuth() {
         try {
+            // Check if token exists
+            if (!this.token) {
+                return false;
+            }
+
+            // Check token expiration (if last login was more than 24 hours ago)
+            const lastLoginTime = localStorage.getItem('lastLoginTime');
+            if (lastLoginTime && Date.now() - parseInt(lastLoginTime) > 24 * 60 * 60 * 1000) {
+                this.logout();
+                return false;
+            }
+
             const response = await this.request('/auth/check');
             return response.authenticated === true;
         } catch (error) {
             console.error('Auth check failed:', error);
+            if (error.message === 'Token expired' || error.message === 'Invalid token') {
+                this.logout();
+            }
             return false;
         }
     }

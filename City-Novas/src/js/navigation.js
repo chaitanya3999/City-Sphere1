@@ -97,9 +97,74 @@ document.addEventListener('DOMContentLoaded', () => {
         // Add more page-specific initializations as needed
     }
 
+    // Add authentication and user profile handling
+    const updateUserProfile = async () => {
+        const userMenu = document.querySelector('.user-menu');
+        if (!userMenu) return;
+    
+        try {
+            const response = await fetch('/api/user/profile');
+            const data = await response.json();
+    
+            if (data.user) {
+                userMenu.innerHTML = `
+                    <div class="user-dropdown">
+                        <button class="dropdown-btn">
+                            <i class="fas fa-user-circle"></i>
+                            <span>${data.user.name}</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="dropdown-content">
+                            <a href="profile.html">
+                                <i class="fas fa-user"></i> Profile
+                            </a>
+                            <a href="provider-dashboard.html">
+                                <i class="fas fa-tachometer-alt"></i> Dashboard
+                            </a>
+                            <a href="#" id="logoutBtn">
+                                <i class="fas fa-sign-out-alt"></i> Logout
+                            </a>
+                        </div>
+                    </div>
+                `;
+    
+                // Add dropdown toggle functionality
+                const dropdownBtn = document.querySelector('.dropdown-btn');
+                const dropdownContent = document.querySelector('.dropdown-content');
+    
+                dropdownBtn?.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    dropdownContent?.classList.toggle('show');
+                });
+    
+                // Close dropdown when clicking outside
+                document.addEventListener('click', () => {
+                    dropdownContent?.classList.remove('show');
+                });
+    
+                // Handle logout
+                document.getElementById('logoutBtn')?.addEventListener('click', async (e) => {
+                    e.preventDefault();
+                    try {
+                        await fetch('/api/auth/logout', { method: 'POST' });
+                        window.location.href = 'index.html';
+                    } catch (error) {
+                        console.error('Logout failed:', error);
+                    }
+                });
+            }
+        } catch (error) {
+            console.error('Failed to fetch user profile:', error);
+        }
+    };
+    
+    // Initialize user profile on page load
+    updateUserProfile();
+    
     // Handle browser back/forward navigation
     window.addEventListener('popstate', () => {
-        loadPage(window.location.pathname);
+        const currentPath = window.location.pathname;
+        loadPage(currentPath);
     });
 
     // Responsive navigation adjustments
