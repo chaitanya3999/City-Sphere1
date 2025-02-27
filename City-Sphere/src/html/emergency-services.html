@@ -233,7 +233,7 @@ app.listen(PORT, () => {
 });
 
 function contactEmergency(serviceNumber) {
-    const name = prompt("Please enter your name:");
+    const name = prompt("Please enter your Number:");
     if (name) {
         $.post('/request-service', { name: name, service: serviceNumber }, function(response) {
             alert(response);
