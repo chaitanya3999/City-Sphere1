@@ -1,115 +1,73 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Responsive sidebar toggle
     const sidebarToggle = document.getElementById('sidebarToggle');
-    const sidebar = document.querySelector('.dashboard-sidebar');
-    const mainContent = document.querySelector('.dashboard-main-content');
+    const sidebar = document.querySelector('.sidebar');
+    const mainContent = document.querySelector('.main-content');
 
-    sidebarToggle.addEventListener('click', () => {
-        sidebar.classList.toggle('sidebar-open');
-        mainContent.classList.toggle('content-expanded');
-    });
-
-    // Responsive tabs
-    const dashboardTabs = document.querySelectorAll('.dashboard-tab');
-    const dashboardSections = document.querySelectorAll('.dashboard-section');
-
-    dashboardTabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-            const targetSection = tab.getAttribute('data-target');
-            
-            // Remove active classes
-            dashboardTabs.forEach(t => t.classList.remove('active-tab'));
-            dashboardSections.forEach(s => s.classList.remove('active-section'));
-            
-            // Add active classes to clicked tab and corresponding section
-            tab.classList.add('active-tab');
-            document.querySelector(targetSection).classList.add('active-section');
+    if (sidebarToggle) {
+        sidebarToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
         });
+    }
+
+    // Close sidebar when clicking outside on mobile
+    document.addEventListener('click', (e) => {
+        if (window.innerWidth <= 768 && 
+            !e.target.closest('.sidebar') && 
+            !e.target.closest('#sidebarToggle') && 
+            sidebar.classList.contains('active')) {
+            sidebar.classList.remove('active');
+        }
     });
 
-    // Responsive data tables
-    const dataTables = document.querySelectorAll('.data-table');
+    // Update provider name
+    const providerNameHeader = document.getElementById('providerNameHeader');
+    // TODO: Replace with actual API call to get provider name
+    const providerName = 'John Doe';
+    if (providerNameHeader) {
+        providerNameHeader.textContent = `Welcome, ${providerName}`;
+    }
 
+    // Make tables responsive
+    const dataTables = document.querySelectorAll('.data-table');
     function makeTablesResponsive() {
         dataTables.forEach(table => {
-            const headers = Array.from(table.querySelectorAll('thead th'));
-            const rows = table.querySelectorAll('tbody tr');
+            const headerCells = table.querySelectorAll('thead th');
+            const headerTexts = Array.from(headerCells).map(th => th.textContent);
+            const bodyCells = table.querySelectorAll('tbody td');
 
-            rows.forEach(row => {
-                const cells = Array.from(row.querySelectorAll('td'));
-                
-                cells.forEach((cell, index) => {
-                    if (window.innerWidth < 768) {
-                        cell.setAttribute('data-label', headers[index].textContent);
-                    } else {
-                        cell.removeAttribute('data-label');
-                    }
-                });
+            bodyCells.forEach((cell, index) => {
+                const headerIndex = index % headerTexts.length;
+                cell.setAttribute('data-label', headerTexts[headerIndex]);
             });
         });
     }
 
-    // Service request interactions
-    const serviceRequestCards = document.querySelectorAll('.service-request-card');
+    // Call makeTablesResponsive initially and on window resize
+    makeTablesResponsive();
+    window.addEventListener('resize', makeTablesResponsive);
 
-    serviceRequestCards.forEach(card => {
-        const acceptButton = card.querySelector('.accept-request');
-        const rejectButton = card.querySelector('.reject-request');
-
-        acceptButton.addEventListener('click', () => handleServiceRequest(card, 'accept'));
-        rejectButton.addEventListener('click', () => handleServiceRequest(card, 'reject'));
-    });
-
-    function handleServiceRequest(card, action) {
-        const requestId = card.getAttribute('data-request-id');
-        
-        fetch('/api/service-request', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ requestId, action })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                card.classList.add(action === 'accept' ? 'accepted' : 'rejected');
-                card.querySelector('.request-status').textContent = action.charAt(0).toUpperCase() + action.slice(1);
-            } else {
-                alert(data.message);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Network error. Please try again.');
+    // Handle notifications
+    const notificationIcon = document.querySelector('.notification-icon');
+    if (notificationIcon) {
+        notificationIcon.addEventListener('click', () => {
+            // TODO: Implement notifications panel
+            console.log('Notifications clicked');
         });
     }
 
-    // Responsive layout adjustments
-    function adjustLayoutForScreenSize() {
-        const screenWidth = window.innerWidth;
-        
-        if (screenWidth < 768) {
-            document.body.classList.add('mobile-view');
-            sidebar.classList.add('mobile-sidebar');
-            mainContent.classList.add('mobile-content');
-            
-            makeTablesResponsive();
-        } else {
-            document.body.classList.remove('mobile-view');
-            sidebar.classList.remove('mobile-sidebar');
-            mainContent.classList.remove('mobile-content');
-            
-            // Reset table styles
-            dataTables.forEach(table => {
-                table.querySelectorAll('td').forEach(cell => {
-                    cell.removeAttribute('data-label');
-                });
-            });
-        }
+    // Update stats periodically (mock data for demonstration)
+    function updateStats() {
+        const bookingsNumber = document.querySelector('.stat-card:nth-child(1) .stat-number');
+        const revenueNumber = document.querySelector('.stat-card:nth-child(2) .stat-number');
+        const servicesNumber = document.querySelector('.stat-card:nth-child(3) .stat-number');
+
+        // TODO: Replace with actual API calls
+        if (bookingsNumber) bookingsNumber.textContent = Math.floor(Math.random() * 100);
+        if (revenueNumber) revenueNumber.textContent = `₹${Math.floor(Math.random() * 100000)}`;
+        if (servicesNumber) servicesNumber.textContent = Math.floor(Math.random() * 10);
     }
 
-    // Initial layout adjustment and resize listener
-    adjustLayoutForScreenSize();
-    window.addEventListener('resize', adjustLayoutForScreenSize);
+    // Update stats every 5 minutes
+    setInterval(updateStats, 300000);
 });

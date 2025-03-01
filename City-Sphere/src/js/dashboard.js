@@ -21,28 +21,48 @@ async function checkAuthentication() {
 
 async function initializeDashboard() {
     try {
-        // Get user data from localStorage
-        const userData = JSON.parse(localStorage.getItem('user') || '{}');
-        
-        // Update user info
-        const userName = document.getElementById('userName');
-        const sidebarUserName = document.getElementById('sidebarUserName');
-        const userEmail = document.getElementById('userEmail');
-        
-        if (userData) {
-            userName.textContent = userData.name || 'User';
-            sidebarUserName.textContent = userData.name || 'User';
-            userEmail.textContent = userData.email || 'user@email.com';
+        const loadingOverlay = document.getElementById('loadingOverlay');
+        if (loadingOverlay) loadingOverlay.classList.remove('hide');
 
-            // Fill profile form if exists
-            const fullNameInput = document.getElementById('fullName');
-            const phoneNumberInput = document.getElementById('phoneNumber');
-            const addressInput = document.getElementById('address');
-
-            if (fullNameInput) fullNameInput.value = userData.name || '';
-            if (phoneNumberInput) phoneNumberInput.value = userData.phone || '';
-            if (addressInput) addressInput.value = userData.address || '';
+        // Get user data from localStorage and validate
+        let userData;
+        try {
+            userData = JSON.parse(localStorage.getItem('user') || '{}');
+            if (!userData || typeof userData !== 'object') {
+                throw new Error('Invalid user data format');
+            }
+        } catch (e) {
+            console.error('Failed to parse user data:', e);
+            userData = {};
         }
+        
+        // Update user info with proper null checks
+        const elements = {
+            userName: document.getElementById('userName'),
+            sidebarUserName: document.getElementById('sidebarUserName'),
+            userEmail: document.getElementById('userEmail'),
+            fullNameInput: document.getElementById('fullName'),
+            phoneNumberInput: document.getElementById('phoneNumber'),
+            addressInput: document.getElementById('address')
+        };
+
+        // Validate all required elements exist
+        Object.entries(elements).forEach(([key, element]) => {
+            if (key.includes('Input')) return; // Skip optional form inputs
+            if (!element) {
+                throw new Error(`Required element ${key} not found in the DOM`);
+            }
+        });
+
+        // Update display elements
+        elements.userName.textContent = userData.name || 'User';
+        elements.sidebarUserName.textContent = userData.name || 'User';
+        elements.userEmail.textContent = userData.email || 'user@email.com';
+
+        // Update form inputs if they exist
+        if (elements.fullNameInput) elements.fullNameInput.value = userData.name || '';
+        if (elements.phoneNumberInput) elements.phoneNumberInput.value = userData.phone || '';
+        if (elements.addressInput) elements.addressInput.value = userData.address || '';
 
         // Load and display appointments
         loadDashboardAppointments();
@@ -100,43 +120,86 @@ function setupEventListeners() {
 
 // Load and display upcoming appointments
 async function loadDashboardAppointments() {
-    try {
-        // Fetch latest appointments from server
-        const appointments = await appointmentService.getAppointments();
-        const upcomingAppointmentsElement = document.getElementById('upcomingAppointments');
-    
-    // Filter upcoming appointments
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const upcomingAppointments = appointments
-        .filter(app => new Date(app.appointmentDate) >= today)
-        .sort((a, b) => new Date(a.appointmentDate) - new Date(b.appointmentDate))
-        .slice(0, 3); // Show only next 3 appointments
-
-    if (upcomingAppointments.length === 0) {
-        upcomingAppointmentsElement.innerHTML = `
-            <div class="no-appointments">
-                <p>No upcoming appointments</p>
-                <a href="doctors.html" class="action-btn">Book an Appointment</a>
-            </div>
-        `;
+    const upcomingAppointmentsElement = document.getElementById('upcomingAppointments');
+    if (!upcomingAppointmentsElement) {
+        console.error('Appointments container not found');
         return;
     }
 
-    upcomingAppointmentsElement.innerHTML = upcomingAppointments
-        .map(appointment => `
-            <div class="appointment-item">
-                <div class="appointment-info">
-                    <h4>${appointment.doctorName}</h4>
-                    <p><i class="fas fa-calendar"></i> ${formatDate(appointment.appointmentDate)}</p>
-                    <p><i class="fas fa-clock"></i> ${appointment.appointmentTime}</p>
+    // Show loading state
+    upcomingAppointmentsElement.innerHTML = `
+        <div class="loading-appointments">
+            <div class="spinner"></div>
+            <p>Loading your appointments...</p>
+        </div>
+    `;
+
+    try {
+        // Fetch latest appointments from server
+        const appointments = await appointmentService.getAppointments();
+        if (!Array.isArray(appointments)) {
+            throw new Error('Invalid appointments data received');
+        }
+
+        // Filter upcoming appointments
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const upcomingAppointments = appointments
+            .filter(app => {
+                try {
+                    return new Date(app.appointmentDate) >= today;
+                } catch (e) {
+                    console.error('Invalid date format:', app.appointmentDate);
+                    return false;
+                }
+            })
+            .sort((a, b) => new Date(a.appointmentDate) - new Date(b.appointmentDate))
+            .slice(0, 3); // Show only next 3 appointments
+
+        if (upcomingAppointments.length === 0) {
+            upcomingAppointmentsElement.innerHTML = `
+                <div class="no-appointments">
+                    <p>No upcoming appointments</p>
+                    <a href="doctors.html" class="action-btn">Book an Appointment</a>
                 </div>
-                <span class="appointment-status status-${appointment.status.toLowerCase()}">
-                    ${appointment.status}
-                </span>
+            `;
+            return;
+        }
+
+        upcomingAppointmentsElement.innerHTML = upcomingAppointments
+            .map(appointment => {
+                // Validate required fields
+                const doctorName = appointment.doctorName || 'Unknown Doctor';
+                const appointmentDate = appointment.appointmentDate ? formatDate(appointment.appointmentDate) : 'Date not set';
+                const appointmentTime = appointment.appointmentTime || 'Time not set';
+                const status = appointment.status ? appointment.status.toLowerCase() : 'pending';
+
+                return `
+                    <div class="appointment-item">
+                        <div class="appointment-info">
+                            <h4>${doctorName}</h4>
+                            <p><i class="fas fa-calendar"></i> ${appointmentDate}</p>
+                            <p><i class="fas fa-clock"></i> ${appointmentTime}</p>
+                        </div>
+                        <span class="appointment-status status-${status}">
+                            ${status.charAt(0).toUpperCase() + status.slice(1)}
+                        </span>
+                    </div>
+                `;
+            })
+            .join('');
+    } catch (error) {
+        console.error('Failed to load appointments:', error);
+        upcomingAppointmentsElement.innerHTML = `
+            <div class="error-message">
+                <i class="fas fa-exclamation-circle"></i>
+                <p>Failed to load appointments. Please try again later.</p>
+                <button onclick="loadDashboardAppointments()" class="retry-btn">
+                    <i class="fas fa-redo"></i> Retry
+                </button>
             </div>
-        `)
-        .join('');
+        `;
+    }
 }
 
 // Update activity summary
