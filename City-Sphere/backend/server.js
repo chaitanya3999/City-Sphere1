@@ -10,6 +10,7 @@ const authRoutes = require('./routes/auth.routes');
 const userRoutes = require('./routes/user.routes');
 const appointmentRoutes = require('./routes/appointment.routes');
 const walletRoutes = require('./routes/wallet.routes');
+const restaurantRoutes = require('./routes/restaurantRoutes');
 
 // Load environment variables
 dotenv.config();
@@ -48,11 +49,12 @@ app.use('/src', express.static(path.join(__dirname, '../src'), {
     }
 }));
 
-// API routes
+// API routes with proper error handling
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/appointments', appointmentRoutes);
 app.use('/api/wallet', walletRoutes);
+app.use('/api/restaurants', restaurantRoutes);
 
 // Serve HTML files
 const HTML_FILES = [
@@ -107,20 +109,19 @@ app.use((err, req, res, next) => {
     });
 });
 
-// Connect to MongoDB
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/citysphere', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-})
-.then(() => {
-    console.log('Connected to MongoDB');
-})
-.catch((error) => {
-    console.error('MongoDB connection error:', error);
-});
+// Update the MongoDB connection part
+const MONGODB_URI = process.env.MONGODB_URI || "mongodb+srv://TheFlash7x:Anurag270306*@cluster0.me6vv.mongodb.net/citysphere?retryWrites=true&w=majority";
+
+// MongoDB Connection
+mongoose.connect(MONGODB_URI)
+    .then(() => console.log('Connected to MongoDB'))
+    .catch(err => {
+        console.error('MongoDB connection error:', err);
+        process.exit(1);
+    });
 
 // Start server
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+    console.log(`Server running on port ${PORT}`);
 });

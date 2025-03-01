@@ -1,0 +1,82 @@
+.order-card {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.order-restaurant {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.order-status {
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-weight: 500;
+}
+
+.status-placed {
+    background: #ffd700;
+    color: #000;
+}
+
+.status-preparing {
+    background: #ff9800;
+    color: white;
+}
+
+.status-ready {
+    background: #4caf50;
+    color: white;
+}
+
+.status-delivered {
+    background: #2196f3;
+    color: white;
+}
+
+.order-items {
+    margin: 15px 0;
+}
+
+.order-item {
+    display: flex;
+    justify-content: space-between;
+    margin: 5px 0;
+}
+
+.order-summary {
+    border-top: 1px solid #eee;
+    padding-top: 15px;
+    margin-top: 15px;
+}
+
+.cancel-button {
+    background: #ff5252;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.cancel-button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+.timer {
+    color: #ff5252;
+    font-weight: bold;
+    margin-left: 10px;
+} 

@@ -1,65 +1,39 @@
 const express = require('express');
-const auth = require('../middleware/auth');
-const User = require('../models/user.model');
 const router = express.Router();
+const User = require('../models/User');
+const auth = require('../middleware/auth.middleware');
 
-// Get user profile
-router.get('/profile', auth, async (req, res) => {
+// Get user profile with wallet balance
+router.get('/me', auth, async (req, res) => {
     try {
-        res.json(req.user);
-    } catch (error) {
-        res.status(500).json({ message: 'Error fetching profile', error: error.message });
-    }
-});
-
-// Update user profile
-router.patch('/profile', auth, async (req, res) => {
-    const updates = Object.keys(req.body);
-    const allowedUpdates = ['name', 'email', 'phone', 'address', 'settings'];
-    const isValidOperation = updates.every(update => allowedUpdates.includes(update));
-
-    if (!isValidOperation) {
-        return res.status(400).json({ message: 'Invalid updates' });
-    }
-
-    try {
-        updates.forEach(update => req.user[update] = req.body[update]);
-        await req.user.save();
-        res.json(req.user);
-    } catch (error) {
-        res.status(400).json({ message: 'Error updating profile', error: error.message });
-    }
-});
-
-// Change password
-router.post('/change-password', auth, async (req, res) => {
-    try {
-        const { currentPassword, newPassword } = req.body;
-
-        // Verify current password
-        const isMatch = await req.user.comparePassword(currentPassword);
-        if (!isMatch) {
-            return res.status(400).json({ message: 'Current password is incorrect' });
+        const user = await User.findById(req.user.id).select('-password');
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
         }
 
-        // Update password
-        req.user.password = newPassword;
-        await req.user.save();
-
-        res.json({ message: 'Password updated successfully' });
+        res.json({
+            id: user._id,
+            name: user.name,
+            email: user.email,
+            walletBalance: Number(user.walletBalance || 0)
+        });
     } catch (error) {
-        res.status(400).json({ message: 'Error changing password', error: error.message });
+        console.error('Get profile error:', error);
+        res.status(500).json({ message: 'Failed to get user profile' });
     }
 });
 
-// Delete account
-router.delete('/account', auth, async (req, res) => {
+// Get wallet balance
+router.get('/wallet', auth, async (req, res) => {
     try {
-        await req.user.remove();
-        res.json({ message: 'Account deleted successfully' });
+        // User is already attached by auth middleware
+        res.json({
+            balance: Number(req.user.walletBalance || 0)
+        });
     } catch (error) {
-        res.status(500).json({ message: 'Error deleting account', error: error.message });
+        console.error('Get wallet error:', error);
+        res.status(500).json({ message: 'Failed to get wallet balance' });
     }
 });
 
-module.exports = router;
+module.exports = router; 

@@ -1,9 +1,11 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const { OAuth2Client } = require('google-auth-library');
-const User = require('../models/user.model');
-const authMiddleware = require('../middleware/auth.middleware');
+const User = require('../models/User');
+const auth = require('../middleware/auth.middleware');
 const router = express.Router();
+const bcrypt = require('bcryptjs');
+const JWT_SECRET = '311069610d1f6595da4c3d51d9e59c780c2e297bb2f53a213a9d6825a7d3cb0cb27f025f749e923ff0608ac941d1e5f9685e4311beb47fac299375c6f0ab974b';
 
 // Initialize Google OAuth client
 const googleClient = new OAuth2Client('855437139826-iuond0b1id6a7tuh2vlh9bv69kh88r6a.apps.googleusercontent.com');
@@ -33,7 +35,17 @@ router.post('/register', async (req, res) => {
         }
 
         // Create new user
-        const user = new User({ name, email, password });
+        const user = new User({
+            name,
+            email,
+            password
+        });
+
+        // Hash password
+        const salt = await bcrypt.genSalt(10);
+        user.password = await bcrypt.hash(password, salt);
+
+        // Save user
         await user.save();
         console.log('New user created:', email);
 
@@ -69,53 +81,28 @@ router.post('/register', async (req, res) => {
 // Login user
 router.post('/login', async (req, res) => {
     try {
-        console.log('Login request received:', req.body);
         const { email, password } = req.body;
-
-        // Find user
         const user = await User.findOne({ email });
-        if (!user) {
-            return res.status(401).json({
-                success: false,
-                message: 'Invalid email or password'
-            });
+        
+        if (!user || !(await bcrypt.compare(password, user.password))) {
+            return res.status(401).json({ message: 'Invalid credentials' });
         }
 
-        // Check password
-        const isValidPassword = await user.comparePassword(password);
-        if (!isValidPassword) {
-            return res.status(401).json({
-                success: false,
-                message: 'Invalid email or password'
-            });
-        }
-
-        // Generate token
-        const token = jwt.sign(
-            { userId: user._id },
-            process.env.JWT_SECRET || 'your-secret-key',
-            { expiresIn: '24h' }
-        );
-
-        // Set cookie
-        res.cookie('token', token, COOKIE_OPTIONS);
+        const token = jwt.sign({ userId: user._id }, JWT_SECRET, { expiresIn: '24h' });
 
         res.json({
             success: true,
-            message: 'Login successful',
+            token,
             user: {
                 id: user._id,
                 name: user.name,
-                email: user.email
-            },
-            token
+                email: user.email,
+                walletBalance: user.walletBalance || 0
+            }
         });
     } catch (error) {
         console.error('Login error:', error);
-        res.status(500).json({
-            success: false,
-            message: 'Login failed'
-        });
+        res.status(500).json({ message: 'Login failed' });
     }
 });
 
@@ -207,7 +194,7 @@ router.post('/logout', (req, res) => {
 });
 
 // Check authentication status
-router.get('/check', authMiddleware, (req, res) => {
+router.get('/check', auth, (req, res) => {
     res.json({
         success: true,
         authenticated: true,

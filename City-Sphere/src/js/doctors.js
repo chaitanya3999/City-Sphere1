@@ -1,4 +1,3 @@
-// Sample doctor data
 const doctors = [
   {
     id: 1,
@@ -70,15 +69,12 @@ const doctors = [
   },
 ];
 
-// Initialize the page
 document.addEventListener("DOMContentLoaded", function () {
-  // Add event listeners for search and filter
   const searchInput = document.getElementById("searchInput");
   if (searchInput) {
     searchInput.addEventListener("input", searchDoctors);
   }
 
-  // Initialize filter buttons
   document.querySelectorAll(".filter-btn").forEach((btn) => {
     btn.addEventListener("click", function () {
       const specialty = this.getAttribute("data-specialty") || "all";
@@ -86,7 +82,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  // Add event listeners for booking
   document.querySelectorAll(".doctor-card .button").forEach((button) => {
     button.addEventListener("click", function () {
       const doctorId = this.getAttribute("data-doctor-id");
@@ -97,7 +92,6 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
-// Search doctors
 function searchDoctors() {
   const searchTerm = document.getElementById("searchInput").value.toLowerCase();
   const doctorCards = document.querySelectorAll(".doctor-card");
@@ -123,11 +117,9 @@ function searchDoctors() {
   });
 }
 
-// Filter doctors
 function filterDoctors(specialty) {
   const doctorCards = document.querySelectorAll(".doctor-card");
 
-  // Update active button
   document.querySelectorAll(".filter-btn").forEach((btn) => {
     if (btn.textContent.toLowerCase().includes(specialty.toLowerCase())) {
       btn.classList.add("active");
@@ -151,7 +143,6 @@ function filterDoctors(specialty) {
   });
 }
 
-// Open booking modal
 function openBookingModal(doctorId) {
   const doctor = doctors.find((d) => d.id === doctorId);
   if (!doctor) return;
@@ -184,7 +175,6 @@ function openBookingModal(doctorId) {
 
   document.body.appendChild(modal);
 
-  // Set up close functionality
   const closeBtn = modal.querySelector(".close");
   closeBtn.onclick = () => modal.remove();
   window.onclick = (event) => {
@@ -193,7 +183,6 @@ function openBookingModal(doctorId) {
     }
   };
 
-  // Handle date selection
   const dateInput = modal.querySelector("#appointmentDate");
   const timeSelect = modal.querySelector("#appointmentTime");
 
@@ -213,7 +202,6 @@ function openBookingModal(doctorId) {
     }
   });
 
-  // Handle form submission
   const form = modal.querySelector("#appointmentForm");
   form.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -224,7 +212,6 @@ function openBookingModal(doctorId) {
   });
 }
 
-// Show booking confirmation
 function showBookingConfirmation(doctor, date, time) {
   const formattedDate = new Date(date).toLocaleDateString("en-US", {
     weekday: "long",
@@ -306,7 +293,6 @@ function showBookingConfirmation(doctor, date, time) {
 
   document.body.appendChild(modal);
 
-  // Set up close functionality
   const closeBtn = modal.querySelector(".close");
   closeBtn.onclick = () => modal.remove();
   window.onclick = (event) => {
@@ -316,7 +302,6 @@ function showBookingConfirmation(doctor, date, time) {
   };
 }
 
-// Add to calendar functionality
 function addToCalendar(doctorName, date, time) {
   const startDate = new Date(`${date} ${time}`);
   const endDate = new Date(startDate.getTime() + 30 * 60000); // 30 minutes appointment
@@ -330,7 +315,6 @@ function addToCalendar(doctorName, date, time) {
   window.open(calendarUrl, "_blank");
 }
 
-// Close confirmation modal
 function closeConfirmation(button) {
   const modal = button.closest(".modal");
   modal.remove();
